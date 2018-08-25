@@ -23,3 +23,34 @@ public struct Color {
         self.alpha = alpha
     }
 }
+
+#if !os(Linux)
+internal extension Color {
+    var renderable: Renderable {
+        return Renderable(
+            red: CGFloat(red),
+            green: CGFloat(green),
+            blue: CGFloat(blue),
+            alpha: CGFloat(alpha)
+        )
+    }
+}
+#endif
+
+#if os(iOS)
+
+import UIKit
+
+internal extension Color {
+    typealias Renderable = UIColor
+}
+
+#elseif os(macOS)
+
+import Cocoa
+
+internal extension Color {
+    typealias Renderable = NSColor
+}
+
+#endif

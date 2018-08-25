@@ -4,13 +4,9 @@
  *  MIT license - see LICENSE.md
  */
 
-#if os(macOS)
-import Cocoa
-#endif
+#if !os(Linux)
 
-#if os(iOS)
-import UIKit
-#endif
+import Foundation
 
 /// Output format to use to generate an NSAttributedString from the
 /// highlighted code. A `Theme` is used to determine what fonts and
@@ -30,7 +26,7 @@ public struct AttributedStringOutputFormat: OutputFormat {
 public extension AttributedStringOutputFormat {
     struct Builder: OutputBuilder {
         private let theme: Theme
-        private lazy var font = loadFont()
+        private lazy var font = theme.font.load()
         private var string = NSMutableAttributedString()
 
         fileprivate init(theme: Theme) {
@@ -54,109 +50,18 @@ public extension AttributedStringOutputFormat {
         public func build() -> NSAttributedString {
             return NSAttributedString(attributedString: string)
         }
-        
-        #if os(macOS)
-        private mutating func loadFont() -> NSFont {
-            let size = CGFloat(theme.font.size)
-
-            switch theme.font.resource {
-            case .system:
-                return .defaultFont(ofSize: size)
-            case .path(let path):
-                guard let font = NSFont.loaded(from: path, size: size) else {
-                    return .defaultFont(ofSize: size)
-                }
-
-                return font
-            }
-        }
-        #endif
-        
-        #if os(iOS)
-        private mutating func loadFont() -> UIFont {
-            
-            let size = CGFloat(theme.font.size)
-            return .defaultFont(ofSize: size)
-            
-        }
-        #endif
-        
     }
 }
 
-#if os(macOS)
 private extension NSMutableAttributedString {
-    func append(_ string: String, font: NSFont, color: Color) {
-        let color = NSColor(
-            red: CGFloat(color.red),
-            green: CGFloat(color.green),
-            blue: CGFloat(color.blue),
-            alpha: CGFloat(color.alpha)
-        )
-
+    func append(_ string: String, font: Font.Loaded, color: Color) {
         let attributedString = NSAttributedString(string: string, attributes: [
-            .foregroundColor: color,
+            .foregroundColor: color.renderable,
             .font: font
-            ])
+        ])
         
         append(attributedString)
     }
 }
 
-private extension NSFont {
-    static func loaded(from path: String, size: CGFloat) -> NSFont? {
-        let url = CFURLCreateWithFileSystemPath(
-            kCFAllocatorDefault,
-            path as CFString,
-            .cfurlposixPathStyle,
-            false
-        )
-
-        guard let font = url.flatMap(CGDataProvider.init).flatMap(CGFont.init) else {
-            return nil
-        }
-
-        return CTFontCreateWithGraphicsFont(font, size, nil, nil)
-    }
-
-    static func defaultFont(ofSize size: CGFloat) -> NSFont {
-        guard let courier = loaded(from: "/Library/Fonts/Courier New.ttf", size: size) else {
-            return .systemFont(ofSize: size)
-        }
-
-        return courier
-    }
-}
-#endif
-
-#if os(iOS)
-private extension NSMutableAttributedString {
-    func append(_ string: String, font: UIFont, color: Color) {
-        let color = UIColor(
-            red: CGFloat(color.red),
-            green: CGFloat(color.green),
-            blue: CGFloat(color.blue),
-            alpha: CGFloat(color.alpha)
-        )
-        
-        let attributedString = NSAttributedString(string: string, attributes: [
-            .foregroundColor: color,
-            .font: font
-            ])
-        
-        append(attributedString)
-    }
-}
-
-private extension UIFont {
-    
-    static func defaultFont(ofSize size: CGFloat) -> UIFont {
-        guard let menlo = UIFont(name: "Menlo-Regular", size: size) else {
-            return .systemFont(ofSize: size)
-        }
-        
-        return menlo
-    }
-    
-}
 #endif
