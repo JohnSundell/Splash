@@ -6,13 +6,9 @@
 
 import Foundation
 
-/*
- * Extends the Theme struct with static properties that
- * represent common Xcode defaults as well as community
- * favourites.
- */
-public extension Theme {
+#if !os(Linux)
 
+public extension Theme {
     /// Create a theme matching the "Sundell's Colors" Xcode theme
     static func sundellsColors(withFont font: Font) -> Theme {
         return Theme(
@@ -36,6 +32,7 @@ public extension Theme {
         )
     }
 
+    /// Create a theme matching Xcode's "Midnight" theme
     static func midnight(withFont font: Font) -> Theme {
         return Theme(
             font: font,
@@ -58,6 +55,7 @@ public extension Theme {
         )
     }
 
+    /// Creating a theme matching the colors used for the WWDC 2017 sample code
     static func wwdc17(withFont font: Font) -> Theme {
         return Theme(
             font: font,
@@ -80,6 +78,7 @@ public extension Theme {
         )
     }
 
+    /// Creating a theme matching the colors used for the WWDC 2018 sample code
     static func wwdc18(withFont font: Font) -> Theme {
         return Theme(
             font: font,
@@ -102,6 +101,7 @@ public extension Theme {
         )
     }
 
+    /// Create a theme matching Xcode's "Sunset" theme
     static func sunset(withFont font: Font) -> Theme {
         return Theme(
             font: font,
@@ -124,6 +124,7 @@ public extension Theme {
         )
     }
 
+    /// Create a theme matching Xcode's "Presentation" theme
     static func presentation(withFont font: Font) -> Theme {
         return Theme(
             font: font,
@@ -145,5 +146,6 @@ public extension Theme {
             ]
         )
     }
-
 }
+
+#endif
