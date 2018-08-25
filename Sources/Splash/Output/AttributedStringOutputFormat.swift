@@ -66,7 +66,7 @@ public extension AttributedStringOutputFormat {
                 guard let font = NSFont.loaded(from: path, size: size) else {
                     return .defaultFont(ofSize: size)
                 }
-                
+
                 return font
             }
         }
