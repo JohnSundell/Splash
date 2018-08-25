@@ -45,6 +45,8 @@ You'll get the following output back:
 <span class="keyword">func</span> hello(world: <span class="type">String</span>) -> <span class="type">Int</span>
 ```
 
+To be as flexible as possible, Splash doesn't hardcode any colors or other CSS attributes in the HTML it generates. Instead it simply assigns a CSS class to each token. For an example of a CSS file that can be used to style Splash-generated HTML, see [Examples/sundellsColors.css](https://github.com/JohnSundell/Splash/blob/master/Examples/sundellsColors.css).
+
 For more information about HTML generation with Splash and how to customize it, see `HTMLOutputFormat`.
 
 #### SplashImageGen
