@@ -6,6 +6,8 @@
 
 import Foundation
 
+#if !os(Linux)
+
 /// A representation of a color, for use with a `Theme`.
 /// Since Splash aims to be cross-platform, it uses this
 /// simplified color representation rather than `NSColor`
@@ -23,3 +25,34 @@ public struct Color {
         self.alpha = alpha
     }
 }
+
+internal extension Color {
+    var renderable: Renderable {
+        return Renderable(
+            red: CGFloat(red),
+            green: CGFloat(green),
+            blue: CGFloat(blue),
+            alpha: CGFloat(alpha)
+        )
+    }
+}
+
+#endif
+
+#if os(iOS)
+
+import UIKit
+
+internal extension Color {
+    typealias Renderable = UIColor
+}
+
+#elseif os(macOS)
+
+import Cocoa
+
+internal extension Color {
+    typealias Renderable = NSColor
+}
+
+#endif

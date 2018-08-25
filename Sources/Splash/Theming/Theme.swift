@@ -6,10 +6,11 @@
 
 import Foundation
 
+#if !os(Linux)
+
 /// A theme describes what fonts and colors to use when rendering
-/// certain output formats - such as `NSAttributedString`. A default
-/// implementation is provided that matches the "Sundell's Colors"
-/// Xcode theme, by using the `sundellsColors(withFont:)` method.
+/// certain output formats - such as `NSAttributedString`. Several
+/// default implementations are provided - see Theme+Defaults.swift.
 public struct Theme {
     /// What font to use to render the highlighted text
     public var font: Font
@@ -24,3 +25,5 @@ public struct Theme {
         self.tokenColors = tokenColors
     }
 }
+
+#endif

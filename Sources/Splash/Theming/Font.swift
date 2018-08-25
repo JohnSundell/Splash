@@ -6,9 +6,11 @@
 
 import Foundation
 
+#if !os(Linux)
+
 /// A representation of a font, for use with a `Theme`.
 /// Since Splash aims to be cross-platform, it uses this
-/// simplified color representation rather than `NSFont`
+/// simplified font representation rather than `NSFont`
 /// or `UIFont`.
 public struct Font {
     /// The underlying resource used to load the font
@@ -19,12 +21,7 @@ public struct Font {
     /// Initialize an instance with a path to a font file
     /// on disk and a size.
     public init(path: String, size: Double) {
-        #if os(macOS)
         resource = .path((path as NSString).expandingTildeInPath)
-        #else
-        resource = .path(path)
-        #endif
-
         self.size = size
     }
 
@@ -41,7 +38,69 @@ public extension Font {
     enum Resource {
         /// Use an appropriate system font
         case system
+        /// Use a pre-loaded font
+        case preloaded(Loaded)
         /// Load a font file from a given file system path
         case path(String)
     }
 }
+
+internal extension Font {
+    func load() -> Loaded {
+        switch resource {
+        case .system:
+            return loadDefaultFont()
+        case .preloaded(let font):
+            return font
+        case .path(let path):
+            return load(fromPath: path) ?? loadDefaultFont()
+        }
+    }
+
+    private func loadDefaultFont() -> Loaded {
+        let font: Loaded?
+
+        #if os(iOS)
+        font = UIFont(name: "Menlo-Regular", size: CGFloat(size))
+        #else
+        font = load(fromPath: "/Library/Fonts/Courier New.ttf")
+        #endif
+
+        return font ?? .systemFont(ofSize: CGFloat(size))
+    }
+
+    private func load(fromPath path: String) -> Loaded? {
+        let url = CFURLCreateWithFileSystemPath(
+            kCFAllocatorDefault,
+            path as CFString,
+            .cfurlposixPathStyle,
+            false
+        )
+
+        guard let font = url.flatMap(CGDataProvider.init).flatMap(CGFont.init) else {
+            return nil
+        }
+
+        return CTFontCreateWithGraphicsFont(font, CGFloat(size), nil, nil)
+    }
+}
+
+#endif
+
+#if os(iOS)
+
+import UIKit
+
+public extension Font {
+    typealias Loaded = UIFont
+}
+
+#elseif os(macOS)
+
+import Cocoa
+
+public extension Font {
+    typealias Loaded = NSFont
+}
+
+#endif
