@@ -13,6 +13,29 @@ import Foundation
  */
 public extension Theme {
 
+    /// Create a theme matching the "Sundell's Colors" Xcode theme
+    static func sundellsColors(withFont font: Font) -> Theme {
+        return Theme(
+            font: font,
+            plainTextColor: Color(
+                red: 0.66,
+                green: 0.74,
+                blue: 0.74
+            ),
+            tokenColors: [
+                .keyword : Color(red: 0.91, green: 0.2, blue: 0.54),
+                .string : Color(red: 0.98, green: 0.39, blue: 0.12),
+                .type : Color(red: 0.51, green: 0.51, blue: 0.79),
+                .call : Color(red: 0.2, green: 0.56, blue: 0.9),
+                .number : Color(red: 0.86, green: 0.44, blue: 0.34),
+                .comment : Color(red: 0.42, green: 0.54, blue: 0.58),
+                .property : Color(red: 0.2, green: 0.56, blue: 0.9),
+                .dotAccess : Color(red: 0.2, green: 0.56, blue: 0.9),
+                .preprocessing : Color(red: 0.896, green: 0.488, blue: 0.284)
+            ]
+        )
+    }
+
     static func midnight(withFont font: Font) -> Theme {
         return Theme(
             font: font,
