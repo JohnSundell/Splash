@@ -21,7 +21,7 @@ public struct AttributedStringOutputFormat: OutputFormat {
     public init(theme: Theme) {
         self.theme = theme
     }
-    
+
     public func makeBuilder() -> Builder {
         return Builder(theme: theme)
     }
@@ -32,25 +32,25 @@ public extension AttributedStringOutputFormat {
         private let theme: Theme
         private lazy var font = loadFont()
         private var string = NSMutableAttributedString()
-        
+
         fileprivate init(theme: Theme) {
             self.theme = theme
         }
-        
+
         public mutating func addToken(_ token: String, ofType type: TokenType) {
             let color = theme.tokenColors[type] ?? Color(red: 1, green: 1, blue: 1)
             string.append(token, font: font, color: color)
         }
-        
+
         public mutating func addPlainText(_ text: String) {
             string.append(text, font: font, color: theme.plainTextColor)
         }
-        
+
         public mutating func addWhitespace(_ whitespace: String) {
             let color = Color(red: 1, green: 1, blue: 1)
             string.append(whitespace, font: font, color: color)
         }
-        
+
         public func build() -> NSAttributedString {
             return NSAttributedString(attributedString: string)
         }
@@ -58,7 +58,7 @@ public extension AttributedStringOutputFormat {
         #if os(macOS)
         private mutating func loadFont() -> NSFont {
             let size = CGFloat(theme.font.size)
-            
+
             switch theme.font.resource {
             case .system:
                 return .defaultFont(ofSize: size)
@@ -93,7 +93,7 @@ private extension NSMutableAttributedString {
             blue: CGFloat(color.blue),
             alpha: CGFloat(color.alpha)
         )
-        
+
         let attributedString = NSAttributedString(string: string, attributes: [
             .foregroundColor: color,
             .font: font
@@ -111,19 +111,19 @@ private extension NSFont {
             .cfurlposixPathStyle,
             false
         )
-        
+
         guard let font = url.flatMap(CGDataProvider.init).flatMap(CGFont.init) else {
             return nil
         }
-        
+
         return CTFontCreateWithGraphicsFont(font, size, nil, nil)
     }
-    
+
     static func defaultFont(ofSize size: CGFloat) -> NSFont {
         guard let courier = loaded(from: "/Library/Fonts/Courier New.ttf", size: size) else {
             return .systemFont(ofSize: size)
         }
-        
+
         return courier
     }
 }
