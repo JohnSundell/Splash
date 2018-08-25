@@ -55,6 +55,26 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testAccessingPropertyAfterFunctionCallWithoutArguments() {
+        let components = highlighter.highlight("call().property")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("()."),
+            .token("property", .property)
+        ])
+    }
+
+    func testAccessingPropertyAfterFunctionCallWithArguments() {
+        let components = highlighter.highlight("call(argument).property")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("(argument)."),
+            .token("property", .property)
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -65,7 +85,9 @@ extension FunctionCallTests {
         return [
             ("testFunctionCallWithIntegers", testFunctionCallWithIntegers),
             ("testImplicitInitializerCall", testImplicitInitializerCall),
-            ("testExplicitInitializerCall", testExplicitInitializerCall)
+            ("testExplicitInitializerCall", testExplicitInitializerCall),
+            ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
+            ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments)
         ]
     }
 }
