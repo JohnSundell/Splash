@@ -5,8 +5,12 @@
  */
 
 #if os(macOS)
-
 import Cocoa
+#endif
+
+#if os(iOS)
+import UIKit
+#endif
 
 /// Output format to use to generate an NSAttributedString from the
 /// highlighted code. A `Theme` is used to determine what fonts and
@@ -50,7 +54,8 @@ public extension AttributedStringOutputFormat {
         public func build() -> NSAttributedString {
             return NSAttributedString(attributedString: string)
         }
-
+        
+        #if os(macOS)
         private mutating func loadFont() -> NSFont {
             let size = CGFloat(theme.font.size)
 
@@ -65,9 +70,21 @@ public extension AttributedStringOutputFormat {
                 return font
             }
         }
+        #endif
+        
+        #if os(iOS)
+        private mutating func loadFont() -> UIFont {
+            
+            let size = CGFloat(theme.font.size)
+            return .defaultFont(ofSize: size)
+            
+        }
+        #endif
+        
     }
 }
 
+#if os(macOS)
 private extension NSMutableAttributedString {
     func append(_ string: String, font: NSFont, color: Color) {
         let color = NSColor(
@@ -80,8 +97,8 @@ private extension NSMutableAttributedString {
         let attributedString = NSAttributedString(string: string, attributes: [
             .foregroundColor: color,
             .font: font
-        ])
-
+            ])
+        
         append(attributedString)
     }
 }
@@ -110,5 +127,36 @@ private extension NSFont {
         return courier
     }
 }
+#endif
 
+#if os(iOS)
+private extension NSMutableAttributedString {
+    func append(_ string: String, font: UIFont, color: Color) {
+        let color = UIColor(
+            red: CGFloat(color.red),
+            green: CGFloat(color.green),
+            blue: CGFloat(color.blue),
+            alpha: CGFloat(color.alpha)
+        )
+        
+        let attributedString = NSAttributedString(string: string, attributes: [
+            .foregroundColor: color,
+            .font: font
+            ])
+        
+        append(attributedString)
+    }
+}
+
+private extension UIFont {
+    
+    static func defaultFont(ofSize size: CGFloat) -> UIFont {
+        guard let menlo = UIFont(name: "Menlo-Regular", size: size) else {
+            return .systemFont(ofSize: size)
+        }
+        
+        return menlo
+    }
+    
+}
 #endif
