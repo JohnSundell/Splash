@@ -76,8 +76,7 @@ public extension AttributedStringOutputFormat {
         private mutating func loadFont() -> UIFont {
             
             let size = CGFloat(theme.font.size)
-            let font = UIFont.defaultFont(ofSize: size)
-            return font
+            return .defaultFont(ofSize: size)
             
         }
         #endif
