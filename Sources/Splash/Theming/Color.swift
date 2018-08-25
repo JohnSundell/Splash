@@ -6,6 +6,8 @@
 
 import Foundation
 
+#if !os(Linux)
+
 /// A representation of a color, for use with a `Theme`.
 /// Since Splash aims to be cross-platform, it uses this
 /// simplified color representation rather than `NSColor`
@@ -24,7 +26,6 @@ public struct Color {
     }
 }
 
-#if !os(Linux)
 internal extension Color {
     var renderable: Renderable {
         return Renderable(
@@ -35,6 +36,7 @@ internal extension Color {
         )
     }
 }
+
 #endif
 
 #if os(iOS)
