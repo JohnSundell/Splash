@@ -17,7 +17,7 @@ import UIKit
 /// colors to use for the various tokens.
 public struct AttributedStringOutputFormat: OutputFormat {
     public var theme: Theme
-    
+
     public init(theme: Theme) {
         self.theme = theme
     }
