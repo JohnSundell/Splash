@@ -56,7 +56,7 @@ public extension AttributedStringOutputFormat {
 private extension NSMutableAttributedString {
     func append(_ string: String, font: Font.Loaded, color: Color) {
         let attributedString = NSAttributedString(string: string, attributes: [
-            .foregroundColor: color.renderable,
+            .foregroundColor: color,
             .font: font
         ])
         
