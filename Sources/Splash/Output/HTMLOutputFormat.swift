@@ -33,11 +33,11 @@ public extension HTMLOutputFormat {
         }
 
         public mutating func addToken(_ token: String, ofType type: TokenType) {
-            html.append("<span class=\"\(classPrefix)\(type.rawValue)\">\(token)</span>")
+            html.append("<span class=\"\(classPrefix)\(type.rawValue)\">\(token.escaped)</span>")
         }
 
         public mutating func addPlainText(_ text: String) {
-            html.append(text)
+            html.append(text.escaped)
         }
 
         public mutating func addWhitespace(_ whitespace: String) {
@@ -47,5 +47,12 @@ public extension HTMLOutputFormat {
         public func build() -> String {
             return html
         }
+    }
+}
+
+private extension String {
+    var escaped: String {
+        return replacingOccurrences(of: "<", with: "&lt;")
+               .replacingOccurrences(of: ">", with: "&gt;")
     }
 }
