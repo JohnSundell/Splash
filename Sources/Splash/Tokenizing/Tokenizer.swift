@@ -43,6 +43,7 @@ private extension Tokenizer {
         private let delimiters: CharacterSet
         private var index: String.Index?
         private var tokenCounts = [String : Int]()
+        private var allTokens = [String]()
         private var lineTokens = [String]()
         private var segments: (current: Segment?, previous: Segment?)
 
@@ -132,6 +133,7 @@ private extension Tokenizer {
 
         private func makeSegment(with component: Component, at index: String.Index) -> Segment {
             let tokens = Segment.Tokens(
+                all: allTokens,
                 counts: tokenCounts,
                 onSameLine: lineTokens,
                 previous: segments.current?.tokens.current,
@@ -154,6 +156,8 @@ private extension Tokenizer {
             var count = tokenCounts[segment.tokens.current] ?? 0
             count += 1
             tokenCounts[segment.tokens.current] = count
+
+            allTokens.append(segment.tokens.current)
 
             if segment.isLastOnLine {
                 lineTokens = []

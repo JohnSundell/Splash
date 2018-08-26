@@ -214,12 +214,14 @@ private extension SwiftGrammar {
     struct TypeRule: SyntaxRule {
         var tokenType: TokenType { return .type }
 
+        private let declarationKeywords: Set<String> = [
+            "class", "struct", "enum", "func",
+            "protocol", "typealias", "import"
+        ]
+
         func matches(_ segment: Segment) -> Bool {
             // Types should not be highlighted when declared
             if let previousToken = segment.tokens.previous {
-                let declarationKeywords = ["class", "struct", "enum",
-                                           "protocol", "typealias", "import"]
-
                 guard !previousToken.isAny(of: declarationKeywords) else {
                     return false
                 }
@@ -234,9 +236,21 @@ private extension SwiftGrammar {
             }
 
             // In a generic declaration, only highlight constraints
-            if !segment.tokens.onSameLine.contains(anyOf: "var", "let") {
-                if !segment.tokens.containsBalancedOccurrences(of: "<", and: ">") {
-                    return !segment.tokens.previous.isAny(of: "<", ",")
+            if segment.tokens.previous.isAny(of: "<", ",") {
+                // Since the declaration might be on another line, we have to walk
+                // backwards through all tokens until we've found enough information.
+                for token in segment.tokens.all.reversed() {
+                    guard !declarationKeywords.contains(token) else {
+                        return false
+                    }
+
+                    guard !keywords.contains(token) else {
+                        return true
+                    }
+
+                    if token.isAny(of: ">", "=", "==", "(") {
+                        return true
+                    }
                 }
             }
 

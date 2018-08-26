@@ -11,7 +11,7 @@ extension Equatable {
         return candidates.contains(self)
     }
 
-    func isAny(of candidates: [Self]) -> Bool {
+    func isAny<S: Sequence>(of candidates: S) -> Bool where S.Element == Self {
         return candidates.contains(self)
     }
 }

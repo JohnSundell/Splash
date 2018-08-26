@@ -24,16 +24,18 @@ public struct Segment {
 public extension Segment {
     /// A collection of tokens included in a code segment
     struct Tokens {
+        /// All tokens that have been found so far (excluding the current one)
+        public var all: [String]
         /// The number of times a given token has been found up until this point
-        var counts: [String : Int]
+        public var counts: [String : Int]
         /// The tokens that were previously found on the same line as the current one
-        var onSameLine: [String]
+        public var onSameLine: [String]
         /// The token that was previously found (may be on a different line)
-        var previous: String?
+        public var previous: String?
         /// The current token which is currently being evaluated
-        var current: String
+        public var current: String
         /// Any upcoming token that will follow the current one
-        var next: String?
+        public var next: String?
     }
 }
 
