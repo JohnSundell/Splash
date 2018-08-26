@@ -25,9 +25,9 @@ public extension Theme {
                 .call : Color(red: 0.2, green: 0.56, blue: 0.9),
                 .number : Color(red: 0.86, green: 0.44, blue: 0.34),
                 .comment : Color(red: 0.42, green: 0.54, blue: 0.58),
-                .property : Color(red: 0.2, green: 0.56, blue: 0.9),
-                .dotAccess : Color(red: 0.2, green: 0.56, blue: 0.9),
-                .preprocessing : Color(red: 0.896, green: 0.488, blue: 0.284)
+                .property : Color(red: 0.13, green: 0.67, blue: 0.62),
+                .dotAccess : Color(red: 0.57, green: 0.7, blue: 0),
+                .preprocessing : Color(red: 0.71, green: 0.54, blue: 0)
             ]
         )
     }
