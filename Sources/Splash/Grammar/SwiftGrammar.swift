@@ -47,7 +47,7 @@ private extension SwiftGrammar {
         "super", "self", "set", "true", "false", "nil",
         "override", "where", "_", "default", "break",
         "#selector", "required", "willSet", "didSet",
-        "lazy"
+        "lazy", "subscript"
     ]
 
     struct PreprocessingRule: SyntaxRule {
@@ -159,6 +159,12 @@ private extension SwiftGrammar {
 
         func matches(_ segment: Segment) -> Bool {
             guard segment.tokens.current.startsWithLetter else {
+                return false
+            }
+
+            // Subscripting is a bit of an edge case, since it's the only keyword
+            // that looks like a function call, so we need to handle it explicitly
+            guard segment.tokens.current != "subscript" else {
                 return false
             }
 

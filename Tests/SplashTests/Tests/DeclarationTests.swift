@@ -424,6 +424,43 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testSubscriptDeclaration() {
+        let components = highlighter.highlight("""
+        extension Collection {
+            subscript(key: Key) -> Value? { return nil }
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("extension", .keyword),
+            .whitespace(" "),
+            .token("Collection", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("subscript", .keyword),
+            .plainText("(key:"),
+            .whitespace(" "),
+            .token("Key", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText("?"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .token("nil", .keyword),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -449,7 +486,8 @@ extension DeclarationTests {
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
-            ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet)
+            ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
+            ("testSubscriptDeclaration", testSubscriptDeclaration)
         ]
     }
 }

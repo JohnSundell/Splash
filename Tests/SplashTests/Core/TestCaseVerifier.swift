@@ -22,7 +22,11 @@ struct TestCaseVerifier<Case: XCTestCase> {
             }
 
             guard testNames.contains(name) else {
-                XCTFail("Test case \(Case.self) does not include test \(name) on Linux")
+                XCTFail("""
+                Test case \(Case.self) does not include test \(name) on Linux.
+                Please add it to the test case's 'allTests' array.
+                """)
+
                 return false
             }
         }
