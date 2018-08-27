@@ -48,6 +48,16 @@ final class EnumTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testUsingEnumInSubscript() {
+        let components = highlighter.highlight("dictionary[.key]")
+
+        XCTAssertEqual(components, [
+            .plainText("dictionary[."),
+            .token("key", .dotAccess),
+            .plainText("]")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -58,7 +68,8 @@ extension EnumTests {
         return [
             ("testEnumDotSyntaxInAssignment", testEnumDotSyntaxInAssignment),
             ("testEnumDotSyntaxAsArgument", testEnumDotSyntaxAsArgument),
-            ("testEnumDotSyntaxWithAssociatedValue", testEnumDotSyntaxWithAssociatedValue)
+            ("testEnumDotSyntaxWithAssociatedValue", testEnumDotSyntaxWithAssociatedValue),
+            ("testUsingEnumInSubscript", testUsingEnumInSubscript)
         ]
     }
 }

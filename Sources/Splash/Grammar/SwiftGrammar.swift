@@ -262,7 +262,7 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .dotAccess }
 
         func matches(_ segment: Segment) -> Bool {
-            guard segment.tokens.previous.isAny(of: ".", "(.") else {
+            guard segment.tokens.previous.isAny(of: ".", "(.", "[.") else {
                 return false
             }
 
