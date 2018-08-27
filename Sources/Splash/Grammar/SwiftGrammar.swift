@@ -276,6 +276,10 @@ private extension SwiftGrammar {
                 return false
             }
 
+            guard segment.tokens.current != "self" else {
+                return false
+            }
+
             return segment.tokens.onSameLine.first != "import"
         }
     }
@@ -292,14 +296,12 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard !segment.prefixedByDotAccess else {
+            guard segment.tokens.current != "self" else {
                 return false
             }
 
-            if let previousToken = segment.tokens.previous {
-                guard !keywords.contains(previousToken) else {
-                    return false
-                }
+            guard !segment.prefixedByDotAccess else {
+                return false
             }
 
             return segment.tokens.onSameLine.first != "import"

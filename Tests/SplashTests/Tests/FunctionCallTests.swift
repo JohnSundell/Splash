@@ -88,6 +88,19 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPassingTypeToFunction() {
+        let components = highlighter.highlight("call(String.self)")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("("),
+            .token("String", .type),
+            .plainText("."),
+            .token("self", .keyword),
+            .plainText(")")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -101,7 +114,8 @@ extension FunctionCallTests {
             ("testExplicitInitializerCall", testExplicitInitializerCall),
             ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
             ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
-            ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType)
+            ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
+            ("testPassingTypeToFunction", testPassingTypeToFunction)
         ]
     }
 }
