@@ -213,6 +213,15 @@ private extension SwiftGrammar {
                 }
             }
 
+            if let previousToken = segment.tokens.previous {
+                // Don't highlight most keywords when used as a parameter label
+                if !segment.tokens.current.isAny(of: "_", "self", "let", "var") {
+                    guard !previousToken.isAny(of: "(", ",") else {
+                        return false
+                    }
+                }
+            }
+
             return keywords.contains(segment.tokens.current)
         }
     }
