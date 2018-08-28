@@ -475,6 +475,25 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+    
+    func testDeferDeclaration() {
+        let components = highlighter.highlight("func hello() { defer {} }")
+        
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("hello()"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("defer", .keyword),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace(" "),
+            .plainText("}")
+            ])
+        
+    }
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -503,7 +522,8 @@ extension DeclarationTests {
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
-            ("testSubscriptDeclaration", testSubscriptDeclaration)
+            ("testSubscriptDeclaration", testSubscriptDeclaration),
+            ("testDeferDeclaration", testDeferDeclaration)
         ]
     }
 }
