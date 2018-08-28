@@ -491,8 +491,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("{}"),
             .whitespace(" "),
             .plainText("}")
-            ])
-        
+        ])
     }
 
     func testAllTestsRunOnLinux() {
