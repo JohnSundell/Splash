@@ -493,6 +493,32 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+        
+    func testFunctionDeclarationWithInOutParameter() {
+        let components = highlighter.highlight("func swapValues(value1: inout Int, value2: inout Int) { }")
+        
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("swapValues(value1:"),
+            .whitespace(" "),
+            .token("inout", .keyword),
+            .whitespace(" "),
+            .token("Int", .type),
+            .plainText(","),
+            .whitespace(" "),
+            .plainText("value2:"),
+            .whitespace(" "),
+            .token("inout", .keyword),
+            .whitespace(" "),
+            .token("Int", .type),
+			.plainText(")"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -522,7 +548,8 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
-            ("testDeferDeclaration", testDeferDeclaration)
+            ("testDeferDeclaration", testDeferDeclaration),
+            ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter)
         ]
     }
 }
