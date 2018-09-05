@@ -547,7 +547,8 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
-            ("testDeferDeclaration", testDeferDeclaration)
+            ("testDeferDeclaration", testDeferDeclaration),
+            ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter)
         ]
     }
 }
