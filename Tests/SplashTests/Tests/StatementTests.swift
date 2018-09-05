@@ -206,6 +206,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("{"),
             .whitespace(" "),
             .token("continue",.keyword),
+            .whitespace(" "),
             .plainText("}")
             ])
     }
@@ -231,18 +232,10 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("repeat", .keyword),
             .whitespace(" "),
             .plainText("{"),
-            .whitespace("\n"),
-            .whitespace(" "),
-            .whitespace(" "),
-            .whitespace(" "),
-            .whitespace(" "),
+            .whitespace("\n    "),
             .token("print", .call),
             .plainText("(x)"),
-            .whitespace("\n"),
-            .whitespace(" "),
-            .whitespace(" "),
-            .whitespace(" "),
-            .whitespace(" "),
+            .whitespace("\n    "),
             .plainText("x"),
             .whitespace(" "),
             .plainText("="),
