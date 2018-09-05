@@ -59,6 +59,30 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testMultiLineCommentWithConsecutiveAsterisks() {
+        let components = highlighter.highlight("""
+        /**
+         Splash
+         */
+        struct Foo {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("/*", .comment),
+            .token("*", .comment),
+            .whitespace("\n "),
+            .token("Splash", .comment),
+            .whitespace("\n "),
+            .token("*/", .comment),
+            .whitespace("\n"),
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Foo"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -68,7 +92,8 @@ extension CommentTests {
     static var allTests: [(String, TestClosure<CommentTests>)] {
         return [
             ("testSingleLineComment", testSingleLineComment),
-            ("testMultiLineComment", testMultiLineComment)
+            ("testMultiLineComment", testMultiLineComment),
+            ("testMultiLineCommentWithConsecutiveAsterisks", testMultiLineCommentWithConsecutiveAsterisks)
         ]
     }
 }
