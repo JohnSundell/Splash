@@ -279,7 +279,10 @@ extension StatementTests {
             ("testChainedIfElseStatements", testChainedIfElseStatements),
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithAssociatedValues", testSwitchStatementWithAssociatedValues),
-            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty)
+            ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
+            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
+            ("testForStatementWithContinue", testForStatementWithContinue),
+            ("testRepeatWhileStatement", testRepeatWhileStatement)
         ]
     }
 }
