@@ -512,6 +512,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("inout", .keyword),
             .whitespace(" "),
             .token("Int", .type),
+			.plainText(")"),
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
