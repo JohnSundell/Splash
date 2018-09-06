@@ -134,6 +134,40 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+        
+    func testSwitchStatementWithFallthrough() {
+        let components = highlighter.highlight("""
+        switch variable {
+        case .one: fallthrough
+        default:
+            callB()
+        }
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("switch", .keyword),
+            .whitespace(" "),
+            .plainText("variable"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n"),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .plainText("."),
+            .token("one", .dotAccess),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("fallthrough", .keyword),
+            .whitespace("\n"),
+            .token("default", .keyword),
+            .plainText(":"),
+            .whitespace("\n    "),
+            .token("callB", .call),
+            .plainText("()"),
+            .whitespace("\n"),
+            .plainText("}")
+            ])
+    }
 
     func testForStatementWithStaticProperty() {
         let components = highlighter.highlight("for value in Enum.allCases { }")
@@ -154,6 +188,76 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+        
+    func testForStatementWithContinue() {
+        let components = highlighter.highlight("for value in Enum.allCases { continue }")
+        
+        XCTAssertEqual(components, [
+            .token("for", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .token("Enum", .type),
+            .plainText("."),
+            .token("allCases", .property),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("continue",.keyword),
+            .whitespace(" "),
+            .plainText("}")
+            ])
+    }
+    
+    func testRepeatWhileStatement() {
+        let components = highlighter.highlight("""
+        var x = 5
+        repeat {
+            print(x)
+            x = x - 1
+        } while x > 1
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("x"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("5", .number),
+            .whitespace("\n"),
+            .token("repeat", .keyword),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("print", .call),
+            .plainText("(x)"),
+            .whitespace("\n    "),
+            .plainText("x"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("x"),
+            .whitespace(" "),
+            .plainText("-"),
+            .whitespace(" "),
+            .token("1", .number),
+            .whitespace("\n"),
+            .plainText("}"),
+            .whitespace(" "),
+            .token("while", .keyword),
+            .whitespace(" "),
+            .plainText("x"),
+            .whitespace(" "),
+            .plainText(">"),
+            .whitespace(" "),
+            .token("1", .number)
+            ])
+        
+    }
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -168,7 +272,10 @@ extension StatementTests {
             ("testChainedIfElseStatements", testChainedIfElseStatements),
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithAssociatedValues", testSwitchStatementWithAssociatedValues),
-            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty)
+            ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
+            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
+            ("testForStatementWithContinue", testForStatementWithContinue),
+            ("testRepeatWhileStatement", testRepeatWhileStatement)
         ]
     }
 }
