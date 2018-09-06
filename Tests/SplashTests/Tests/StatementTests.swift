@@ -166,7 +166,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("()"),
             .whitespace("\n"),
             .plainText("}")
-            ])
+        ])
     }
 
     func testForStatementWithStaticProperty() {
@@ -208,7 +208,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("continue",.keyword),
             .whitespace(" "),
             .plainText("}")
-            ])
+        ])
     }
     
     func testRepeatWhileStatement() {
@@ -255,8 +255,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText(">"),
             .whitespace(" "),
             .token("1", .number)
-            ])
-        
+        ])
     }
 
     func testAllTestsRunOnLinux() {
