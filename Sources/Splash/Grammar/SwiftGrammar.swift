@@ -76,11 +76,14 @@ private extension SwiftGrammar {
                 return true
             }
 
-            if segment.tokens.current.isAny(of: "/*", "*/") {
+            if segment.tokens.current.isAny(of: "/*", "/**", "*/") {
                 return true
             }
+            
+            let isStandardComment = !segment.tokens.containsBalancedOccurrences(of: "/*", and: "*/")
+            let isMultiAsterixsComment = !segment.tokens.containsBalancedOccurrences(of: "/**", and: "*/")
 
-            return !segment.tokens.containsBalancedOccurrences(of: "/*", and: "*/")
+            return isStandardComment || isMultiAsterixsComment
         }
     }
 

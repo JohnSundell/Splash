@@ -58,6 +58,27 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("()")
         ])
     }
+    
+    func testMultiLineCommentWithMultipleAsterixs() {
+        let components = highlighter.highlight("""
+        /**
+            Comment
+        */ call()
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("/**", .comment),
+            .whitespace("\n    "),
+            .token("Comment", .comment),
+            .whitespace("\n"),
+            .token("*/", .comment),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("()")
+            ])
+    }
+    
+    
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -68,7 +89,8 @@ extension CommentTests {
     static var allTests: [(String, TestClosure<CommentTests>)] {
         return [
             ("testSingleLineComment", testSingleLineComment),
-            ("testMultiLineComment", testMultiLineComment)
+            ("testMultiLineComment", testMultiLineComment),
+            ("testMultiLineCommentWithMultipleAsterixs", testMultiLineCommentWithMultipleAsterixs)
         ]
     }
 }
