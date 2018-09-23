@@ -4,6 +4,7 @@
 //
 //  Created by Maciej Gad on 23/09/2018.
 //
+#if os(macOS)
 
 import Foundation
 import Splash
@@ -36,3 +37,5 @@ extension ThemeName {
         }
     }
 }
+
+#endif
