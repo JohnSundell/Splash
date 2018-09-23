@@ -15,6 +15,7 @@ extension CommandLine {
         let outputURL: URL
         let padding: CGFloat
         let font: Font
+        let themeName:ThemeName
     }
 
     static func makeOptions() -> Options? {
@@ -28,7 +29,8 @@ extension CommandLine {
             code: arguments[1],
             outputURL: resolveOutputURL(),
             padding: CGFloat(defaults.int(forKey: "p", default: 20)),
-            font: resolveFont(from: defaults)
+            font: resolveFont(from: defaults),
+            themeName:resolveTheme(from: defaults)
         )
     }
 
@@ -45,6 +47,16 @@ extension CommandLine {
         }
 
         return Font(path: path, size: size)
+    }
+    
+    private static func resolveTheme(from defaults: UserDefaults) -> ThemeName {
+        guard let providedName = defaults.string(forKey: "t") else {
+            return .sundellsColors
+        }
+        if let themeName = ThemeName(rawValue: providedName) {
+            return themeName
+        }
+        return .sundellsColors
     }
 }
 

@@ -19,11 +19,13 @@ guard let options = CommandLine.makeOptions() else {
     -p The amount of padding (in pixels) to apply around the code
     -f A path to a font to use when rendering
     -s The size of text to use when rendering
+    -t Theme name (default sundellsColors)
     """)
     exit(1)
 }
 
-let theme = Theme.sundellsColors(withFont: options.font)
+let themeName = options.themeName
+let theme = themeName.theme(withFont: options.font)
 let outputFormat = AttributedStringOutputFormat(theme: theme)
 let highlighter = SyntaxHighlighter(format: outputFormat)
 let string = highlighter.highlight(options.code)
@@ -39,8 +41,7 @@ let contextRect = CGRect(
 let context = NSGraphicsContext(size: contextRect.size)
 NSGraphicsContext.current = context
 
-let backgroundColor = NSColor(white: 0.12, alpha: 1)
-context.fill(with: backgroundColor, in: contextRect)
+context.fill(with: theme.backgroundColor, in: contextRect)
 
 string.draw(in: CGRect(
     x: options.padding,
