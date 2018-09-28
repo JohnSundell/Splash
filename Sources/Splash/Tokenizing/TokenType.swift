@@ -7,7 +7,7 @@
 import Foundation
 
 /// Enum defining the possible types of tokens that can be highlighted
-public enum TokenType: String, Equatable {
+public enum TokenType: Hashable {
     /// A keyword, such as `if`, `class` or `let`
     case keyword
     /// A token that is part of a string literal
@@ -26,4 +26,17 @@ public enum TokenType: String, Equatable {
     case dotAccess
     /// A preprocessing symbol, such as `#if` or `@available`
     case preprocessing
+    /// A custom token type, containing an arbitrary string
+    case custom(String)
+}
+
+public extension TokenType {
+    /// Return a string value representing the token type
+    var string: String {
+        if case .custom(let type) = self {
+            return type
+        }
+
+        return "\(self)"
+    }
 }

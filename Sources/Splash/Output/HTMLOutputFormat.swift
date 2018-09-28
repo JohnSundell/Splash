@@ -33,7 +33,7 @@ public extension HTMLOutputFormat {
         }
 
         public mutating func addToken(_ token: String, ofType type: TokenType) {
-            html.append("<span class=\"\(classPrefix)\(type.rawValue)\">\(token.escaped)</span>")
+            html.append("<span class=\"\(classPrefix)\(type.string)\">\(token.escaped)</span>")
         }
 
         public mutating func addPlainText(_ text: String) {
