@@ -18,7 +18,7 @@ extension TokenizerOutputFormat {
         private var components = [String]()
 
         mutating func addToken(_ token: String, ofType type: TokenType) {
-            components.append("\(type.rawValue.capitalized) token: \(token)")
+            components.append("\(type.string.capitalized) token: \(token)")
         }
 
         mutating func addPlainText(_ text: String) {

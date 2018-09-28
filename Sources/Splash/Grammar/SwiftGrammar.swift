@@ -9,8 +9,8 @@ import Foundation
 /// Grammar for the Swift language. Use this implementation when
 /// highlighting Swift code. This is the default grammar.
 public struct SwiftGrammar: Grammar {
-    public let delimiters: CharacterSet
-    public let syntaxRules: [SyntaxRule]
+    public var delimiters: CharacterSet
+    public var syntaxRules: [SyntaxRule]
 
     public init() {
         var delimiters = CharacterSet.alphanumerics.inverted
