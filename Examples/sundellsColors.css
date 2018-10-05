@@ -20,6 +20,7 @@ pre code {
     font-size: 0.95em;
     overflow-x: auto;
     white-space: pre;
+    -webkit-overflow-scrolling: touch;
 }
 
 pre code .keyword {
