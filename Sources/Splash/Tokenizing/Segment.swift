@@ -51,4 +51,14 @@ public extension Segment.Tokens {
     func containsBalancedOccurrences(of tokenA: String, and tokenB: String) -> Bool {
         return count(of: tokenA) == count(of: tokenB)
     }
+    
+    /// Return whether a number of occurrences of the first list of tokens in a higher
+    /// than a number of occurrences of the second list.
+    /// For example, this can be used to check if a token is inside a comment block.
+    func containsMoreOccurrences(of tokensA:[String], than tokensB:[String]) -> Bool {
+        let tokenAcount = tokensA.map { count(of: $0) }.reduce(0, +)
+        let tokenBcount = tokensB.map { count(of: $0) }.reduce(0, +)
+        
+        return tokenAcount > tokenBcount
+    }
 }

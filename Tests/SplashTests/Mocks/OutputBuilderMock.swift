@@ -34,3 +34,17 @@ extension OutputBuilderMock {
         case whitespace(String)
     }
 }
+
+
+extension OutputBuilderMock.Component: CustomDebugStringConvertible {
+    var debugDescription: String {
+        switch self {
+        case .token(let value, let type):
+            return "token(\(value), \(type))"
+        case .plainText(let value):
+            return "plainText(\(value))"
+        case .whitespace(let value):
+            return "whitespace(\(value))"
+        }
+    }
+}

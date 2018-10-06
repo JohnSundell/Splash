@@ -58,6 +58,48 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("()")
         ])
     }
+    
+    func testMultiLineDocumentationComment() {
+        let components = highlighter.highlight("""
+        struct Foo {}
+        /** Comment
+            Hello!
+        */ call()
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Foo"),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace("\n"),
+            .token("/**", .comment),
+            .whitespace(" "),
+            .token("Comment", .comment),
+            .whitespace("\n    "),
+            .token("Hello!", .comment),
+            .whitespace("\n"),
+            .token("*/", .comment),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("()")
+            ])
+    }
+    
+    func testNotStartedComment() {
+        let components = highlighter.highlight("""
+        */ call()
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("*/", .comment),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("()")
+            ])
+    }
+    
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -68,7 +110,9 @@ extension CommentTests {
     static var allTests: [(String, TestClosure<CommentTests>)] {
         return [
             ("testSingleLineComment", testSingleLineComment),
-            ("testMultiLineComment", testMultiLineComment)
+            ("testMultiLineComment", testMultiLineComment),
+            ("testMultiLineDocumentationComment", testMultiLineDocumentationComment),
+            ("testNotStartedComment", testNotStartedComment)
         ]
     }
 }
