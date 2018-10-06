@@ -72,7 +72,8 @@ private extension SwiftGrammar {
                 return true
             }
 
-            if segment.tokens.onSameLine.contains(anyOf: "//", "///") {
+            let commetStarted = segment.tokens.onSameLine.filter { $0.hasPrefix("//") }.count > 0
+            if commetStarted {
                 return true
             }
 

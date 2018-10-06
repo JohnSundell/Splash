@@ -100,6 +100,19 @@ final class CommentTests: SyntaxHighlighterTestCase {
             ])
     }
     
+    func testBracketInComments() {
+        let components = highlighter.highlight("""
+        call() //["test"]
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("()"),
+            .whitespace(" "),
+            .token("//[\"test\"]", .comment)
+            ])
+    }
+    
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -112,7 +125,8 @@ extension CommentTests {
             ("testSingleLineComment", testSingleLineComment),
             ("testMultiLineComment", testMultiLineComment),
             ("testMultiLineDocumentationComment", testMultiLineDocumentationComment),
-            ("testNotStartedComment", testNotStartedComment)
+            ("testNotStartedComment", testNotStartedComment),
+            ("testBracketInComments", testBracketInComments)
         ]
     }
 }
