@@ -28,7 +28,12 @@ public extension Theme {
                 .property : Color(red: 0.13, green: 0.67, blue: 0.62),
                 .dotAccess : Color(red: 0.57, green: 0.7, blue: 0),
                 .preprocessing : Color(red: 0.71, green: 0.54, blue: 0)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 0.098,
+                green: 0.098,
+                blue: 0.098
+            )
         )
     }
 
@@ -37,9 +42,9 @@ public extension Theme {
         return Theme(
             font: font,
             plainTextColor: Color(
-                red: 1.0,
-                green: 1.0,
-                blue: 1.0
+                red: 1,
+                green: 1,
+                blue: 1
             ),
             tokenColors: [
                 .keyword : Color(red: 0.828, green: 0.095, blue: 0.583),
@@ -51,7 +56,12 @@ public extension Theme {
                 .property : Color(red: 0.431, green: 0.714, blue: 0.533),
                 .dotAccess : Color(red: 0.431, green: 0.714, blue: 0.533),
                 .preprocessing : Color(red: 0.896, green: 0.488, blue: 0.284)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 0,
+                green: 0,
+                blue: 0
+            )
         )
     }
 
@@ -74,7 +84,12 @@ public extension Theme {
                 .property : Color(red: 0.431, green: 0.714, blue: 0.533),
                 .dotAccess : Color(red: 0.431, green: 0.714, blue: 0.533),
                 .preprocessing : Color(red: 0.992, green: 0.791, blue: 0.45)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 0.18,
+                green: 0.19,
+                blue: 0.2
+            )
         )
     }
 
@@ -83,9 +98,9 @@ public extension Theme {
         return Theme(
             font: font,
             plainTextColor: Color(
-                red: 1.0,
-                green: 1.0,
-                blue: 1.0
+                red: 1,
+                green: 1,
+                blue: 1
             ),
             tokenColors: [
                 .keyword : Color(red: 0.948, green: 0.140, blue: 0.547),
@@ -97,7 +112,12 @@ public extension Theme {
                 .property : Color(red: 0.584, green: 0.898, blue: 0.361),
                 .dotAccess : Color(red: 0.584, green: 0.898, blue: 0.361),
                 .preprocessing : Color(red: 0.952, green: 0.526, blue: 0.229)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 0.163,
+                green: 0.163,
+                blue: 0.182
+            )
         )
     }
 
@@ -106,9 +126,9 @@ public extension Theme {
         return Theme(
             font: font,
             plainTextColor: Color(
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0
+                red: 0,
+                green: 0,
+                blue: 0
             ),
             tokenColors: [
                 .keyword : Color(red: 0.161, green: 0.259, blue: 0.467),
@@ -120,7 +140,12 @@ public extension Theme {
                 .property : Color(red: 0.278, green: 0.415, blue: 0.593),
                 .dotAccess : Color(red: 0.278, green: 0.415, blue: 0.593),
                 .preprocessing : Color(red: 0.392, green: 0.391, blue: 0.52)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 1,
+                green: 0.99,
+                blue: 0.9
+            )
         )
     }
 
@@ -129,9 +154,9 @@ public extension Theme {
         return Theme(
             font: font,
             plainTextColor: Color(
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0
+                red: 0,
+                green: 0,
+                blue: 0
             ),
             tokenColors: [
                 .keyword : Color(red: 0.706, green: 0.0, blue: 0.384),
@@ -143,7 +168,12 @@ public extension Theme {
                 .property : Color(red: 0.267, green: 0.537, blue: 0.576),
                 .dotAccess : Color(red: 0.267, green: 0.537, blue: 0.576),
                 .preprocessing : Color(red: 0.431, green: 0.125, blue: 0.051)
-            ]
+            ],
+            backgroundColor: Color(
+                red: 1,
+                green: 1,
+                blue: 1
+            )
         )
     }
 }
