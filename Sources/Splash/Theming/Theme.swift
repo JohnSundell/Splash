@@ -16,7 +16,7 @@ public struct Theme {
     public var font: Font
     /// What color to use for plain text (no highlighting)
     public var plainTextColor: Color
-    /// What color to use for background
+    /// What color to use for the background
     public var backgroundColor: Color
     /// What color to use for the text's highlighted tokens
     public var tokenColors: [TokenType : Color]
