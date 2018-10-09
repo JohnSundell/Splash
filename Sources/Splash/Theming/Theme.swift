@@ -21,7 +21,7 @@ public struct Theme {
     /// What color to use for the text's highlighted tokens
     public var tokenColors: [TokenType : Color]
 
-    public init(font: Font, plainTextColor: Color, tokenColors: [TokenType : Color], backgroundColor:Color = Color(white: 0.12, alpha: 1)) {
+    public init(font: Font, plainTextColor: Color, tokenColors: [TokenType : Color], backgroundColor: Color = Color(white: 0.12, alpha: 1)) {
         self.font = font
         self.plainTextColor = plainTextColor
         self.tokenColors = tokenColors
