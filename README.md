@@ -24,6 +24,10 @@ Splash can be used either as a library in your own Swift Package Manager-powered
 Thanks to my good friend [Gui Rambo](https://twitter.com/_inside), you can [try out Splash directly in your browser](https://splash.rambo.codes)! His web tool lets you use Splash to generate either HTML or an image, by simply pasting Swift code into a text box.
 
 👉 [splash.rambo.codes](https://splash.rambo.codes)
+
+If you're using Jekyll, there's also a custom ```{% splash %}``` tag available for the Liquid templating language.
+
+👉 [splashtag](https://github.com/mannberg/splashtag)
   
 ### 🖥 On the command line
 
