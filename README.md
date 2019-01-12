@@ -56,14 +56,14 @@ When rendering your outputted html, make sure to wrap your output code in the `<
 ```html
 <!DOCTYPE html>
 <head>
-	<title>Hello World</title>
-	<link rel="stylesheet" href="sundellsColors.css">
+    <title>Hello World</title>
+    <link rel="stylesheet" href="sundellsColors.css">
 </head>
 
 <pre>
     <code>
-		<span class="keyword">func</span> hello(world: <span class="type">String</span>) -> <span class="type">Int</span>
-	</code>
+        <span class="keyword">func</span> hello(world: <span class="type">String</span>) -> <span class="type">Int</span>
+    </code>
 </pre>
 ```
 
