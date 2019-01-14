@@ -51,7 +51,23 @@ You'll get the following output back:
 
 To be as flexible as possible, Splash doesn't hardcode any colors or other CSS attributes in the HTML it generates. Instead it simply assigns a CSS class to each token. For an example of a CSS file that can be used to style Splash-generated HTML, see [Examples/sundellsColors.css](https://github.com/JohnSundell/Splash/blob/master/Examples/sundellsColors.css).
 
-For more information about HTML generation with Splash and how to customize it, see `HTMLOutputFormat`.
+When rendering your outputted html, make sure to wrap your output code in the `<pre>` and `<code> ` tags and properly link to your `.css` file. Like this:
+
+```html
+<!DOCTYPE html>
+<head>
+    <title>Hello World</title>
+    <link rel="stylesheet" href="sundellsColors.css">
+</head>
+
+<pre>
+    <code>
+        <span class="keyword">func</span> hello(world: <span class="type">String</span>) -> <span class="type">Int</span>
+    </code>
+</pre>
+```
+
+For more information about HTML generation with Splash and how to customize it, see `HTMLOutputFormat` [here](https://github.com/JohnSundell/Splash/blob/master/Sources/Splash/Output/HTMLOutputFormat.swift).
 
 #### SplashImageGen
 
@@ -114,6 +130,10 @@ Splash supports both macOS and Linux.
 ### 📦 As a package
 
 To install Splash for use in a Swift Package Manager-powered tool or server-side application, add Splash as a dependency to your `Package.swift` file. For more information, please see the [Swift Package Manager documentation](https://github.com/apple/swift-package-manager/tree/master/Documentation).
+
+```
+.package(url: "https://github.com/JohnSundell/Splash", from: "0.1.4")
+```
 
 ### 🏃‍♂️ As a Marathon dependency
 
