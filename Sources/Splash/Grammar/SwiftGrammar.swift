@@ -136,11 +136,7 @@ private extension SwiftGrammar {
             // Hex value e.g. 0x2700ff
             if segment.tokens.current.hasPrefix("0x"), 
                 segment.tokens.current.count > 2,
-                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ 
-                    let val = hexSet.contains($0) 
-                    print("val \(val) for \($0)")
-                    return val
-                }) {
+                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ hexSet.contains($0) }) {
                 return true
             }
 
