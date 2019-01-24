@@ -119,6 +119,9 @@ private extension SwiftGrammar {
     struct NumberRule: SyntaxRule {
         var tokenType: TokenType { return .number }
 
+        private let hexSet = CharacterSet(charactersIn: "01234567890abcdefABCDEF_")
+        private let bitSet = CharacterSet(charactersIn: "01_")
+
         func matches(_ segment: Segment) -> Bool {
             // Don't match against index-based closure arguments
             guard segment.tokens.previous != "$" else {
@@ -127,6 +130,24 @@ private extension SwiftGrammar {
 
             // Integers can be separated using "_", so handle that
             if segment.tokens.current.removing("_").isNumber {
+                return true
+            }
+
+            // Hex value e.g. 0x2700ff
+            if segment.tokens.current.hasPrefix("0x"), 
+                segment.tokens.current.count > 2,
+                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ 
+                    let val = hexSet.contains($0) 
+                    print("val \(val) for \($0)")
+                    return val
+                }) {
+                return true
+            }
+
+            // Bit value e.g. 0b1000_0101
+            if segment.tokens.current.hasPrefix("0b"), 
+                segment.tokens.current.count > 2,
+                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ bitSet.contains($0) }) {
                 return true
             }
 
