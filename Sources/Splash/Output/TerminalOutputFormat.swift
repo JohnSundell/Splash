@@ -47,16 +47,17 @@ private extension String {
     }
 }
 
-// Converting from RGB to 256-color xterm
+// Converting from RGB to closest 256-color xterm value
 //
 // Inspired by the explanation given in
 // https://codegolf.stackexchange.com/questions/156918/rgb-to-xterm-color-converter
 private extension Color {
     private static let xtermDefaultColorIndex = 16
-    private static let xtermIndices = [0, 95, 135, 175, 215, 255]
-    private static let xtermTriplets: [(Int, Int, Int)] = (0 ..< 239).map {
+    private static let xtermColors: [(Int, Int, Int)] = (0 ..< 239).map {
+        let indices = [0, 95, 135, 175, 215, 255]
         let uniformValue = $0 * 10 - 2152
-        return $0 < 216 ? (xtermIndices[$0 / 36], xtermIndices[($0 % 36) / 6], xtermIndices[$0 % 6]) :
+
+        return $0 < 216 ? (indices[$0 / 36], indices[($0 % 36) / 6], indices[$0 % 6]) :
             (uniformValue, uniformValue, uniformValue)
     }
 
@@ -66,11 +67,11 @@ private extension Color {
         var blue: CGFloat = 0
         getRed(&red, green: &green, blue: &blue, alpha: nil)
 
-        let manhattanDistances: [Float] = Color.xtermTriplets.map { triplet in
+        let manhattanDistances: [Float] = Color.xtermColors.map { (r, g, b) in
             let distances = [
-                fabsf(Float(red * 255) - Float(triplet.0)),
-                fabsf(Float(green * 255) - Float(triplet.1)),
-                fabsf(Float(blue * 255) - Float(triplet.2))
+                fabsf(Float(red * 255) - Float(r)),
+                fabsf(Float(green * 255) - Float(g)),
+                fabsf(Float(blue * 255) - Float(b))
             ]
 
             return distances.reduce(0, +)
