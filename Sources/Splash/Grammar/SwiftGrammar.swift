@@ -135,15 +135,13 @@ private extension SwiftGrammar {
 
             // Hex value e.g. 0x2700ff
             if segment.tokens.current.hasPrefix("0x"), 
-                segment.tokens.current.count > 2,
-                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ hexSet.contains($0) }) {
+                segment.tokens.current.dropFirst(2).unicodeScalars.filter({ hexSet.contains($0) }).count > 0 {
                 return true
             }
 
             // Bit value e.g. 0b1000_0101
             if segment.tokens.current.hasPrefix("0b"), 
-                segment.tokens.current.count > 2,
-                segment.tokens.current.dropFirst(2).unicodeScalars.allSatisfy({ bitSet.contains($0) }) {
+                segment.tokens.current.dropFirst(2).unicodeScalars.filter({ bitSet.contains($0) }).count > 0 {
                 return true
             }
 
