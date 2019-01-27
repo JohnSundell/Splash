@@ -46,9 +46,9 @@ public extension Segment.Tokens {
         return counts[token] ?? 0
     }
 
-    /// Return whether an equal number of occurrences have been found of two tokens.
+    /// Return whether an equal number of occurrences have been found of paired tokens.
     /// For example, this can be used to check if a token is encapsulated by parenthesis.
-    func containsBalancedOccurrences(of tokenA: String, and tokenB: String) -> Bool {
-        return count(of: tokenA) == count(of: tokenB)
+    func containsBalancedOccurrences(of lhsTokens: [String], and rhsTokens: [String]) -> Bool {
+        return lhsTokens.reduce(0, { $0 + count(of: $1) }) == rhsTokens.reduce(0, { $0 + count(of: $1) })
     }
 }
