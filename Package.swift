@@ -24,10 +24,6 @@ let package = Package(
             dependencies: ["Splash"]
         ),
         .target(
-            name: "SplashTerminalGen",
-            dependencies: ["Splash"]
-        ),
-        .target(
             name: "SplashTokenizer",
             dependencies: ["Splash"]
         ),

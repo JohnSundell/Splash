@@ -152,7 +152,9 @@ extension CommentTests {
     static var allTests: [(String, TestClosure<CommentTests>)] {
         return [
             ("testSingleLineComment", testSingleLineComment),
-            ("testMultiLineComment", testMultiLineComment)
+            ("testMultiLineComment", testMultiLineComment),
+            ("testHeaderdocComment", testHeaderdocComment),
+            ("testVariedComments", testVariedComments)
         ]
     }
 }
