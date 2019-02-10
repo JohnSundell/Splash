@@ -23,7 +23,7 @@ public extension TerminalOutputFormat {
         }
 
         public mutating func addToken(_ token: String, ofType type: TokenType) {
-            let color = theme.tokenColors[type] ?? Color(red: 1, green: 1, blue: 1)
+            let color = theme.tokenColors[type] ?? .white
             text.append(token.colorized(with: color))
         }
 
@@ -42,6 +42,8 @@ public extension TerminalOutputFormat {
 }
 
 private extension String {
+    // Color formatting for xterm is described in the section named "88/256 Colors" here:
+    // https://misc.flogisoft.com/bash/tip_colors_and_formatting
     func colorized(with color: Color) -> String {
         return "\u{001B}[38;5;\(color.xtermIndex)m\(self)\u{001B}[39m"
     }
@@ -51,9 +53,9 @@ private extension String {
 //
 // Inspired by the explanation given in
 // https://codegolf.stackexchange.com/questions/156918/rgb-to-xterm-color-converter
-private extension Color {
+extension Color {
     private static let xtermDefaultColorIndex = 16
-    private static let xtermColors: [(Int, Int, Int)] = (0 ..< 239).map {
+    private static let xtermColors: [(Int, Int, Int)] = (0 ... 239).map {
         let indices = [0, 95, 135, 175, 215, 255]
         let uniformValue = $0 * 10 - 2152
 
@@ -87,3 +89,16 @@ private extension Color {
         return index + Color.xtermDefaultColorIndex
     }
 }
+
+#if swift(>=4.2)
+#else
+private extension Array where Element: Equatable {
+    func lastIndex(of element: Element) -> Int? {
+        guard let index = reversed().firstIndex(of: element)?.base else {
+            return nil
+        }
+
+        return index - 1
+    }
+}
+#endif
