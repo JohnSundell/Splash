@@ -48,7 +48,7 @@ private extension SwiftGrammar {
         "override", "where", "_", "default", "break",
         "#selector", "required", "willSet", "didSet",
         "lazy", "subscript", "defer", "inout", "while",
-        "continue", "fallthrough", "repeat"
+        "continue", "fallthrough", "repeat", "indirect"
     ]
 
     struct PreprocessingRule: SyntaxRule {

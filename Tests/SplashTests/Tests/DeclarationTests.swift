@@ -520,6 +520,39 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testIndirectEnumDeclaration() {
+        let components = highlighter.highlight("""
+        indirect enum Content {
+            case single(String)
+            case collection([Content])
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("indirect", .keyword),
+            .whitespace(" "),
+            .token("enum", .keyword),
+            .whitespace(" "),
+            .plainText("Content"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .plainText("single("),
+            .token("String", .type),
+            .plainText(")"),
+            .whitespace("\n    "),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .plainText("collection(["),
+            .token("Content", .type),
+            .plainText("])"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -549,7 +582,8 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
-            ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter)
+            ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
+            ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
 }
