@@ -256,6 +256,13 @@ private extension SwiftGrammar {
                 return false
             }
 
+            // The XCTAssert family of functions is a bit of an edge case,
+            // since they start with capital letters. Since they are so
+            // commonly used, we'll add a special case for them here:
+            guard !segment.tokens.current.starts(with: "XCTAssert") else {
+                return false
+            }
+
             // In a generic declaration, only highlight constraints
             if segment.tokens.previous.isAny(of: "<", ",") {
                 var foundOpeningBracket = false
