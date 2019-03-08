@@ -520,6 +520,50 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithNonEscapedKeywordAsName() {
+        let components = highlighter.highlight("func get() -> Int { return 7 }")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("get()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .token("7", .number),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
+    func testFunctionDeclarationWithEscapedKeywordAsName() {
+        let components = highlighter.highlight("func `public`() -> Int { return 7 }")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("`public`()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .token("7", .number),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -583,6 +627,8 @@ extension DeclarationTests {
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
             ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
+            ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
+            ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }

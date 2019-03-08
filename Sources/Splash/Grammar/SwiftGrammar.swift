@@ -221,6 +221,10 @@ private extension SwiftGrammar {
                         return false
                     }
                 }
+
+                guard !segment.tokens.previous.isAny(of: "func", "`") else {
+                    return false
+                }
             }
 
             return keywords.contains(segment.tokens.current)
