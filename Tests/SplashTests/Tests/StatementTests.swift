@@ -169,6 +169,39 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testSwitchStatementWithTypePatternMatching() {
+        let components = highlighter.highlight("""
+        switch variable {
+        case is MyType: break
+        default: break
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("switch", .keyword),
+            .whitespace(" "),
+            .plainText("variable"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n"),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .token("is", .keyword),
+            .whitespace(" "),
+            .token("MyType", .type),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .token("default", .keyword),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testForStatementWithStaticProperty() {
         let components = highlighter.highlight("for value in Enum.allCases { }")
 
@@ -272,6 +305,7 @@ extension StatementTests {
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithAssociatedValues", testSwitchStatementWithAssociatedValues),
             ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
+            ("testSwitchStatementWithTypePatternMatching", testSwitchStatementWithTypePatternMatching),
             ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
             ("testForStatementWithContinue", testForStatementWithContinue),
             ("testRepeatWhileStatement", testRepeatWhileStatement)
