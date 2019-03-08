@@ -119,6 +119,17 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPassingBoolToUnnamedArgument() {
+        let components = highlighter.highlight("setCachingEnabled(true)")
+
+        XCTAssertEqual(components, [
+            .token("setCachingEnabled", .call),
+            .plainText("("),
+            .token("true", .keyword),
+            .plainText(")")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -134,7 +145,8 @@ extension FunctionCallTests {
             ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
             ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
             ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
-            ("testPassingTypeToFunction", testPassingTypeToFunction)
+            ("testPassingTypeToFunction", testPassingTypeToFunction),
+            ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument)
         ]
     }
 }
