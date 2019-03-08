@@ -257,11 +257,19 @@ private extension SwiftGrammar {
 
             // In a generic declaration, only highlight constraints
             if segment.tokens.previous.isAny(of: "<", ",") {
+                var foundOpeningBracket = false
+
                 // Since the declaration might be on another line, we have to walk
                 // backwards through all tokens until we've found enough information.
                 for token in segment.tokens.all.reversed() {
+                    if !foundOpeningBracket && token == "<" {
+                        foundOpeningBracket = true
+                    }
+
                     guard !declarationKeywords.contains(token) else {
-                        return false
+                        // If it turns out that we weren't in fact inside of a generic
+                        // declaration, (lacking "<"), then highlight the type as normal.
+                        return !foundOpeningBracket
                     }
 
                     guard !keywords.contains(token) else {

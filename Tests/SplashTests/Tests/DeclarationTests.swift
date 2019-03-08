@@ -221,6 +221,23 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClassDeclarationWithMultipleProtocolConformances() {
+        let components = highlighter.highlight("class MyClass: ProtocolA, ProtocolB {}")
+
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("MyClass:"),
+            .whitespace(" "),
+            .token("ProtocolA", .type),
+            .plainText(","),
+            .whitespace(" "),
+            .token("ProtocolB", .type),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testSubclassDeclaration() {
         let components = highlighter.highlight("class ViewController: UIViewController { }")
 
@@ -616,6 +633,7 @@ extension DeclarationTests {
             ("testGenericStructDeclaration", testGenericStructDeclaration),
             ("testClassDeclaration", testClassDeclaration),
             ("testCompactClassDeclarationWithInitializer", testCompactClassDeclarationWithInitializer),
+            ("testClassDeclarationWithMultipleProtocolConformances", testClassDeclarationWithMultipleProtocolConformances),
             ("testSubclassDeclaration", testSubclassDeclaration),
             ("testProtocolDeclaration", testProtocolDeclaration),
             ("testExtensionDeclaration", testExtensionDeclaration),
