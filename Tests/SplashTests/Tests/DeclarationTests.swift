@@ -221,6 +221,24 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClassDeclarationWithDeinit() {
+        let components = highlighter.highlight("class Foo { deinit {} }")
+
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("Foo"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("deinit", .keyword),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testClassDeclarationWithMultipleProtocolConformances() {
         let components = highlighter.highlight("class MyClass: ProtocolA, ProtocolB {}")
 
@@ -690,6 +708,7 @@ extension DeclarationTests {
             ("testGenericStructDeclaration", testGenericStructDeclaration),
             ("testClassDeclaration", testClassDeclaration),
             ("testCompactClassDeclarationWithInitializer", testCompactClassDeclarationWithInitializer),
+            ("testClassDeclarationWithDeinit", testClassDeclarationWithDeinit),
             ("testClassDeclarationWithMultipleProtocolConformances", testClassDeclarationWithMultipleProtocolConformances),
             ("testSubclassDeclaration", testSubclassDeclaration),
             ("testProtocolDeclaration", testProtocolDeclaration),
