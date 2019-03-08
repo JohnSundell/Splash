@@ -130,6 +130,15 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testXCTAssertCalls() {
+        let components = highlighter.highlight("XCTAssertTrue(variable)")
+
+        XCTAssertEqual(components, [
+            .token("XCTAssertTrue", .call),
+            .plainText("(variable)")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -146,7 +155,8 @@ extension FunctionCallTests {
             ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
             ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
             ("testPassingTypeToFunction", testPassingTypeToFunction),
-            ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument)
+            ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
+            ("testXCTAssertCalls", testXCTAssertCalls)
         ]
     }
 }
