@@ -487,6 +487,32 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyWithSetterAccessLevel() {
+        let components = highlighter.highlight("""
+        struct Hello {
+            private(set) var property: Int
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Hello"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("private(set)", .keyword),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("property:"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testSubscriptDeclaration() {
         let components = highlighter.highlight("""
         extension Collection {
@@ -674,6 +700,7 @@ extension DeclarationTests {
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
+            ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
             ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
