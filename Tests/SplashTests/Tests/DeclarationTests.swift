@@ -291,6 +291,37 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testProtocolDeclarationWithAssociatedTypes() {
+        let components = highlighter.highlight("""
+        protocol Task {
+            associatedtype Input
+            associatedtype Error: Swift.Error
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("protocol", .keyword),
+            .whitespace(" "),
+            .plainText("Task"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("associatedtype", .keyword),
+            .whitespace(" "),
+            .plainText("Input"),
+            .whitespace("\n    "),
+            .token("associatedtype", .keyword),
+            .whitespace(" "),
+            .plainText("Error:"),
+            .whitespace(" "),
+            .token("Swift", .type),
+            .plainText("."),
+            .token("Error", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testExtensionDeclaration() {
         let components = highlighter.highlight("extension UIViewController { }")
 
@@ -636,6 +667,7 @@ extension DeclarationTests {
             ("testClassDeclarationWithMultipleProtocolConformances", testClassDeclarationWithMultipleProtocolConformances),
             ("testSubclassDeclaration", testSubclassDeclaration),
             ("testProtocolDeclaration", testProtocolDeclaration),
+            ("testProtocolDeclarationWithAssociatedTypes", testProtocolDeclarationWithAssociatedTypes),
             ("testExtensionDeclaration", testExtensionDeclaration),
             ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),

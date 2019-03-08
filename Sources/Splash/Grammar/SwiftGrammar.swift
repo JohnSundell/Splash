@@ -236,7 +236,8 @@ private extension SwiftGrammar {
 
         private let declarationKeywords: Set<String> = [
             "class", "struct", "enum", "func",
-            "protocol", "typealias", "import"
+            "protocol", "typealias", "import",
+            "associatedtype"
         ]
 
         func matches(_ segment: Segment) -> Bool {
