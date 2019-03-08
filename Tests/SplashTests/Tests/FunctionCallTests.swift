@@ -55,6 +55,24 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testDotSyntaxInitializerCall() {
+        let components = highlighter.highlight("let string: String = .init()")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("string:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("."),
+            .token("init", .keyword),
+            .plainText("()")
+        ])
+    }
+
     func testAccessingPropertyAfterFunctionCallWithoutArguments() {
         let components = highlighter.highlight("call().property")
 
@@ -112,6 +130,7 @@ extension FunctionCallTests {
             ("testFunctionCallWithIntegers", testFunctionCallWithIntegers),
             ("testImplicitInitializerCall", testImplicitInitializerCall),
             ("testExplicitInitializerCall", testExplicitInitializerCall),
+            ("testDotSyntaxInitializerCall", testDotSyntaxInitializerCall),
             ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
             ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
             ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),

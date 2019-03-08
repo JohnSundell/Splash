@@ -286,7 +286,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard segment.tokens.current != "self" else {
+            guard !segment.tokens.current.isAny(of: "self", "init") else {
                 return false
             }
 
