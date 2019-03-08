@@ -36,12 +36,11 @@ public struct SwiftGrammar: Grammar {
 }
 
 private extension SwiftGrammar {
-    static let keywords: Set<String> = [
+    static let keywords = ([
         "final", "class", "struct", "enum", "protocol",
         "extension", "let", "var", "func", "typealias",
         "init", "guard", "if", "else", "return", "get",
         "throw", "throws", "for", "in", "open", "weak",
-        "public", "internal", "private", "fileprivate",
         "import", "mutating", "associatedtype", "case",
         "switch", "static", "do", "try", "catch", "as",
         "super", "self", "set", "true", "false", "nil",
@@ -49,6 +48,10 @@ private extension SwiftGrammar {
         "#selector", "required", "willSet", "didSet",
         "lazy", "subscript", "defer", "inout", "while",
         "continue", "fallthrough", "repeat", "indirect"
+    ] as Set<String>).union(accessControlKeywords)
+
+    static let accessControlKeywords: Set<String> = [
+        "public", "internal", "fileprivate", "private"
     ]
 
     struct PreprocessingRule: SyntaxRule {
@@ -147,6 +150,7 @@ private extension SwiftGrammar {
     struct CallRule: SyntaxRule {
         var tokenType: TokenType { return .call }
         private let keywordsToAvoid: Set<String>
+        private let callLikeKeywords: Set<String>
         private let controlFlowTokens = ["if", "&&", "||", "for"]
 
         init() {
@@ -156,6 +160,10 @@ private extension SwiftGrammar {
             keywordsToAvoid.remove("throw")
             keywordsToAvoid.remove("if")
             self.keywordsToAvoid = keywordsToAvoid
+
+            var callLikeKeywords = accessControlKeywords
+            callLikeKeywords.insert("subscript")
+            self.callLikeKeywords = callLikeKeywords
         }
 
         func matches(_ segment: Segment) -> Bool {
@@ -163,10 +171,13 @@ private extension SwiftGrammar {
                 return false
             }
 
-            // Subscripting is a bit of an edge case, since it's the only keyword
-            // that looks like a function call, so we need to handle it explicitly
-            guard segment.tokens.current != "subscript" else {
-                return false
+            // There's a few keywords that might look like function calls
+            if callLikeKeywords.contains(segment.tokens.current) {
+                if let nextToken = segment.tokens.next {
+                    guard !nextToken.starts(with: "(") else {
+                        return false
+                    }
+                }
             }
 
             if let previousToken = segment.tokens.previous {
@@ -215,6 +226,20 @@ private extension SwiftGrammar {
             }
 
             if let previousToken = segment.tokens.previous {
+                // Highlight the '(set)' part of setter access modifiers
+                switch segment.tokens.current {
+                case "(":
+                    return accessControlKeywords.contains(previousToken)
+                case "set":
+                    if previousToken == "(" {
+                        return true
+                    }
+                case ")":
+                    return previousToken == "set"
+                default:
+                    break
+                }
+
                 // Don't highlight most keywords when used as a parameter label
                 if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false") {
                     guard !previousToken.isAny(of: "(", ",") else {
