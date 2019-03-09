@@ -221,6 +221,15 @@ private extension SwiftGrammar {
 
         func matches(_ segment: Segment) -> Bool {
             if segment.tokens.next == ":" {
+                // Nil pattern matching inside of a switch statement case
+                if segment.tokens.current == "nil" {
+                    guard let previousToken = segment.tokens.previous else {
+                        return false
+                    }
+
+                    return previousToken.isAny(of: "case", ",")
+                }
+
                 guard segment.tokens.current == "default" else {
                     return false
                 }
