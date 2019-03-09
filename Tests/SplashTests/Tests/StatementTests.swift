@@ -202,6 +202,45 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testSwitchStatementWithOptional() {
+        let components = highlighter.highlight("""
+        switch anOptional {
+        case nil: break
+        case "value"?: break
+        default: break
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("switch", .keyword),
+            .whitespace(" "),
+            .plainText("anOptional"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n"),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .token("nil", .keyword),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .token("\"value\"", .string),
+            .plainText("?:"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .token("default", .keyword),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testForStatementWithStaticProperty() {
         let components = highlighter.highlight("for value in Enum.allCases { }")
 
@@ -306,6 +345,7 @@ extension StatementTests {
             ("testSwitchStatementWithAssociatedValues", testSwitchStatementWithAssociatedValues),
             ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
             ("testSwitchStatementWithTypePatternMatching", testSwitchStatementWithTypePatternMatching),
+            ("testSwitchStatementWithOptional", testSwitchStatementWithOptional),
             ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
             ("testForStatementWithContinue", testForStatementWithContinue),
             ("testRepeatWhileStatement", testRepeatWhileStatement)
