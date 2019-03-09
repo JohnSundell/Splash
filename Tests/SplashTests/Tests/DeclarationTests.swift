@@ -656,6 +656,41 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithPreProcessors() {
+        let components = highlighter.highlight("""
+        func log(_ file: StaticString = #file, _ function: StaticString = #function) {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("log("),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("file:"),
+            .whitespace(" "),
+            .token("StaticString", .type),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("#file", .keyword),
+            .plainText(","),
+            .whitespace(" "),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("function:"),
+            .whitespace(" "),
+            .token("StaticString", .type),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("#function", .keyword),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -725,6 +760,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
             ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
+            ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }

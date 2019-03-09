@@ -48,7 +48,7 @@ private extension SwiftGrammar {
         "#selector", "required", "willSet", "didSet",
         "lazy", "subscript", "defer", "inout", "while",
         "continue", "fallthrough", "repeat", "indirect",
-        "deinit", "is"
+        "deinit", "is", "#file", "#line", "#function"
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [
