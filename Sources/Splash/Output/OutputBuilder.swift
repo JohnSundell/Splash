@@ -21,5 +21,5 @@ public protocol OutputBuilder {
     /// Add some whitespace to the builder
     mutating func addWhitespace(_ whitespace: String)
     /// Build the final output based on the builder's current state
-    func build() -> Output
+    mutating func build() -> Output
 }
