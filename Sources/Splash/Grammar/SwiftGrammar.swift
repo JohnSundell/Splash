@@ -80,11 +80,12 @@ private extension SwiftGrammar {
                 return true
             }
 
-            if segment.tokens.current.isAny(of: "/*", "*/") {
+            if segment.tokens.current.isAny(of: "/*", "/**", "*/") {
                 return true
             }
 
-            return !segment.tokens.containsBalancedOccurrences(of: "/*", and: "*/")
+            let multiLineStartCount = segment.tokens.count(of: "/*") + segment.tokens.count(of: "/**")
+            return multiLineStartCount != segment.tokens.count(of: "*/")
         }
     }
 
