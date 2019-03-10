@@ -27,25 +27,59 @@ public extension HTMLOutputFormat {
     struct Builder: OutputBuilder {
         private let classPrefix: String
         private var html = ""
+        private var pendingToken: (string: String, type: TokenType)?
+        private var pendingWhitespace: String?
 
         fileprivate init(classPrefix: String) {
             self.classPrefix = classPrefix
         }
 
         public mutating func addToken(_ token: String, ofType type: TokenType) {
-            html.append("<span class=\"\(classPrefix)\(type.string)\">\(token.escaped)</span>")
+            if var pending = pendingToken {
+                guard pending.type != type else {
+                    pendingWhitespace.map { pending.string += $0 }
+                    pendingWhitespace = nil
+                    pending.string += token
+                    pendingToken = pending
+                    return
+                }
+            }
+
+            appendPending()
+            pendingToken = (token, type)
         }
 
         public mutating func addPlainText(_ text: String) {
+            appendPending()
             html.append(text.escaped)
         }
 
         public mutating func addWhitespace(_ whitespace: String) {
-            html.append(whitespace)
+            if pendingToken != nil {
+                pendingWhitespace = (pendingWhitespace ?? "") + whitespace
+            } else {
+                html.append(whitespace)
+            }
         }
 
-        public func build() -> String {
+        public mutating func build() -> String {
+            appendPending()
             return html
+        }
+
+        private mutating func appendPending() {
+            if let pending = pendingToken {
+                html.append("""
+                <span class="\(classPrefix)\(pending.type.string)">\(pending.string.escaped)</span>
+                """)
+
+                pendingToken = nil
+            }
+
+            if let whitespace = pendingWhitespace {
+                html.append(whitespace)
+                pendingWhitespace = nil
+            }
         }
     }
 }
