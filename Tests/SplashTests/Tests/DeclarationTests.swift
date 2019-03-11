@@ -719,6 +719,40 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionWithRethrows() {
+        let components = highlighter.highlight("""
+        func map<T>(_ transform: (Element) throws -> T) rethrows -> [T]
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("map<T>("),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("transform:"),
+            .whitespace(" "),
+            .plainText("("),
+            .token("Element", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("throws", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("rethrows", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("T", .type),
+            .plainText("]")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -790,6 +824,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
             ("testNonMutatingFunction", testNonMutatingFunction),
+            ("testFunctionWithRethrows", testFunctionWithRethrows),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
