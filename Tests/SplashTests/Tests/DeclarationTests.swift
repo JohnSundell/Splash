@@ -437,7 +437,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("0", .number),
             .whitespace("\n"),
             .plainText("}")
-            ])
+        ])
     }
 
 
