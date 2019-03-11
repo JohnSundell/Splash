@@ -11,7 +11,7 @@ import PackageDescription
 let package = Package(
     name: "Splash",
     products: [
-        .library(name: "Splash",  targets: ["Splash"])
+        .library(name: "Splash", targets: ["Splash"])
     ],
     targets: [
         .target(name: "Splash"),
