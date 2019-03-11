@@ -782,6 +782,7 @@ extension DeclarationTests {
             ("testExtensionDeclaration", testExtensionDeclaration),
             ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
+            ("testDynamicPropertyDeclaration", testDynamicPropertyDeclaration),
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
