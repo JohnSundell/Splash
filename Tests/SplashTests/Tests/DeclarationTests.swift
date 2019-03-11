@@ -722,6 +722,34 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testNonMutatingFunction() {
+        let components = highlighter.highlight("""
+        struct MyStruct {
+            nonmutating func doNotChangeState() { }
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("MyStruct"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("nonmutating", .keyword),
+            .whitespace(" "),
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("doNotChangeState()"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -793,6 +821,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
+            ("testNonMutatingFunction", testNonMutatingFunction),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
