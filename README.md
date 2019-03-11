@@ -189,4 +189,4 @@ To read more about suggested workflows when contributing to Splash, how to repor
 
 ## Hope you enjoy using Splash!
 
-I had a lot of fun building Splash, and I'm looking forward to continue working on it in the open together with you! I hope you'll like it and that you'll find it useful. Let me know what you think on on [Twitter](https://twitter.com/johnsundell), [Mastodon](https://mastodon.social/@johnsundell) or [Micro.blog](https://micro.blog/johnsundell) 😊
+I had a lot of fun building Splash, and I'm looking forward to continue working on it in the open together with you! I hope you'll like it and that you'll find it useful. Let me know what you think on on [Twitter](https://twitter.com/johnsundell) 😊
