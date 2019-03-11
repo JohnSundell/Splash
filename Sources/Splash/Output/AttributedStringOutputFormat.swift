@@ -59,7 +59,7 @@ private extension NSMutableAttributedString {
             .foregroundColor: color,
             .font: font
         ])
-        
+
         append(attributedString)
     }
 }

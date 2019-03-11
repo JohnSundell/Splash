@@ -598,10 +598,10 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-    
+
     func testDeferDeclaration() {
         let components = highlighter.highlight("func hello() { defer {} }")
-        
+
         XCTAssertEqual(components, [
             .token("func", .keyword),
             .whitespace(" "),
@@ -616,10 +616,10 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-        
+
     func testFunctionDeclarationWithInOutParameter() {
         let components = highlighter.highlight("func swapValues(value1: inout Int, value2: inout Int) { }")
-        
+
         XCTAssertEqual(components, [
             .token("func", .keyword),
             .whitespace(" "),
