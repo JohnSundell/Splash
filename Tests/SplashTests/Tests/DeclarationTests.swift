@@ -719,7 +719,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testFunctionWithRethrows() {
+    func testRethrowingFunctionDeclaration() {
         let components = highlighter.highlight("""
         func map<T>(_ transform: (Element) throws -> T) rethrows -> [T]
         """)
@@ -824,7 +824,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
             ("testNonMutatingFunction", testNonMutatingFunction),
-            ("testFunctionWithRethrows", testFunctionWithRethrows),
+            ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
