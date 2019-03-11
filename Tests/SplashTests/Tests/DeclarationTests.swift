@@ -409,6 +409,37 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+    
+    func testDynamicPropertyDeclaration() {
+        let components = highlighter.highlight("""
+        class Hello {
+            @objc dynamic var property = 0
+        }
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("Hello"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@objc", .keyword),
+            .whitespace(" "),
+            .token("dynamic", .keyword),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("property"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
 
     func testGenericPropertyDeclaration() {
         let components = highlighter.highlight("class Hello { var array: Array<String> = [] }")
@@ -751,6 +782,7 @@ extension DeclarationTests {
             ("testExtensionDeclaration", testExtensionDeclaration),
             ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
+            ("testDynamicPropertyDeclaration", testDynamicPropertyDeclaration),
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
