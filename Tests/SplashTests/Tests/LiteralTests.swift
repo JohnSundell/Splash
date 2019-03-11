@@ -76,6 +76,30 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testStringLiteralWithCustomIterpolation() {
+        let components = highlighter.highlight("""
+        "Hello \\(label: a, b) world \\(label: call())"
+        """)
+
+        XCTAssertEqual(components, [
+            .token("\"Hello", .string),
+            .whitespace(" "),
+            .plainText("\\(label:"),
+            .whitespace(" "),
+            .plainText("a,"),
+            .whitespace(" "),
+            .plainText("b)"),
+            .whitespace(" "),
+            .token("world", .string),
+            .whitespace(" "),
+            .plainText("\\(label:"),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("())"),
+            .token("\"", .string)
+        ])
+    }
+
     func testMultiLineStringLiteral() {
         let components = highlighter.highlight("""
         let string = \"\"\"
@@ -194,6 +218,7 @@ extension LiteralTests {
             ("testStringLiteralWithEscapedQuote", testStringLiteralWithEscapedQuote),
             ("testStringLiteralWithAttribute", testStringLiteralWithAttribute),
             ("testStringLiteralInterpolation", testStringLiteralInterpolation),
+            ("testStringLiteralWithCustomIterpolation", testStringLiteralWithCustomIterpolation),
             ("testMultiLineStringLiteral", testMultiLineStringLiteral),
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
