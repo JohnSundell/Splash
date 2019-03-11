@@ -118,6 +118,41 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testMultiLineRawStringLiteral() {
+        let components = highlighter.highlight("""
+        #\"\"\"
+        A raw string \\(withoutInterpolation)
+        with multiple lines. #" Nested "#
+        \"\"\"#
+        """)
+
+        XCTAssertEqual(components, [
+            .token("#\"\"\"", .string),
+            .whitespace("\n"),
+            .token("A", .string),
+            .whitespace(" "),
+            .token("raw", .string),
+            .whitespace(" "),
+            .token("string", .string),
+            .whitespace(" "),
+            .token("\\(withoutInterpolation)", .string),
+            .whitespace("\n"),
+            .token("with", .string),
+            .whitespace(" "),
+            .token("multiple", .string),
+            .whitespace(" "),
+            .token("lines.", .string),
+            .whitespace(" "),
+            .token("#\"", .string),
+            .whitespace(" "),
+            .token("Nested", .string),
+            .whitespace(" "),
+            .token("\"#", .string),
+            .whitespace("\n"),
+            .token("\"\"\"#", .string)
+        ])
+    }
+
     func testDoubleLiteral() {
         let components = highlighter.highlight("let double = 1.13")
 
@@ -161,6 +196,7 @@ extension LiteralTests {
             ("testStringLiteralInterpolation", testStringLiteralInterpolation),
             ("testMultiLineStringLiteral", testMultiLineStringLiteral),
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
+            ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
             ("testDoubleLiteral", testDoubleLiteral),
             ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators)
         ]
