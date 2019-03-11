@@ -103,7 +103,13 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .string }
 
         func matches(_ segment: Segment) -> Bool {
-            return segment.isWithinStringLiteral(withStart: "#\"", end: "\"#")
+            if segment.isWithinStringLiteral(withStart: "#\"", end: "\"#") {
+                return true
+            }
+
+            let multiLineStartCount = segment.tokens.count(of: "#\"\"\"")
+            let multiLineEndCount = segment.tokens.count(of: "\"\"\"#")
+            return multiLineStartCount != multiLineEndCount
         }
     }
 
