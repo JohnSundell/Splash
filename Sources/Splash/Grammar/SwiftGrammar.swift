@@ -22,6 +22,7 @@ public struct SwiftGrammar: Grammar {
         syntaxRules = [
             PreprocessingRule(),
             CommentRule(),
+            RawStringRule(),
             MultiLineStringRule(),
             SingleLineStringRule(),
             AttributeRule(),
@@ -40,15 +41,16 @@ private extension SwiftGrammar {
         "final", "class", "struct", "enum", "protocol",
         "extension", "let", "var", "func", "typealias",
         "init", "guard", "if", "else", "return", "get",
-        "throw", "throws", "rethrows", "for", "in", "open",
-        "weak", "import", "mutating", "nonmutating", "associatedtype",
+        "throw", "throws", "for", "in", "open", "weak",
+        "import", "mutating", "nonmutating", "associatedtype",
         "case", "switch", "static", "do", "try", "catch", "as",
         "super", "self", "set", "true", "false", "nil",
         "override", "where", "_", "default", "break",
         "#selector", "required", "willSet", "didSet",
         "lazy", "subscript", "defer", "inout", "while",
         "continue", "fallthrough", "repeat", "indirect",
-        "deinit", "is", "#file", "#line", "#function"
+        "deinit", "is", "#file", "#line", "#function",
+        "dynamic"
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [
@@ -97,6 +99,20 @@ private extension SwiftGrammar {
         }
     }
 
+    struct RawStringRule: SyntaxRule {
+        var tokenType: TokenType { return .string }
+
+        func matches(_ segment: Segment) -> Bool {
+            if segment.isWithinStringLiteral(withStart: "#\"", end: "\"#") {
+                return true
+            }
+
+            let multiLineStartCount = segment.tokens.count(of: "#\"\"\"")
+            let multiLineEndCount = segment.tokens.count(of: "\"\"\"#")
+            return multiLineStartCount != multiLineEndCount
+        }
+    }
+
     struct MultiLineStringRule: SyntaxRule {
         var tokenType: TokenType { return .string }
 
@@ -113,7 +129,7 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .string }
 
         func matches(_ segment: Segment) -> Bool {
-            guard segment.isWithinStringLiteral else {
+            guard segment.isWithinStringLiteral(withStart: "\"", end: "\"") else {
                 return false
             }
 
@@ -376,14 +392,12 @@ private extension SwiftGrammar {
 }
 
 private extension Segment {
-    var isWithinStringLiteral: Bool {
-        let delimiter = "\""
-
-        if tokens.current.hasPrefix(delimiter) {
+    func isWithinStringLiteral(withStart start: String, end: String) -> Bool {
+        if tokens.current.hasPrefix(start) {
             return true
         }
 
-        if tokens.current.hasSuffix(delimiter) {
+        if tokens.current.hasSuffix(end) {
             return true
         }
 
@@ -396,18 +410,20 @@ private extension Segment {
                 continue
             }
 
-            if token == delimiter {
-                if markerCounts.start == markerCounts.end {
+            if token == start {
+                if start != end || markerCounts.start == markerCounts.end {
                     markerCounts.start += 1
                 } else {
                     markerCounts.end += 1
                 }
+            } else if token == end && start != end {
+                markerCounts.end += 1
             } else {
-                if token.hasPrefix(delimiter) {
+                if token.hasPrefix(start) {
                     markerCounts.start += 1
                 }
 
-                if token.hasSuffix(delimiter) {
+                if token.hasSuffix(end) {
                     markerCounts.end += 1
                 }
             }

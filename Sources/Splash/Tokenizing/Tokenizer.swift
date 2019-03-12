@@ -42,7 +42,7 @@ private extension Tokenizer {
         private let code: String
         private let delimiters: CharacterSet
         private var index: String.Index?
-        private var tokenCounts = [String : Int]()
+        private var tokenCounts = [String: Int]()
         private var allTokens = [String]()
         private var lineTokens = [String]()
         private var segments: (current: Segment?, previous: Segment?)

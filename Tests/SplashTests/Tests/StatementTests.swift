@@ -134,7 +134,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-        
+
     func testSwitchStatementWithFallthrough() {
         let components = highlighter.highlight("""
         switch variable {
@@ -143,7 +143,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             callB()
         }
         """)
-        
+
         XCTAssertEqual(components, [
             .token("switch", .keyword),
             .whitespace(" "),
@@ -260,10 +260,10 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-        
+
     func testForStatementWithContinue() {
         let components = highlighter.highlight("for value in Enum.allCases { continue }")
-        
+
         XCTAssertEqual(components, [
             .token("for", .keyword),
             .whitespace(" "),
@@ -277,12 +277,12 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .token("continue",.keyword),
+            .token("continue", .keyword),
             .whitespace(" "),
             .plainText("}")
         ])
     }
-    
+
     func testRepeatWhileStatement() {
         let components = highlighter.highlight("""
         var x = 5
@@ -291,7 +291,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             x = x - 1
         } while x > 1
         """)
-        
+
         XCTAssertEqual(components, [
             .token("var", .keyword),
             .whitespace(" "),

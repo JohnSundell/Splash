@@ -409,6 +409,37 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+    
+    func testDynamicPropertyDeclaration() {
+        let components = highlighter.highlight("""
+        class Hello {
+            @objc dynamic var property = 0
+        }
+        """)
+        
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("Hello"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@objc", .keyword),
+            .whitespace(" "),
+            .token("dynamic", .keyword),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("property"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
 
     func testGenericPropertyDeclaration() {
         let components = highlighter.highlight("class Hello { var array: Array<String> = [] }")
@@ -567,10 +598,10 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-    
+
     func testDeferDeclaration() {
         let components = highlighter.highlight("func hello() { defer {} }")
-        
+
         XCTAssertEqual(components, [
             .token("func", .keyword),
             .whitespace(" "),
@@ -585,10 +616,10 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-        
+
     func testFunctionDeclarationWithInOutParameter() {
         let components = highlighter.highlight("func swapValues(value1: inout Int, value2: inout Int) { }")
-        
+
         XCTAssertEqual(components, [
             .token("func", .keyword),
             .whitespace(" "),
@@ -604,7 +635,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("inout", .keyword),
             .whitespace(" "),
             .token("Int", .type),
-			.plainText(")"),
+            .plainText(")"),
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
@@ -813,6 +844,7 @@ extension DeclarationTests {
             ("testExtensionDeclaration", testExtensionDeclaration),
             ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
+            ("testDynamicPropertyDeclaration", testDynamicPropertyDeclaration),
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
