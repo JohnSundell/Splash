@@ -8,7 +8,7 @@ import Foundation
 
 /// Enum defining the possible types of tokens that can be highlighted
 public enum TokenType: Hashable {
-    /// A keyword, such as `if`, `class` or `let`
+    /// A keyword, such as `if`, `class`, `let` or attributes such as @available
     case keyword
     /// A token that is part of a string literal
     case string
@@ -24,7 +24,7 @@ public enum TokenType: Hashable {
     case property
     /// A symbol being accessed through dot notation, such as `.myCase`
     case dotAccess
-    /// A preprocessing symbol, such as `#if` or `@available`
+    /// A preprocessing symbol, such as `#if`
     case preprocessing
     /// A custom token type, containing an arbitrary string
     case custom(String)
