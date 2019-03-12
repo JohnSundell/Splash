@@ -635,7 +635,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("inout", .keyword),
             .whitespace(" "),
             .token("Int", .type),
-			.plainText(")"),
+            .plainText(")"),
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
@@ -750,6 +750,40 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testRethrowingFunctionDeclaration() {
+        let components = highlighter.highlight("""
+        func map<T>(_ transform: (Element) throws -> T) rethrows -> [T]
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("map<T>("),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("transform:"),
+            .whitespace(" "),
+            .plainText("("),
+            .token("Element", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("throws", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("rethrows", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("T", .type),
+            .plainText("]")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -822,6 +856,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
             ("testNonMutatingFunction", testNonMutatingFunction),
+            ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
