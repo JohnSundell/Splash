@@ -19,7 +19,7 @@ It's used to highlight all recent articles on [swiftbysundell.com](https://swift
 
 ## Usage
 
-Splash can be used either as a library in your own Swift Package Manager-powered tool or script, or by using one of the three built-in command line tools that act as frontends for the Splash library.
+Splash can be used either as a library in your own Swift Package Manager-powered tool or script, or by using one of the four built-in command line tools that act as frontends for the Splash library.
 
 ### 🌍 On the web
 
@@ -30,10 +30,10 @@ Thanks to my good friend [Gui Rambo](https://twitter.com/_inside), you can [try 
 If you're using Jekyll, there's also a custom ```{% splash %}``` tag available for the Liquid templating language.
 
 👉 [splashtag](https://github.com/mannberg/splashtag)
-  
+
 ### 🖥 On the command line
 
-The easiest way to get started building things with Splash is to use one of the three built-in command line tools that each enable you to use Splash in different ways.
+The easiest way to get started building things with Splash is to use one of the four built-in command line tools that each enable you to use Splash in different ways.
 
 #### SplashHTMLGen
 
@@ -176,13 +176,13 @@ To run a tool without installing it, you can use the Swift Package Manager's `ru
 $ swift run SplashHTMLGen "func hello(world: String) -> Int"
 ```
 
-To install all three command line tools globally on your system, use Make:
+To install all four command line tools globally on your system, use Make:
 
 ```
 $ make install
 ```
 
-That will install the following three tools in your `/usr/local/bin` folder:
+That will install the following four tools in your `/usr/local/bin` folder:
 
 ```
 SplashHTMLGen
