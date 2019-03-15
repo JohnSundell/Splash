@@ -18,7 +18,8 @@ public func makeLinuxTests() -> [XCTestCaseEntry] {
         testCase(LiteralTests.allTests),
         testCase(OptionalTests.allTests),
         testCase(PreprocessorTests.allTests),
-        testCase(StatementTests.allTests)
+        testCase(StatementTests.allTests),
+        testCase(MarkdownTests.allTests)
     ]
 }
 
