@@ -83,6 +83,8 @@ $ SplashMarkdown ~/Documents/Article.md
 
 The decorated Markdown will be returned as standard output.
 
+Highlighting can be skipped for any code block by adding `no-highlight` next to the block’s opening row of backticks — like this: *“```no-highlight”*.
+
 #### SplashImageGen
 
 `SplashImageGen` uses Splash to generate an `NSAttributedString` from Swift code, then draws that attributed string into a graphics context to turn it into an image, which is then written to disk.
