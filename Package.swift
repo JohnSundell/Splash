@@ -33,7 +33,7 @@ let package = Package(
         ),
         .testTarget(
             name: "SplashTests",
-            dependencies: ["Splash", "SplashMarkdown"]
+            dependencies: ["Splash"]
         ),
     ]
 )

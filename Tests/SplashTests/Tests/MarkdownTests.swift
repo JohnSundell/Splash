@@ -5,7 +5,7 @@
  */
 
 import XCTest
-import SplashMarkdown
+import Splash
 
 final class MarkdownTests: SplashTestCase {
     private var decorator: MarkdownDecorator!

@@ -5,7 +5,6 @@
  */
 
 import Foundation
-import Splash
 
 /// Type used to decorate a Markdown file with Splash-highlighted code blocks
 public struct MarkdownDecorator {
