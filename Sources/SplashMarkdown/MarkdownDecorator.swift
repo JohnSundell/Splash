@@ -7,10 +7,18 @@
 import Foundation
 import Splash
 
+/// Type used to decorate a Markdown file with Splash-highlighted code blocks
 public struct MarkdownDecorator {
     private let highlighter = SyntaxHighlighter(format: HTMLOutputFormat())
     private let skipHighlightingPrefix = "no-highlight"
 
+    public init() {}
+
+    /// Decorate all code blocks within a given Markdown string. This API assumes
+    /// that the passed Markdown is valid. Each code block will be replaced by
+    /// Splash-highlighted HTML for that block's code. To skip highlighting for
+    /// any given code block, add "no-highlight" next to the opening row of
+    /// backticks for that block.
     public func decorate(_ markdown: String) -> String {
         let components = markdown.components(separatedBy: "```")
         var output = ""
