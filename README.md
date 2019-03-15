@@ -15,6 +15,8 @@
 
 Welcome to **Splash** - a fast, lightweight and flexible Swift syntax highlighter. It can be used to generate code sample HTML for a blog post, to turn a string of Swift code into a fully syntax highlighted image, or to build custom developer tools.
 
+It's used to highlight all recent articles on [swiftbysundell.com](https://swiftbysundell.com).
+
 ## Usage
 
 Splash can be used either as a library in your own Swift Package Manager-powered tool or script, or by using one of the three built-in command line tools that act as frontends for the Splash library.
@@ -141,14 +143,14 @@ Splash is distributed as a Swift package, making it easy to install for use in s
 
 Splash supports both macOS and Linux.
 
-*Before you begin, make sure that you have a Swift 4.1-compatible toolchain installed (for example Xcode 9.4 if you're on a Mac).*
+*Before you begin, make sure that you have a Swift 4.2-compatible toolchain installed (for example Xcode 10 if you're on a Mac).*
 
 ### 📦 As a package
 
 To install Splash for use in a Swift Package Manager-powered tool or server-side application, add Splash as a dependency to your `Package.swift` file. For more information, please see the [Swift Package Manager documentation](https://github.com/apple/swift-package-manager/tree/master/Documentation).
 
 ```
-.package(url: "https://github.com/JohnSundell/Splash", from: "0.1.4")
+.package(url: "https://github.com/JohnSundell/Splash", from: "0.1.0")
 ```
 
 ### 🏃‍♂️ As a Marathon dependency
