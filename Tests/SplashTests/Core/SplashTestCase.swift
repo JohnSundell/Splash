@@ -1,3 +1,9 @@
+/**
+ *  Splash
+ *  Copyright (c) John Sundell 2019
+ *  MIT license - see LICENSE.md
+ */
+
 import Foundation
 import XCTest
 

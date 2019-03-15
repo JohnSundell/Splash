@@ -16,6 +16,10 @@ let package = Package(
     targets: [
         .target(name: "Splash"),
         .target(
+            name: "SplashMarkdown",
+            dependencies: ["Splash"]
+        ),
+        .target(
             name: "SplashHTMLGen",
             dependencies: ["Splash"]
         ),
