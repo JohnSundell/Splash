@@ -326,6 +326,11 @@ private extension SwiftGrammar {
                         foundOpeningBracket = true
                     }
 
+                    // Handling generic lists for parameters, rather than declarations
+                    if foundOpeningBracket && token == ":" {
+                        return true
+                    }
+
                     guard !declarationKeywords.contains(token) else {
                         // If it turns out that we weren't in fact inside of a generic
                         // declaration, (lacking "<"), then highlight the type as normal.
