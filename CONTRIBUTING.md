@@ -79,6 +79,9 @@ What delimiters that `Tokenizer` should use to split the code up into segments i
 
 The decision to not simply hardcode `SwiftGrammar` across the code base was to [decouple the code using a protocol](https://www.swiftbysundell.com/posts/separation-of-concerns-using-protocols-in-swift) (in this case `Grammar`) to achieve a much more flexible solution. If the Swift grammar changes a lot in the future, we can always add a second implementation while still maintaining backward compatibility, and it also opens up the possibility of using Splash with languages other than Swift - since it doesn't make many (if any) hard assumptions about Swift itself (Objective-C support, anyone? 😉).
 
+How to add a new grammar?
+To create a new grammar for a language X, simply create a XGrammar.swift in which you define a type called XGrammar conforming to the `Grammar` protocol. Then write some tests and add them ????
+
 Apart from supplying `Tokenizer` with delimiters, the most important role of a `Grammar` implementation is to provide an array of `SyntaxRule` implementations. When `SyntaxHighlighter` iterates through the segments that its `Tokenizer` gave it, it applies the syntax rules from its `Grammar` to each one of them to figure out each token's type. Each rule is asked if it matches a given segment, and as soon as a match is found that rule's `TokenType` is used to determine the type of that token.
 
 Have a look at `SwiftGrammar` to see all of its `SyntaxRule` implementations and how they decide how to classify each token using code segments.
