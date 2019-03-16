@@ -205,6 +205,24 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testKeyPathLiteral() {
+        let components = highlighter.highlight("let value = object[keyPath: \\.property]")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("object[keyPath:"),
+            .whitespace(" "),
+            .plainText("\\."),
+            .token("property", .property),
+            .plainText("]")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -223,7 +241,8 @@ extension LiteralTests {
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
             ("testDoubleLiteral", testDoubleLiteral),
-            ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators)
+            ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators),
+            ("testKeyPathLiteral", testKeyPathLiteral)
         ]
     }
 }

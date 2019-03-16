@@ -29,6 +29,7 @@ public struct SwiftGrammar: Grammar {
             NumberRule(),
             TypeRule(),
             CallRule(),
+            KeyPathRule(),
             PropertyRule(),
             DotAccessRule(),
             KeywordRule()
@@ -363,6 +364,14 @@ private extension SwiftGrammar {
             }
 
             return segment.tokens.onSameLine.first != "import"
+        }
+    }
+
+    struct KeyPathRule: SyntaxRule {
+        var tokenType: TokenType { return .property }
+
+        func matches(_ segment: Segment) -> Bool {
+            return segment.tokens.previous == "\\."
         }
     }
 
