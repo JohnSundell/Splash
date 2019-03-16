@@ -150,6 +150,33 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGenericFunctionDeclarationWithGenericParameter() {
+        let components = highlighter.highlight("func value<T>(at keyPath: KeyPath<Element, T>) -> T? {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("value<T>(at"),
+            .whitespace(" "),
+            .plainText("keyPath:"),
+            .whitespace(" "),
+            .token("KeyPath", .type),
+            .plainText("<"),
+            .token("Element", .type),
+            .plainText(","),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(">)"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText("?"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testGenericStructDeclaration() {
         let components = highlighter.highlight("struct MyStruct<A: Hello, B> {}")
 
@@ -833,6 +860,7 @@ extension DeclarationTests {
             ("testGenericFunctionDeclarationWithoutConstraints", testGenericFunctionDeclarationWithoutConstraints),
             ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
             ("testGenericFunctionDeclarationWithMultipleConstraints", testGenericFunctionDeclarationWithMultipleConstraints),
+            ("testGenericFunctionDeclarationWithGenericParameter", testGenericFunctionDeclarationWithGenericParameter),
             ("testGenericStructDeclaration", testGenericStructDeclaration),
             ("testClassDeclaration", testClassDeclaration),
             ("testCompactClassDeclarationWithInitializer", testCompactClassDeclarationWithInitializer),
