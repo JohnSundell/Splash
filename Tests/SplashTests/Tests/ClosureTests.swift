@@ -124,6 +124,33 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testNestedEscapingClosure() {
+        let components = highlighter.highlight("let closures = [(@escaping () -> Void) -> Void]()")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("closures"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("[("),
+            .token("@escaping", .keyword),
+            .whitespace(" "),
+            .plainText("()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Void", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Void", .type),
+            .plainText("]()")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -138,7 +165,8 @@ extension ClosureTests {
             ("testClosureArgumentWithSingleArgument", testClosureArgumentWithSingleArgument),
             ("testClosureArgumentWithMultipleArguments", testClosureArgumentWithMultipleArguments),
             ("testEscapingClosureArgument", testEscapingClosureArgument),
-            ("testPassingClosureAsArgument", testPassingClosureAsArgument)
+            ("testPassingClosureAsArgument", testPassingClosureAsArgument),
+            ("testNestedEscapingClosure", testNestedEscapingClosure)
         ]
     }
 }
