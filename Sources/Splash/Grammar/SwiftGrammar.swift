@@ -17,6 +17,7 @@ public struct SwiftGrammar: Grammar {
         delimiters.remove("_")
         delimiters.remove("\"")
         delimiters.remove("#")
+        delimiters.remove("@")
         self.delimiters = delimiters
 
         syntaxRules = [
@@ -96,7 +97,7 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
-            return segment.tokens.current == "@" || segment.tokens.previous == "@"
+            return segment.tokens.current.hasPrefix("@")
         }
     }
 
