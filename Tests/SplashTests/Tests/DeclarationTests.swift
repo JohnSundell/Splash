@@ -88,6 +88,26 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGenericFunctionDeclarationWithKeywordArgumentLabel() {
+        let components = highlighter.highlight("func perform<O: AnyObject>(for object: O) {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("perform<O:"),
+            .whitespace(" "),
+            .token("AnyObject", .type),
+            .plainText(">(for"),
+            .whitespace(" "),
+            .plainText("object:"),
+            .whitespace(" "),
+            .token("O", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testGenericFunctionDeclarationWithoutConstraints() {
         let components = highlighter.highlight("func hello<A, B>(a: A, b: B)")
 
@@ -857,6 +877,7 @@ extension DeclarationTests {
             ("testPublicFunctionDeclarationWithDocumentationEndingWithDot", testPublicFunctionDeclarationWithDocumentationEndingWithDot),
             ("testFunctionDeclarationWithEmptyExternalLabel", testFunctionDeclarationWithEmptyExternalLabel),
             ("testFunctionDeclarationWithKeywordArgumentLabel", testFunctionDeclarationWithKeywordArgumentLabel),
+            ("testGenericFunctionDeclarationWithKeywordArgumentLabel", testGenericFunctionDeclarationWithKeywordArgumentLabel),
             ("testGenericFunctionDeclarationWithoutConstraints", testGenericFunctionDeclarationWithoutConstraints),
             ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
             ("testGenericFunctionDeclarationWithMultipleConstraints", testGenericFunctionDeclarationWithMultipleConstraints),
