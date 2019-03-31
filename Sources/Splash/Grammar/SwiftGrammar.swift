@@ -231,7 +231,7 @@ private extension SwiftGrammar {
                 }
             }
 
-            return segment.tokens.next.isAny(of: "(", "()", "())", "(.", "({", "().")
+            return segment.tokens.next.isAny(of: "(", "()", "())", "(.", "({", "().", #"(\."#)
         }
     }
 
@@ -377,7 +377,7 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .property }
 
         func matches(_ segment: Segment) -> Bool {
-            return segment.tokens.previous == "\\."
+            return segment.tokens.previous.isAny(of: #"\."#, #"(\."#)
         }
     }
 
