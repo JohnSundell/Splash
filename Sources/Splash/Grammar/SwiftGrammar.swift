@@ -144,8 +144,10 @@ private extension SwiftGrammar {
 
         func matches(_ segment: Segment) -> Bool {
             // Don't match against index-based closure arguments
-            guard segment.tokens.previous != "$" else {
-                return false
+            if let previous = segment.tokens.previous {
+                guard !previous.hasSuffix("$") else {
+                    return false
+                }
             }
 
             // Integers can be separated using "_", so handle that
@@ -231,7 +233,7 @@ private extension SwiftGrammar {
                 }
             }
 
-            return segment.tokens.next.isAny(of: "(", "()", "())", "(.", "({", "().", #"(\."#)
+            return segment.tokens.next?.starts(with: "(") ?? false
         }
     }
 

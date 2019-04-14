@@ -151,6 +151,35 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClosureArgumentShorthands() {
+        let components = highlighter.highlight("""
+        call {
+            print($0)
+            _ = $1
+            $2()
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("print", .call),
+            .plainText("($0)"),
+            .whitespace("\n    "),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("$1"),
+            .whitespace("\n    "),
+            .plainText("$2()"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -166,7 +195,8 @@ extension ClosureTests {
             ("testClosureArgumentWithMultipleArguments", testClosureArgumentWithMultipleArguments),
             ("testEscapingClosureArgument", testEscapingClosureArgument),
             ("testPassingClosureAsArgument", testPassingClosureAsArgument),
-            ("testNestedEscapingClosure", testNestedEscapingClosure)
+            ("testNestedEscapingClosure", testNestedEscapingClosure),
+            ("testClosureArgumentShorthands", testClosureArgumentShorthands)
         ]
     }
 }
