@@ -272,7 +272,7 @@ private extension SwiftGrammar {
                 }
 
                 // Don't highlight most keywords when used as a parameter label
-                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false") {
+                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout") {
                     guard !previousToken.isAny(of: "(", ",", ">(") else {
                         return false
                     }

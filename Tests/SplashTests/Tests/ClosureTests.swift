@@ -110,6 +110,27 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClosureWithInoutArgument() {
+        let components = highlighter.highlight("func add(closure: (inout Value) -> Void)")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("add(closure:"),
+            .whitespace(" "),
+            .plainText("("),
+            .token("inout", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Void", .type),
+            .plainText(")")
+        ])
+    }
+
     func testPassingClosureAsArgument() {
         let components = highlighter.highlight("object.call({ $0 })")
 
@@ -194,6 +215,7 @@ extension ClosureTests {
             ("testClosureArgumentWithSingleArgument", testClosureArgumentWithSingleArgument),
             ("testClosureArgumentWithMultipleArguments", testClosureArgumentWithMultipleArguments),
             ("testEscapingClosureArgument", testEscapingClosureArgument),
+            ("testClosureWithInoutArgument", testClosureWithInoutArgument),
             ("testPassingClosureAsArgument", testPassingClosureAsArgument),
             ("testNestedEscapingClosure", testNestedEscapingClosure),
             ("testClosureArgumentShorthands", testClosureArgumentShorthands)
