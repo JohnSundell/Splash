@@ -197,6 +197,33 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithGenericReturnType() {
+        let components = highlighter.highlight("""
+        func array() -> Array<Element> { return [] }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("array()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Array", .type),
+            .plainText("<"),
+            .token("Element", .type),
+            .plainText(">"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .plainText("[]"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testGenericStructDeclaration() {
         let components = highlighter.highlight("struct MyStruct<A: Hello, B> {}")
 
@@ -882,6 +909,7 @@ extension DeclarationTests {
             ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
             ("testGenericFunctionDeclarationWithMultipleConstraints", testGenericFunctionDeclarationWithMultipleConstraints),
             ("testGenericFunctionDeclarationWithGenericParameter", testGenericFunctionDeclarationWithGenericParameter),
+            ("testFunctionDeclarationWithGenericReturnType", testFunctionDeclarationWithGenericReturnType),
             ("testGenericStructDeclaration", testGenericStructDeclaration),
             ("testClassDeclaration", testClassDeclaration),
             ("testCompactClassDeclarationWithInitializer", testCompactClassDeclarationWithInitializer),
