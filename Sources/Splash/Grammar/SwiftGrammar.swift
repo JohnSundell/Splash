@@ -326,6 +326,11 @@ private extension SwiftGrammar {
                 // Since the declaration might be on another line, we have to walk
                 // backwards through all tokens until we've found enough information.
                 for token in segment.tokens.all.reversed() {
+                    // Highlight return type generics as normal
+                    if token == "->" {
+                        return true
+                    }
+
                     if !foundOpeningBracket && token == "<" {
                         foundOpeningBracket = true
                     }
