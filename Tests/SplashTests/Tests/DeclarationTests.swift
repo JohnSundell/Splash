@@ -858,6 +858,31 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithOpaqueReturnType() {
+        let components = highlighter.highlight(#"func make() -> some View { Text("!") }"#)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("make()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("some", .keyword),
+            .whitespace(" "),
+            .token("View", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("Text", .type),
+            .plainText("("),
+            .token(#""!""#, .string),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -934,6 +959,7 @@ extension DeclarationTests {
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
             ("testNonMutatingFunction", testNonMutatingFunction),
             ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
+            ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
         ]
     }
