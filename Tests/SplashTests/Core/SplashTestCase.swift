@@ -9,7 +9,7 @@ import XCTest
 
 /// Abstract base class for all Splash tests
 class SplashTestCase: XCTestCase {
-    #if !os(Linux)
+    #if os(macOS)
     func testHasLinuxVerificationTest() {
         let concreteType = type(of: self)
 
