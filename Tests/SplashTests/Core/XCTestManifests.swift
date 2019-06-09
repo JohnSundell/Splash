@@ -6,7 +6,7 @@
 
 import XCTest
 
-#if !os(macOS)
+#if os(Linux)
 
 public func makeLinuxTests() -> [XCTestCaseEntry] {
     return [
