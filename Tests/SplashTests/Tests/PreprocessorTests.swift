@@ -62,6 +62,24 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testAvailabilityCheck() {
+        let components = highlighter.highlight("if #available(iOS 13, *) {}")
+
+        XCTAssertEqual(components, [
+            .token("if", .keyword),
+            .whitespace(" "),
+            .token("#available", .keyword),
+            .plainText("(iOS"),
+            .whitespace(" "),
+            .token("13", .number),
+            .plainText(","),
+            .whitespace(" "),
+            .plainText("*)"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -72,7 +90,8 @@ extension PreprocessorTests {
         return [
             ("testPreprocessing", testPreprocessing),
             ("testSelector", testSelector),
-            ("testFunctionAttribute", testFunctionAttribute)
+            ("testFunctionAttribute", testFunctionAttribute),
+            ("testAvailabilityCheck", testAvailabilityCheck)
         ]
     }
 }
