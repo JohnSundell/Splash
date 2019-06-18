@@ -916,6 +916,36 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testWrappedPropertyDeclarations() {
+        let components = highlighter.highlight("""
+        struct User {
+            @Persisted(key: "name") var name: String
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("User"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@Persisted", .keyword),
+            .plainText("(key:"),
+            .whitespace(" "),
+            .token(#""name""#, .string),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("name:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -960,7 +990,8 @@ extension DeclarationTests {
             ("testNonMutatingFunction", testNonMutatingFunction),
             ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
-            ("testIndirectEnumDeclaration", testIndirectEnumDeclaration)
+            ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
+            ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations)
         ]
     }
 }
