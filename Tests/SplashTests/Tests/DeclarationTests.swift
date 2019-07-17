@@ -428,6 +428,39 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testExtensionDeclarationWithConvenienceInitializer() {
+        let components = highlighter.highlight("""
+        extension Node { convenience init(name: String) { self.init() } }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("extension", .keyword),
+            .whitespace(" "),
+            .token("Node", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("convenience", .keyword),
+            .whitespace(" "),
+            .token("init", .keyword),
+            .plainText("(name:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .plainText("."),
+            .token("init", .call),
+            .plainText("()"),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testExtensionDeclarationWithConstraint() {
         let components = highlighter.highlight("extension Hello where Foo == String, Bar: Numeric { }")
 
@@ -974,6 +1007,7 @@ extension DeclarationTests {
             ("testProtocolDeclaration", testProtocolDeclaration),
             ("testProtocolDeclarationWithAssociatedTypes", testProtocolDeclarationWithAssociatedTypes),
             ("testExtensionDeclaration", testExtensionDeclaration),
+            ("testExtensionDeclarationWithConvenienceInitializer", testExtensionDeclarationWithConvenienceInitializer),
             ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
             ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
             ("testDynamicPropertyDeclaration", testDynamicPropertyDeclaration),
