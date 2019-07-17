@@ -18,6 +18,7 @@ public struct SwiftGrammar: Grammar {
         delimiters.remove("\"")
         delimiters.remove("#")
         delimiters.remove("@")
+        delimiters.remove("$")
         self.delimiters = delimiters
 
         syntaxRules = [
