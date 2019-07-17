@@ -189,7 +189,11 @@ private extension SwiftGrammar {
         }
 
         func matches(_ segment: Segment) -> Bool {
-            guard segment.tokens.current.startsWithLetter else {
+            let token = segment.tokens.current.trimmingCharacters(
+                in: CharacterSet(charactersIn: "_")
+            )
+
+            guard token.startsWithLetter else {
                 return false
             }
 
@@ -304,7 +308,11 @@ private extension SwiftGrammar {
                 }
             }
 
-            guard segment.tokens.current.isCapitalized else {
+            let token = segment.tokens.current.trimmingCharacters(
+                in: CharacterSet(charactersIn: "_")
+            )
+
+            guard token.isCapitalized else {
                 return false
             }
 
@@ -315,7 +323,7 @@ private extension SwiftGrammar {
             // The XCTAssert family of functions is a bit of an edge case,
             // since they start with capital letters. Since they are so
             // commonly used, we'll add a special case for them here:
-            guard !segment.tokens.current.starts(with: "XCTAssert") else {
+            guard !token.starts(with: "XCTAssert") else {
                 return false
             }
 
