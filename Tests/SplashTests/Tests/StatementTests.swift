@@ -330,6 +330,24 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testInitializingTypeWithLeadingUnderscore() {
+        let components = highlighter.highlight("_MyType()")
+
+        XCTAssertEqual(components, [
+            .token("_MyType", .type),
+            .plainText("()")
+        ])
+    }
+
+    func testCallingFunctionWithLeadingUnderscore() {
+        let components = highlighter.highlight("_myFunction()")
+
+        XCTAssertEqual(components, [
+            .token("_myFunction", .call),
+            .plainText("()")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -348,7 +366,9 @@ extension StatementTests {
             ("testSwitchStatementWithOptional", testSwitchStatementWithOptional),
             ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
             ("testForStatementWithContinue", testForStatementWithContinue),
-            ("testRepeatWhileStatement", testRepeatWhileStatement)
+            ("testRepeatWhileStatement", testRepeatWhileStatement),
+            ("testInitializingTypeWithLeadingUnderscore", testInitializingTypeWithLeadingUnderscore),
+            ("testCallingFunctionWithLeadingUnderscore", testCallingFunctionWithLeadingUnderscore)
         ]
     }
 }
