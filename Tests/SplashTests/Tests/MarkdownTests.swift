@@ -33,9 +33,7 @@ final class MarkdownTests: SplashTestCase {
 
         Text text text `inline.code.shouldNotBeHighlighted()`.
 
-        <pre class="splash"><code>
-        <span class="keyword">struct</span> Hello: <span class="type">Protocol</span> {}
-        </code></pre>
+        <pre class="splash"><code><span class="keyword">struct</span> Hello: <span class="type">Protocol</span> {}</code></pre>
 
         Text.
         """
@@ -57,9 +55,7 @@ final class MarkdownTests: SplashTestCase {
         let expectedResult = """
         Text text.
 
-        <pre class="splash"><code>
-        struct Hello: Protocol {}
-        </code></pre>
+        <pre class="splash"><code>struct Hello: Protocol {}</code></pre>
 
         Text.
         """
