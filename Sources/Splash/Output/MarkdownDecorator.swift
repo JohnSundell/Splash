@@ -38,9 +38,7 @@ public struct MarkdownDecorator {
             }
 
             output.append("""
-            <pre class="splash"><code>
-            \(code)
-            </code></pre>
+            <pre class="splash"><code>\(code)</code></pre>
             """)
         }
 
