@@ -452,7 +452,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("self", .keyword),
             .plainText("."),
-            .token("init", .call),
+            .token("init", .keyword),
             .plainText("()"),
             .whitespace(" "),
             .plainText("}"),

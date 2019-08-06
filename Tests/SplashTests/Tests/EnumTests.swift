@@ -37,13 +37,13 @@ final class EnumTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testEnumDotSyntaxWithAssociatedValue() {
+    func testEnumDotSyntaxWithAssociatedValueTreatedAsCall() {
         let components = highlighter.highlight("call(.error(error))")
 
         XCTAssertEqual(components, [
             .token("call", .call),
             .plainText("(."),
-            .token("error", .dotAccess),
+            .token("error", .call),
             .plainText("(error))")
         ])
     }
@@ -68,7 +68,7 @@ extension EnumTests {
         return [
             ("testEnumDotSyntaxInAssignment", testEnumDotSyntaxInAssignment),
             ("testEnumDotSyntaxAsArgument", testEnumDotSyntaxAsArgument),
-            ("testEnumDotSyntaxWithAssociatedValue", testEnumDotSyntaxWithAssociatedValue),
+            ("testEnumDotSyntaxWithAssociatedValueTreatedAsCall", testEnumDotSyntaxWithAssociatedValueTreatedAsCall),
             ("testUsingEnumInSubscript", testUsingEnumInSubscript)
         ]
     }

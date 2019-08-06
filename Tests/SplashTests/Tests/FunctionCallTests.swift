@@ -50,7 +50,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("String", .type),
             .plainText("."),
-            .token("init", .call),
+            .token("init", .keyword),
             .plainText("()")
         ])
     }

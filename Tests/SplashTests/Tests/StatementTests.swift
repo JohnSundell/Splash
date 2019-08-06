@@ -106,7 +106,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testSwitchStatementWithAssociatedValues() {
+    func testSwitchStatementWithSingleAssociatedValue() {
         let components = highlighter.highlight("""
         switch value {
         case .one(let a): break
@@ -128,6 +128,42 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("let", .keyword),
             .whitespace(" "),
             .plainText("a):"),
+            .whitespace(" "),
+            .token("break", .keyword),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testSwitchStatementWithMultipleAssociatedValues() {
+        let components = highlighter.highlight("""
+        switch value {
+        case .one(let a), .two(let b): break
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("switch", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n"),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .plainText("."),
+            .token("one", .dotAccess),
+            .plainText("("),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("a),"),
+            .whitespace(" "),
+            .plainText("."),
+            .token("two", .dotAccess),
+            .plainText("("),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("b):"),
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace("\n"),
@@ -360,7 +396,8 @@ extension StatementTests {
             ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
             ("testChainedIfElseStatements", testChainedIfElseStatements),
             ("testSwitchStatement", testSwitchStatement),
-            ("testSwitchStatementWithAssociatedValues", testSwitchStatementWithAssociatedValues),
+            ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
+            ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),
             ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
             ("testSwitchStatementWithTypePatternMatching", testSwitchStatementWithTypePatternMatching),
             ("testSwitchStatementWithOptional", testSwitchStatementWithOptional),
