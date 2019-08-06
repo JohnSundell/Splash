@@ -186,6 +186,7 @@ private extension SwiftGrammar {
 
             var callLikeKeywords = accessControlKeywords
             callLikeKeywords.insert("subscript")
+            callLikeKeywords.insert("init")
             self.callLikeKeywords = callLikeKeywords
         }
 
@@ -213,8 +214,22 @@ private extension SwiftGrammar {
                 }
 
                 // Don't treat enums with associated values as function calls
-                guard !segment.prefixedByDotAccess else {
-                    return false
+                // when they appear within a switch statement
+                if previousToken == "." {
+                    let previousTokens = segment.tokens.onSameLine
+
+                    if previousTokens.count > 1 {
+                        let lastToken = previousTokens[previousTokens.count - 2]
+
+                        guard lastToken != "case" else {
+                            return false
+                        }
+
+                        // Multiple expressions can be matched within a single case
+                        guard !lastToken.hasSuffix(",") else {
+                            return false
+                        }
+                    }
                 }
             }
 
@@ -229,13 +244,6 @@ private extension SwiftGrammar {
                 }
 
                 return !segment.tokens.onSameLine.contains(anyOf: controlFlowTokens)
-            }
-
-            // Check so that this is an initializer call, not the declaration
-            if segment.tokens.current == "init" {
-                guard segment.tokens.previous == "." else {
-                    return false
-                }
             }
 
             return segment.tokens.next?.starts(with: "(") ?? false
@@ -415,6 +423,12 @@ private extension SwiftGrammar {
 
             guard !segment.prefixedByDotAccess else {
                 return false
+            }
+
+            if let next = segment.tokens.next {
+                guard !next.hasPrefix("(") else {
+                    return false
+                }
             }
 
             return segment.tokens.onSameLine.first != "import"
