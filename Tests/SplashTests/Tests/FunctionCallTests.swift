@@ -130,6 +130,26 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testIndentedFunctionCalls() {
+        let components = highlighter.highlight("""
+        variable
+            .callOne()
+            .callTwo()
+        """)
+
+        XCTAssertEqual(components, [
+            .plainText("variable"),
+            .whitespace("\n    "),
+            .plainText("."),
+            .token("callOne", .call),
+            .plainText("()"),
+            .whitespace("\n    "),
+            .plainText("."),
+            .token("callTwo", .call),
+            .plainText("()")
+        ])
+    }
+
     func testXCTAssertCalls() {
         let components = highlighter.highlight("XCTAssertTrue(variable)")
 
@@ -156,6 +176,7 @@ extension FunctionCallTests {
             ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
             ("testPassingTypeToFunction", testPassingTypeToFunction),
             ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
+            ("testIndentedFunctionCalls", testIndentedFunctionCalls),
             ("testXCTAssertCalls", testXCTAssertCalls)
         ]
     }
