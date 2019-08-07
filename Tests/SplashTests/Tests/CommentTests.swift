@@ -112,6 +112,25 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentEndingWithComma() {
+        let components = highlighter.highlight("""
+        // Hello,
+        class World {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("Hello,", .comment),
+            .whitespace("\n"),
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("World"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -123,7 +142,8 @@ extension CommentTests {
             ("testSingleLineComment", testSingleLineComment),
             ("testMultiLineComment", testMultiLineComment),
             ("testMultiLineCommentWithDoubleAsterisks", testMultiLineCommentWithDoubleAsterisks),
-            ("testMutliLineDocumentationComment", testMutliLineDocumentationComment)
+            ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
+            ("testCommentEndingWithComma", testCommentEndingWithComma)
         ]
     }
 }
