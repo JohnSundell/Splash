@@ -283,7 +283,8 @@ private extension SwiftGrammar {
                 }
             }
 
-            if let previousToken = segment.tokens.previous {
+            if !segment.tokens.onSameLine.isEmpty,
+               let previousToken = segment.tokens.previous {
                 // Highlight the '(set)' part of setter access modifiers
                 switch segment.tokens.current {
                 case "(":
