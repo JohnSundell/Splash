@@ -112,6 +112,11 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentStartingWithPunctuation() {
+        let components = highlighter.highlight("//.call()")
+        XCTAssertEqual(components, [.token("//.call()", .comment)])
+    }
+
     func testCommentEndingWithComma() {
         let components = highlighter.highlight("""
         // Hello,
@@ -143,6 +148,7 @@ extension CommentTests {
             ("testMultiLineComment", testMultiLineComment),
             ("testMultiLineCommentWithDoubleAsterisks", testMultiLineCommentWithDoubleAsterisks),
             ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
+            ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
             ("testCommentEndingWithComma", testCommentEndingWithComma)
         ]
     }
