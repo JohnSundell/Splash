@@ -110,6 +110,26 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testStringLiteralWithInterpolationSurroundedByBrackets() {
+        let components = highlighter.highlight(#""[\(text)]""#)
+
+        XCTAssertEqual(components, [
+            .token(#""["#, .string),
+            .plainText(#"\(text)"#),
+            .token(#"]""#, .string)
+        ])
+    }
+
+    func testStringLiteralWithInterpolationPrefixedByPunctuation() {
+        let components = highlighter.highlight(#"".\(text)""#)
+
+        XCTAssertEqual(components, [
+            .token("\".", .string),
+            .plainText(#"\(text)"#),
+            .token("\"", .string)
+        ])
+    }
+
     func testMultiLineStringLiteral() {
         let components = highlighter.highlight("""
         let string = \"\"\"
@@ -266,6 +286,8 @@ extension LiteralTests {
             ("testStringLiteralInterpolation", testStringLiteralInterpolation),
             ("testStringLiteralWithInterpolatedClosureArgumentShorthand", testStringLiteralWithInterpolatedClosureArgumentShorthand),
             ("testStringLiteralWithCustomIterpolation", testStringLiteralWithCustomIterpolation),
+            ("testStringLiteralWithInterpolationSurroundedByBrackets", testStringLiteralWithInterpolationSurroundedByBrackets),
+            ("testStringLiteralWithInterpolationPrefixedByPunctuation", testStringLiteralWithInterpolationPrefixedByPunctuation),
             ("testMultiLineStringLiteral", testMultiLineStringLiteral),
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),

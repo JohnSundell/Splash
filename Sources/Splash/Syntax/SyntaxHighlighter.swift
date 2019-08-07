@@ -41,7 +41,7 @@ public struct SyntaxHighlighter<Format: OutputFormat> {
             state = nil
         }
 
-        for segment in tokenizer.segmentsByTokenizing(code, delimiters: grammar.delimiters) {
+        for segment in tokenizer.segmentsByTokenizing(code, using: grammar) {
             let token = segment.tokens.current
             let whitespace = segment.trailingWhitespace
 
