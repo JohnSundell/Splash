@@ -47,6 +47,10 @@ public struct SwiftGrammar: Grammar {
             return false
         case (")", _):
             return false
+        case ("/", "/"), ("/", "*"):
+            return true
+        case ("/", _):
+            return false
         default:
             return true
         }
