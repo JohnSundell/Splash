@@ -7,9 +7,10 @@
 import Foundation
 
 internal struct Tokenizer {
-    func segmentsByTokenizing(_ code: String, delimiters: CharacterSet) -> AnySequence<Segment> {
+    func segmentsByTokenizing(_ code: String,
+                              using grammar: Grammar) -> AnySequence<Segment> {
         return AnySequence<Segment> {
-            return Buffer(iterator: Iterator(code: code, delimiters: delimiters))
+            Buffer(iterator: Iterator(code: code, grammar: grammar))
         }
     }
 }
@@ -32,24 +33,29 @@ private extension Tokenizer {
     }
 
     struct Iterator: IteratorProtocol {
-        enum Component {
-            case token(String)
-            case delimiter(String)
-            case whitespace(String)
-            case newline(String)
+        struct Component {
+            enum Kind {
+                case token
+                case delimiter
+                case whitespace
+                case newline
+            }
+
+            let character: Character
+            let kind: Kind
         }
 
         private let code: String
-        private let delimiters: CharacterSet
+        private let grammar: Grammar
         private var index: String.Index?
         private var tokenCounts = [String: Int]()
         private var allTokens = [String]()
         private var lineTokens = [String]()
         private var segments: (current: Segment?, previous: Segment?)
 
-        init(code: String, delimiters: CharacterSet) {
+        init(code: String, grammar: Grammar) {
             self.code = code
-            self.delimiters = delimiters
+            self.grammar = grammar
             segments = (nil, nil)
         }
 
@@ -65,8 +71,8 @@ private extension Tokenizer {
             index = nextIndex
             let component = makeComponent(at: nextIndex)
 
-            switch component {
-            case .token(let token), .delimiter(let token):
+            switch component.kind {
+            case .token, .delimiter:
                 guard var segment = segments.current else {
                     segments.current = makeSegment(with: component, at: nextIndex)
                     return next()
@@ -77,22 +83,33 @@ private extension Tokenizer {
                     return finish(segment, with: component, at: nextIndex)
                 }
 
-                segment.tokens.current.append(token)
+                if component.isDelimiter {
+                    let previousCharacter = segment.tokens.current.last!
+                    let shouldMerge = grammar.isDelimiter(previousCharacter,
+                                                          mergableWith: component.character)
+
+                    guard shouldMerge else {
+                        return finish(segment, with: component, at: nextIndex)
+                    }
+                }
+
+                segment.tokens.current.append(component.character)
                 segments.current = segment
                 return next()
-            case .whitespace(let whitespace), .newline(let whitespace):
+            case .whitespace, .newline:
                 guard var segment = segments.current else {
                     var segment = makeSegment(with: component, at: nextIndex)
-                    segment.trailingWhitespace = whitespace
+                    segment.trailingWhitespace = component.token
                     segment.isLastOnLine = component.isNewline
                     segments.current = segment
                     return next()
                 }
 
-                if let existingWhitespace = segment.trailingWhitespace {
-                    segment.trailingWhitespace = existingWhitespace.appending(whitespace)
+                if var existingWhitespace = segment.trailingWhitespace {
+                    existingWhitespace.append(component.character)
+                    segment.trailingWhitespace = existingWhitespace
                 } else {
-                    segment.trailingWhitespace = whitespace
+                    segment.trailingWhitespace = component.token
                 }
 
                 if component.isNewline {
@@ -113,22 +130,28 @@ private extension Tokenizer {
         }
 
         private func makeComponent(at index: String.Index) -> Component {
+            func kind(for character: Character) -> Component.Kind {
+                if character.isWhitespace {
+                    return .whitespace
+                }
+
+                if character.isNewline {
+                    return .newline
+                }
+
+                if grammar.delimiters.contains(character) {
+                    return .delimiter
+                }
+
+                return .token
+            }
+
             let character = code[index]
-            let substring = String(character)
 
-            if character.isWhitespace {
-                return .whitespace(substring)
-            }
-
-            if character.isNewline {
-                return .newline(substring)
-            }
-
-            if delimiters.contains(character) {
-                return .delimiter(substring)
-            }
-
-            return .token(substring)
+            return Component(
+                character: character,
+                kind: kind(for: character)
+            )
         }
 
         private func makeSegment(with component: Component, at index: String.Index) -> Segment {
@@ -175,17 +198,11 @@ private extension Tokenizer {
 
 extension Tokenizer.Iterator.Component {
     var token: String {
-        switch self {
-        case .token(let token),
-             .delimiter(let token):
-            return token
-        case .whitespace, .newline:
-            return ""
-        }
+        return String(character)
     }
 
     var isDelimiter: Bool {
-        switch self {
+        switch kind {
         case .token, .whitespace, .newline:
             return false
         case .delimiter:
@@ -194,7 +211,7 @@ extension Tokenizer.Iterator.Component {
     }
 
     var isNewline: Bool {
-        switch self {
+        switch kind {
         case .token, .whitespace, .delimiter:
             return false
         case .newline:

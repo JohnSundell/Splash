@@ -37,6 +37,20 @@ public struct SwiftGrammar: Grammar {
             KeywordRule()
         ]
     }
+
+    public func isDelimiter(_ delimiterA: Character,
+                            mergableWith delimiterB: Character) -> Bool {
+        switch (delimiterA, delimiterB) {
+        case ("\\", "("):
+            return true
+        case ("\\", _), (_, "\\"):
+            return false
+        case (")", _):
+            return false
+        default:
+            return true
+        }
+    }
 }
 
 private extension SwiftGrammar {
@@ -381,11 +395,15 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .dotAccess }
 
         func matches(_ segment: Segment) -> Bool {
-            guard segment.tokens.previous.isAny(of: ".", "(.", "[.") else {
+            guard !segment.tokens.onSameLine.isEmpty else {
                 return false
             }
 
-            guard !segment.tokens.onSameLine.isEmpty else {
+            guard segment.isValidSymbol else {
+                return false
+            }
+
+            guard segment.tokens.previous.isAny(of: ".", "(.", "[.") else {
                 return false
             }
 
@@ -410,6 +428,10 @@ private extension SwiftGrammar {
 
         func matches(_ segment: Segment) -> Bool {
             guard !segment.tokens.onSameLine.isEmpty else {
+                return false
+            }
+
+            guard segment.isValidSymbol else {
                 return false
             }
 
@@ -509,5 +531,13 @@ private extension Segment {
 
     var prefixedByDotAccess: Bool {
         return tokens.previous == "(." || prefix.hasSuffix(" .")
+    }
+
+    var isValidSymbol: Bool {
+        guard let firstCharacter = tokens.current.first else {
+            return false
+        }
+
+        return firstCharacter == "_" || firstCharacter.isLetter
     }
 }
