@@ -207,6 +207,18 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testRawStringWithInterpolation() {
+        let components = highlighter.highlight("#\"Hello \\#(variable) world\"#")
+
+        XCTAssertEqual(components, [
+            .token("#\"Hello", .string),
+            .whitespace(" "),
+            .plainText("\\#(variable)"),
+            .whitespace(" "),
+            .token("world\"#", .string)
+        ])
+    }
+
     func testDoubleLiteral() {
         let components = highlighter.highlight("let double = 1.13")
 
@@ -291,6 +303,7 @@ extension LiteralTests {
             ("testMultiLineStringLiteral", testMultiLineStringLiteral),
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
+            ("testRawStringWithInterpolation", testRawStringWithInterpolation),
             ("testDoubleLiteral", testDoubleLiteral),
             ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators),
             ("testKeyPathLiteral", testKeyPathLiteral),
