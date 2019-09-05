@@ -8,10 +8,14 @@ import Foundation
 
 /// Type used to decorate a Markdown file with Splash-highlighted code blocks
 public struct MarkdownDecorator {
-    private let highlighter = SyntaxHighlighter(format: HTMLOutputFormat())
+    private let highlighter: SyntaxHighlighter<HTMLOutputFormat>
     private let skipHighlightingPrefix = "no-highlight"
 
-    public init() {}
+    /// Create a Markdown decorator with a given prefix to apply to all CSS
+    /// classes used when highlighting code blocks within a Markdown string.
+    public init(classPrefix: String = "") {
+        highlighter = SyntaxHighlighter(format: HTMLOutputFormat(classPrefix: classPrefix))
+    }
 
     /// Decorate all code blocks within a given Markdown string. This API assumes
     /// that the passed Markdown is valid. Each code block will be replaced by
