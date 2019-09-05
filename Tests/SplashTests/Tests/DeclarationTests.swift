@@ -706,6 +706,45 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGenericSubscriptDeclaration() {
+        let components = highlighter.highlight("""
+        extension Collection {
+            subscript<T>(key: Key<T>) -> T? { return nil }
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("extension", .keyword),
+            .whitespace(" "),
+            .token("Collection", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("subscript", .keyword),
+            .plainText("<T>(key:"),
+            .whitespace(" "),
+            .token("Key", .type),
+            .plainText("<"),
+            .token("T", .type),
+            .plainText(">)"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText("?"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .token("nil", .keyword),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testDeferDeclaration() {
         let components = highlighter.highlight("func hello() { defer {} }")
 
@@ -1016,6 +1055,7 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
+            ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
             ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
             ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
