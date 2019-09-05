@@ -154,12 +154,17 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .string }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current.hasPrefix("\"") &&
+               segment.tokens.current.hasSuffix("\"") {
+                return true
+            }
+
             guard segment.isWithinStringLiteral(withStart: "\"", end: "\"") else {
                 return false
             }
 
             return !segment.isWithinStringInterpolation &&
-                !segment.isWithinRawStringInterpolation
+                   !segment.isWithinRawStringInterpolation
         }
     }
 

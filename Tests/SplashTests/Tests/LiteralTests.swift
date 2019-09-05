@@ -130,6 +130,21 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testStringLiteralWithInterpolationContainingString() {
+        let components = highlighter.highlight(#""\(name ?? "name")""#)
+
+        XCTAssertEqual(components, [
+            .token("\"", .string),
+            .plainText("\\(name"),
+            .whitespace(" "),
+            .plainText("??"),
+            .whitespace(" "),
+            .token("\"name\"", .string),
+            .plainText(")"),
+            .token("\"", .string)
+        ])
+    }
+
     func testMultiLineStringLiteral() {
         let components = highlighter.highlight("""
         let string = \"\"\"
@@ -300,6 +315,7 @@ extension LiteralTests {
             ("testStringLiteralWithCustomIterpolation", testStringLiteralWithCustomIterpolation),
             ("testStringLiteralWithInterpolationSurroundedByBrackets", testStringLiteralWithInterpolationSurroundedByBrackets),
             ("testStringLiteralWithInterpolationPrefixedByPunctuation", testStringLiteralWithInterpolationPrefixedByPunctuation),
+            ("testStringLiteralWithInterpolationContainingString", testStringLiteralWithInterpolationContainingString),
             ("testMultiLineStringLiteral", testMultiLineStringLiteral),
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
