@@ -124,6 +124,10 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .string }
 
         func matches(_ segment: Segment) -> Bool {
+            guard !segment.isWithinRawStringInterpolation else {
+                return false
+            }
+
             if segment.isWithinStringLiteral(withStart: "#\"", end: "\"#") {
                 return true
             }
@@ -154,7 +158,8 @@ private extension SwiftGrammar {
                 return false
             }
 
-            return !segment.isWithinStringInterpolation
+            return !segment.isWithinStringInterpolation &&
+                !segment.isWithinRawStringInterpolation
         }
     }
 
@@ -532,6 +537,25 @@ private extension Segment {
         }
 
         return true
+    }
+
+    var isWithinRawStringInterpolation: Bool {
+        // Quick fix for supporting single expressions within raw string
+        // interpolation, a proper fix should be developed ASAP.
+        switch tokens.current {
+        case "\\":
+            return tokens.previous != "\\" && tokens.next == "#"
+        case "#":
+            return tokens.previous == "\\" && tokens.next == "("
+        case "(":
+            return tokens.onSameLine.suffix(2) == ["\\", "#"]
+        case ")":
+            let suffix = tokens.onSameLine.suffix(4)
+            return suffix.prefix(3) == ["\\", "#", "("]
+        default:
+            let suffix = tokens.onSameLine.suffix(3)
+            return suffix == ["\\", "#", "("] && tokens.next == ")"
+        }
     }
 
     var prefixedByDotAccess: Bool {
