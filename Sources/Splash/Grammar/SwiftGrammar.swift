@@ -314,7 +314,7 @@ private extension SwiftGrammar {
                 }
 
                 // Don't highlight most keywords when used as a parameter label
-                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout") {
+                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil") {
                     guard !previousToken.isAny(of: "(", ",", ">(") else {
                         return false
                     }

@@ -23,6 +23,17 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionCallWithNil() {
+        let components = highlighter.highlight("handler(nil)")
+
+        XCTAssertEqual(components, [
+            .token("handler", .call),
+            .plainText("("),
+            .token("nil", .keyword),
+            .plainText(")")
+        ])
+    }
+
     func testImplicitInitializerCall() {
         let components = highlighter.highlight("let string = String()")
 
@@ -168,6 +179,7 @@ extension FunctionCallTests {
     static var allTests: [(String, TestClosure<FunctionCallTests>)] {
         return [
             ("testFunctionCallWithIntegers", testFunctionCallWithIntegers),
+            ("testFunctionCallWithNil", testFunctionCallWithNil),
             ("testImplicitInitializerCall", testImplicitInitializerCall),
             ("testExplicitInitializerCall", testExplicitInitializerCall),
             ("testDotSyntaxInitializerCall", testDotSyntaxInitializerCall),
