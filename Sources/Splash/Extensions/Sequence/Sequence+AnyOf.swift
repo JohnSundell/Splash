@@ -11,7 +11,7 @@ internal extension Sequence where Element: Equatable {
         return contains(anyOf: candidates)
     }
 
-    func contains(anyOf candidates: [Element]) -> Bool {
+    func contains<S: Sequence>(anyOf candidates: S) -> Bool where S.Element == Element {
         for candidate in candidates {
             if contains(candidate) {
                 return true
