@@ -80,14 +80,19 @@ private extension SwiftGrammar {
 
     struct PreprocessingRule: SyntaxRule {
         var tokenType: TokenType { return .preprocessing }
-        private let tokens = ["#if", "#endif", "#elseif", "#else"]
+        private let controlFlowTokens: Set<String> = ["#if", "#endif", "#elseif", "#else"]
+        private let directiveTokens: Set<String> = ["#warning", "#error"]
 
         func matches(_ segment: Segment) -> Bool {
-            if segment.tokens.current.isAny(of: tokens) {
+            if segment.tokens.current.isAny(of: controlFlowTokens) {
                 return true
             }
 
-            return segment.tokens.onSameLine.contains(anyOf: tokens)
+            if segment.tokens.current.isAny(of: directiveTokens) {
+                return true
+            }
+
+            return segment.tokens.onSameLine.contains(anyOf: controlFlowTokens)
         }
     }
 
