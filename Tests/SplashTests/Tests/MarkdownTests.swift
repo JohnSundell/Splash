@@ -52,10 +52,54 @@ final class MarkdownTests: SplashTestCase {
         Text.
         """
 
+            let expectedResult = """
+            Text text.
+
+            <pre class="splash"><code>struct Hello: Protocol {}</code></pre>
+
+            Text.
+            """
+
+        XCTAssertEqual(decorator.decorate(markdown), expectedResult)
+    }
+
+    func testEscapingSpecialCharactersWithinHighlightedCodeBlock() {
+        let markdown = """
+        Text text.
+
+        ```
+        let a = "<Hello&World>"
+        ```
+
+        Text.
+        """
+
         let expectedResult = """
         Text text.
 
-        <pre class="splash"><code>struct Hello: Protocol {}</code></pre>
+        <pre class="splash"><code><span class="keyword">let</span> a = <span class="string">"&lt;Hello&amp;World&gt;"</span></code></pre>
+
+        Text.
+        """
+
+        XCTAssertEqual(decorator.decorate(markdown), expectedResult)
+    }
+
+    func testEscapingSpecialCharactersWithinSkippedCodeBlock() {
+        let markdown = """
+        Text text.
+
+        ```no-highlight
+        let a = "<Hello&World>"
+        ```
+
+        Text.
+        """
+
+        let expectedResult = """
+        Text text.
+
+        <pre class="splash"><code>let a = "&lt;Hello&amp;World&gt;"</code></pre>
 
         Text.
         """
@@ -72,7 +116,9 @@ extension MarkdownTests {
     static var allTests: [(String, TestClosure<MarkdownTests>)] {
         return [
             ("testConvertingCodeBlock", testConvertingCodeBlock),
-            ("testSkippingHighlightingForCodeBlock", testSkippingHighlightingForCodeBlock)
+            ("testSkippingHighlightingForCodeBlock", testSkippingHighlightingForCodeBlock),
+            ("testEscapingSpecialCharactersWithinHighlightedCodeBlock", testEscapingSpecialCharactersWithinHighlightedCodeBlock),
+            ("testEscapingSpecialCharactersWithinSkippedCodeBlock", testEscapingSpecialCharactersWithinSkippedCodeBlock)
         ]
     }
 }

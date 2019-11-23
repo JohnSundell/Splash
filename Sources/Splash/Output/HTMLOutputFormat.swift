@@ -51,7 +51,7 @@ public extension HTMLOutputFormat {
 
         public mutating func addPlainText(_ text: String) {
             appendPending()
-            html.append(text.escaped)
+            html.append(text.escapingHTMLEntities())
         }
 
         public mutating func addWhitespace(_ whitespace: String) {
@@ -70,7 +70,7 @@ public extension HTMLOutputFormat {
         private mutating func appendPending() {
             if let pending = pendingToken {
                 html.append("""
-                <span class="\(classPrefix)\(pending.type.string)">\(pending.string.escaped)</span>
+                <span class="\(classPrefix)\(pending.type.string)">\(pending.string.escapingHTMLEntities())</span>
                 """)
 
                 pendingToken = nil
@@ -81,12 +81,5 @@ public extension HTMLOutputFormat {
                 pendingWhitespace = nil
             }
         }
-    }
-}
-
-private extension String {
-    var escaped: String {
-        return replacingOccurrences(of: "<", with: "&lt;")
-               .replacingOccurrences(of: ">", with: "&gt;")
     }
 }
