@@ -36,7 +36,7 @@ public struct MarkdownDecorator {
 
             if code.hasPrefix(skipHighlightingPrefix) {
                 let charactersToDrop = skipHighlightingPrefix + "\n"
-                code = String(code.dropFirst(charactersToDrop.count))
+                code = code.dropFirst(charactersToDrop.count).escapingHTMLEntities()
             } else {
                 code = highlighter.highlight(code)
             }
