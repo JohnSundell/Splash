@@ -135,6 +135,11 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("{}")
         ])
     }
+        
+    func testCommentWithNumber() {
+        let components = highlighter.highlight("// 1")
+        XCTAssertEqual(components, [.token("// 1", .comment)])
+    }
 
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
@@ -149,7 +154,8 @@ extension CommentTests {
             ("testMultiLineCommentWithDoubleAsterisks", testMultiLineCommentWithDoubleAsterisks),
             ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
             ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
-            ("testCommentEndingWithComma", testCommentEndingWithComma)
+            ("testCommentEndingWithComma", testCommentEndingWithComma),
+            ("testCommentWithNumber", testCommentWithNumber),
         ]
     }
 }
