@@ -287,6 +287,10 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current == "prefix" && segment.tokens.next == "func" {
+                return true
+            }
+
             if segment.tokens.next == ":" {
                 // Nil pattern matching inside of a switch statement case
                 if segment.tokens.current == "nil" {
