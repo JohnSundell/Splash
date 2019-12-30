@@ -955,6 +955,31 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPrefixFunctionDeclaration() {
+        let components = highlighter.highlight("prefix func !(rhs: Bool) -> Bool { !rhs }")
+
+        XCTAssertEqual(components, [
+            .token("prefix", .keyword),
+            .whitespace(" "),
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("!(rhs:"),
+            .whitespace(" "),
+            .token("Bool", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Bool", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("!rhs"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -1064,6 +1089,7 @@ extension DeclarationTests {
             ("testNonMutatingFunction", testNonMutatingFunction),
             ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
+            ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
             ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations)
         ]
