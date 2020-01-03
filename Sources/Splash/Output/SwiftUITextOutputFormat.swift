@@ -5,9 +5,11 @@
 //  Copyright © 2020 Andrew Eades. All rights reserved.
 //
 
-import SwiftUI
 
 #if !os(Linux)
+#if canImport(SwiftUI)
+
+import SwiftUI
 
 import Foundation
 
@@ -75,4 +77,5 @@ public extension SwiftUITextOutputFormat {
     }
 }
 
+#endif
 #endif
