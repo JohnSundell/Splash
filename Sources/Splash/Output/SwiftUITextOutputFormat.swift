@@ -5,7 +5,6 @@
 //  Copyright © 2020 Andrew Eades. All rights reserved.
 //
 
-import Splash
 import SwiftUI
 
 #if !os(Linux)
