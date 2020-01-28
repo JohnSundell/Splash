@@ -88,6 +88,28 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithKeywordArgumentLabelOnNewLine() {
+        let components = highlighter.highlight("""
+        func a(
+            for b: B
+        )
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("a("),
+            .whitespace("\n    "),
+            .plainText("for"),
+            .whitespace(" "),
+            .plainText("b:"),
+            .whitespace(" "),
+            .token("B", .type),
+            .whitespace("\n"),
+            .plainText(")")
+        ])
+    }
+
     func testGenericFunctionDeclarationWithKeywordArgumentLabel() {
         let components = highlighter.highlight("func perform<O: AnyObject>(for object: O) {}")
 
@@ -1056,6 +1078,7 @@ extension DeclarationTests {
             ("testPublicFunctionDeclarationWithDocumentationEndingWithDot", testPublicFunctionDeclarationWithDocumentationEndingWithDot),
             ("testFunctionDeclarationWithEmptyExternalLabel", testFunctionDeclarationWithEmptyExternalLabel),
             ("testFunctionDeclarationWithKeywordArgumentLabel", testFunctionDeclarationWithKeywordArgumentLabel),
+            ("testFunctionDeclarationWithKeywordArgumentLabelOnNewLine", testFunctionDeclarationWithKeywordArgumentLabelOnNewLine),
             ("testGenericFunctionDeclarationWithKeywordArgumentLabel", testGenericFunctionDeclarationWithKeywordArgumentLabel),
             ("testGenericFunctionDeclarationWithoutConstraints", testGenericFunctionDeclarationWithoutConstraints),
             ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
