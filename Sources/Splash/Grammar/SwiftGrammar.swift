@@ -78,6 +78,12 @@ private extension SwiftGrammar {
         "public", "internal", "fileprivate", "private"
     ]
 
+    static let declarationKeywords: Set<String> = [
+        "class", "struct", "enum", "func",
+        "protocol", "typealias", "import",
+        "associatedtype", "subscript"
+    ]
+
     struct PreprocessingRule: SyntaxRule {
         var tokenType: TokenType { return .preprocessing }
         private let controlFlowTokens: Set<String> = ["#if", "#endif", "#elseif", "#else"]
@@ -306,8 +312,8 @@ private extension SwiftGrammar {
                 }
             }
 
-            if !segment.tokens.onSameLine.isEmpty,
-               let previousToken = segment.tokens.previous {
+            if let previousToken = segment.tokens.previous,
+               !declarationKeywords.contains(segment.tokens.current) {
                 // Highlight the '(set)' part of setter access modifiers
                 switch segment.tokens.current {
                 case "(":
@@ -340,12 +346,6 @@ private extension SwiftGrammar {
 
     struct TypeRule: SyntaxRule {
         var tokenType: TokenType { return .type }
-
-        private let declarationKeywords: Set<String> = [
-            "class", "struct", "enum", "func",
-            "protocol", "typealias", "import",
-            "associatedtype", "subscript"
-        ]
 
         func matches(_ segment: Segment) -> Bool {
             // Types should not be highlighted when declared
