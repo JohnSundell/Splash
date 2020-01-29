@@ -234,6 +234,19 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testStringLiteralContainingOnlyNewLine() {
+        let components = highlighter.highlight(#"text.split(separator: "\n")"#)
+
+        XCTAssertEqual(components, [
+            .plainText("text."),
+            .token("split", .call),
+            .plainText("(separator:"),
+            .whitespace(" "),
+            .token(#""\n""#, .string),
+            .plainText(")")
+        ])
+    }
+
     func testDoubleLiteral() {
         let components = highlighter.highlight("let double = 1.13")
 
@@ -320,6 +333,7 @@ extension LiteralTests {
             ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
             ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
             ("testRawStringWithInterpolation", testRawStringWithInterpolation),
+            ("testStringLiteralContainingOnlyNewLine", testStringLiteralContainingOnlyNewLine),
             ("testDoubleLiteral", testDoubleLiteral),
             ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators),
             ("testKeyPathLiteral", testKeyPathLiteral),
