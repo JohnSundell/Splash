@@ -47,9 +47,13 @@ public struct SwiftGrammar: Grammar {
             return false
         case (")", _):
             return false
-        case ("/", "/"), ("/", "*"):
+        case ("/", "/"), ("/", "*"), ("*", "/"):
             return true
         case ("/", _):
+            return false
+        case ("(", _) where delimiterB != ".":
+            return false
+        case (".", "/"):
             return false
         default:
             return true
@@ -71,11 +75,17 @@ private extension SwiftGrammar {
         "lazy", "subscript", "defer", "inout", "while",
         "continue", "fallthrough", "repeat", "indirect",
         "deinit", "is", "#file", "#line", "#function",
-        "dynamic", "some", "#available", "convenience"
+        "dynamic", "some", "#available", "convenience", "unowned"
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [
         "public", "internal", "fileprivate", "private"
+    ]
+
+    static let declarationKeywords: Set<String> = [
+        "class", "struct", "enum", "func",
+        "protocol", "typealias", "import",
+        "associatedtype", "subscript"
     ]
 
     struct PreprocessingRule: SyntaxRule {
@@ -100,6 +110,12 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .comment }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current.hasPrefix("/*") {
+                if segment.tokens.current.hasSuffix("*/") {
+                    return true
+                }
+            }
+            
             if segment.tokens.current.hasPrefix("//") {
                 return true
             }
@@ -287,6 +303,10 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current == "prefix" && segment.tokens.next == "func" {
+                return true
+            }
+
             if segment.tokens.next == ":" {
                 // Nil pattern matching inside of a switch statement case
                 if segment.tokens.current == "nil" {
@@ -302,31 +322,40 @@ private extension SwiftGrammar {
                 }
             }
 
-            if !segment.tokens.onSameLine.isEmpty,
-               let previousToken = segment.tokens.previous {
-                // Highlight the '(set)' part of setter access modifiers
-                switch segment.tokens.current {
-                case "(":
-                    return accessControlKeywords.contains(previousToken)
-                case "set":
-                    if previousToken == "(" {
-                        return true
-                    }
-                case ")":
-                    return previousToken == "set"
-                default:
-                    break
-                }
-
-                // Don't highlight most keywords when used as a parameter label
-                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil") {
-                    guard !previousToken.isAny(of: "(", ",", ">(") else {
+            if let previousToken = segment.tokens.previous {
+                // Don't highlight variables with the same name as a keyword
+                // when used in optional binding, such as if let, guard let:
+                if !segment.tokens.onSameLine.isEmpty, segment.tokens.current != "self" {
+                    guard !previousToken.isAny(of: "let", "var") else {
                         return false
                     }
                 }
 
-                guard !segment.tokens.previous.isAny(of: "func", "`") else {
-                    return false
+                if !declarationKeywords.contains(segment.tokens.current) {
+                    // Highlight the '(set)' part of setter access modifiers
+                    switch segment.tokens.current {
+                    case "(":
+                        return accessControlKeywords.contains(previousToken)
+                    case "set":
+                        if previousToken == "(" {
+                            return true
+                        }
+                    case ")":
+                        return previousToken == "set"
+                    default:
+                        break
+                    }
+
+                    // Don't highlight most keywords when used as a parameter label
+                    if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil") {
+                        guard !previousToken.isAny(of: "(", ",", ">(") else {
+                            return false
+                        }
+                    }
+
+                    guard !segment.tokens.previous.isAny(of: "func", "`") else {
+                        return false
+                    }
                 }
             }
 
@@ -336,12 +365,6 @@ private extension SwiftGrammar {
 
     struct TypeRule: SyntaxRule {
         var tokenType: TokenType { return .type }
-
-        private let declarationKeywords: Set<String> = [
-            "class", "struct", "enum", "func",
-            "protocol", "typealias", "import",
-            "associatedtype", "subscript"
-        ]
 
         func matches(_ segment: Segment) -> Bool {
             // Types should not be highlighted when declared
@@ -492,9 +515,11 @@ private extension Segment {
         var previousToken: String?
 
         for token in tokens.onSameLine {
-            guard previousToken != "\\" else {
-                previousToken = token
-                continue
+            if token.hasPrefix("(") || token.hasPrefix("#(") || token.hasPrefix("\"") {
+                guard previousToken != "\\" else {
+                    previousToken = token
+                    continue
+                }
             }
 
             if token == start {

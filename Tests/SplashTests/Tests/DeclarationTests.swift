@@ -88,6 +88,28 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithKeywordArgumentLabelOnNewLine() {
+        let components = highlighter.highlight("""
+        func a(
+            for b: B
+        )
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("a("),
+            .whitespace("\n    "),
+            .plainText("for"),
+            .whitespace(" "),
+            .plainText("b:"),
+            .whitespace(" "),
+            .token("B", .type),
+            .whitespace("\n"),
+            .plainText(")")
+        ])
+    }
+
     func testGenericFunctionDeclarationWithKeywordArgumentLabel() {
         let components = highlighter.highlight("func perform<O: AnyObject>(for object: O) {}")
 
@@ -669,6 +691,27 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyDeclarationAfterCommentEndingWithVarKeyword() {
+        let components = highlighter.highlight("""
+        // var
+        var number = 7
+        """)
+
+        XCTAssertEqual(components, [
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("var", .comment),
+            .whitespace("\n"),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("number"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("7", .number)
+        ])
+    }
+
     func testSubscriptDeclaration() {
         let components = highlighter.highlight("""
         extension Collection {
@@ -955,6 +998,31 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPrefixFunctionDeclaration() {
+        let components = highlighter.highlight("prefix func !(rhs: Bool) -> Bool { !rhs }")
+
+        XCTAssertEqual(components, [
+            .token("prefix", .keyword),
+            .whitespace(" "),
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("!(rhs:"),
+            .whitespace(" "),
+            .token("Bool", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Bool", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("!rhs"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -1031,6 +1099,7 @@ extension DeclarationTests {
             ("testPublicFunctionDeclarationWithDocumentationEndingWithDot", testPublicFunctionDeclarationWithDocumentationEndingWithDot),
             ("testFunctionDeclarationWithEmptyExternalLabel", testFunctionDeclarationWithEmptyExternalLabel),
             ("testFunctionDeclarationWithKeywordArgumentLabel", testFunctionDeclarationWithKeywordArgumentLabel),
+            ("testFunctionDeclarationWithKeywordArgumentLabelOnNewLine", testFunctionDeclarationWithKeywordArgumentLabelOnNewLine),
             ("testGenericFunctionDeclarationWithKeywordArgumentLabel", testGenericFunctionDeclarationWithKeywordArgumentLabel),
             ("testGenericFunctionDeclarationWithoutConstraints", testGenericFunctionDeclarationWithoutConstraints),
             ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
@@ -1054,6 +1123,7 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
+            ("testPropertyDeclarationAfterCommentEndingWithVarKeyword", testPropertyDeclarationAfterCommentEndingWithVarKeyword),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
@@ -1064,6 +1134,7 @@ extension DeclarationTests {
             ("testNonMutatingFunction", testNonMutatingFunction),
             ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
+            ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
             ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations)
         ]

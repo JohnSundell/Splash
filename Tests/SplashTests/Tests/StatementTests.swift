@@ -62,6 +62,44 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testIfLetStatementWithKeywordSymbolName() {
+        let components = highlighter.highlight("if let override = optional {}")
+
+        XCTAssertEqual(components, [
+            .token("if", .keyword),
+            .whitespace(" "),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("override"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("optional"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testGuardStatementUnwrappingWeakSelf() {
+        let components = highlighter.highlight("guard let self = self else {}")
+
+        XCTAssertEqual(components, [
+            .token("guard", .keyword),
+            .whitespace(" "),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .whitespace(" "),
+            .token("else", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testSwitchStatement() {
         let components = highlighter.highlight("""
         switch variable {
@@ -395,6 +433,8 @@ extension StatementTests {
             ("testImportStatement", testImportStatement),
             ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
             ("testChainedIfElseStatements", testChainedIfElseStatements),
+            ("testIfLetStatementWithKeywordSymbolName", testIfLetStatementWithKeywordSymbolName),
+            ("testGuardStatementUnwrappingWeakSelf", testGuardStatementUnwrappingWeakSelf),
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
             ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),

@@ -146,6 +146,33 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentWithNoWhiteSpaceToPunctuation() {
+        let components = highlighter.highlight("""
+        (/* Hello */)
+        .// World
+        (/**/)
+        """)
+
+         XCTAssertEqual(components, [
+            .plainText("("),
+            .token("/*", .comment),
+            .whitespace(" "),
+            .token("Hello", .comment),
+            .whitespace(" "),
+            .token("*/", .comment),
+            .plainText(")"),
+            .whitespace("\n"),
+            .plainText("."),
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("World", .comment),
+            .whitespace("\n"),
+            .plainText("("),
+            .token("/**/", .comment),
+            .plainText(")"),
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -161,6 +188,7 @@ extension CommentTests {
             ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
             ("testCommentEndingWithComma", testCommentEndingWithComma),
             ("testCommentWithNumber", testCommentWithNumber),
+            ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation)
         ]
     }
 }
