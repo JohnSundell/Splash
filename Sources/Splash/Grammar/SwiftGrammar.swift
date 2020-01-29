@@ -322,31 +322,38 @@ private extension SwiftGrammar {
                 }
             }
 
-            if let previousToken = segment.tokens.previous,
-               !declarationKeywords.contains(segment.tokens.current) {
-                // Highlight the '(set)' part of setter access modifiers
-                switch segment.tokens.current {
-                case "(":
-                    return accessControlKeywords.contains(previousToken)
-                case "set":
-                    if previousToken == "(" {
-                        return true
-                    }
-                case ")":
-                    return previousToken == "set"
-                default:
-                    break
+            if let previousToken = segment.tokens.previous {
+                // Don't highlight variables with the same name as a keyword
+                // when used in optional binding, such as if let, guard let:
+                guard !previousToken.isAny(of: "let", "var") else {
+                    return false
                 }
 
-                // Don't highlight most keywords when used as a parameter label
-                if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil") {
-                    guard !previousToken.isAny(of: "(", ",", ">(") else {
+                if !declarationKeywords.contains(segment.tokens.current) {
+                    // Highlight the '(set)' part of setter access modifiers
+                    switch segment.tokens.current {
+                    case "(":
+                        return accessControlKeywords.contains(previousToken)
+                    case "set":
+                        if previousToken == "(" {
+                            return true
+                        }
+                    case ")":
+                        return previousToken == "set"
+                    default:
+                        break
+                    }
+
+                    // Don't highlight most keywords when used as a parameter label
+                    if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil") {
+                        guard !previousToken.isAny(of: "(", ",", ">(") else {
+                            return false
+                        }
+                    }
+
+                    guard !segment.tokens.previous.isAny(of: "func", "`") else {
                         return false
                     }
-                }
-
-                guard !segment.tokens.previous.isAny(of: "func", "`") else {
-                    return false
                 }
             }
 

@@ -62,6 +62,24 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testIfLetStatementWithKeywordSymbolName() {
+        let components = highlighter.highlight("if let override = optional {}")
+
+        XCTAssertEqual(components, [
+            .token("if", .keyword),
+            .whitespace(" "),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("override"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("optional"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testSwitchStatement() {
         let components = highlighter.highlight("""
         switch variable {
@@ -395,6 +413,7 @@ extension StatementTests {
             ("testImportStatement", testImportStatement),
             ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
             ("testChainedIfElseStatements", testChainedIfElseStatements),
+            ("testIfLetStatementWithKeywordSymbolName", testIfLetStatementWithKeywordSymbolName),
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
             ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),
