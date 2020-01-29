@@ -143,7 +143,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
         (/**/)
         """)
 
-        XCTAssertEqual(components, [
+         XCTAssertEqual(components, [
             .plainText("("),
             .token("/*", .comment),
             .whitespace(" "),
@@ -158,8 +158,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("World", .comment),
             .whitespace("\n"),
             .plainText("("),
-            .token("/*", .comment),
-            .token("*/", .comment),
+            .token("/**/", .comment),
             .plainText(")"),
         ])
     }
