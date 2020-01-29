@@ -49,11 +49,11 @@ public struct SwiftGrammar: Grammar {
             return false
         case ("/", "/"), ("/", "*"), ("*", "/"):
             return true
-        case ("(", "/"), ("/", ")"):
-            return false
-        case (_, "/"), ("/", _):
-            return false
         case ("/", _):
+            return false
+        case ("(", _) where delimiterB != ".":
+            return false
+        case (".", "/"):
             return false
         default:
             return true
@@ -104,6 +104,12 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .comment }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current.hasPrefix("/*") {
+                if segment.tokens.current.hasSuffix("*/") {
+                    return true
+                }
+            }
+            
             if segment.tokens.current.hasPrefix("//") {
                 return true
             }
