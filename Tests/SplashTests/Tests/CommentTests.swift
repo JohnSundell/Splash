@@ -135,6 +135,16 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("{}")
         ])
     }
+        
+    func testCommentWithNumber() {
+        let components = highlighter.highlight("// 1")
+
+        XCTAssertEqual(components, [
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("1", .comment)
+        ])
+    }
 
     func testCommentWithNoWhiteSpaceToPunctuation() {
         let components = highlighter.highlight("""
@@ -177,6 +187,7 @@ extension CommentTests {
             ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
             ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
             ("testCommentEndingWithComma", testCommentEndingWithComma),
+            ("testCommentWithNumber", testCommentWithNumber),
             ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation)
         ]
     }
