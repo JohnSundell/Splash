@@ -325,8 +325,10 @@ private extension SwiftGrammar {
             if let previousToken = segment.tokens.previous {
                 // Don't highlight variables with the same name as a keyword
                 // when used in optional binding, such as if let, guard let:
-                guard !previousToken.isAny(of: "let", "var") else {
-                    return false
+                if !segment.tokens.onSameLine.isEmpty, segment.tokens.current != "self" {
+                    guard !previousToken.isAny(of: "let", "var") else {
+                        return false
+                    }
                 }
 
                 if !declarationKeywords.contains(segment.tokens.current) {
