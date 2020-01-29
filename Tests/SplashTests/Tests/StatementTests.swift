@@ -80,6 +80,26 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGuardStatementUnwrappingWeakSelf() {
+        let components = highlighter.highlight("guard let self = self else {}")
+
+        XCTAssertEqual(components, [
+            .token("guard", .keyword),
+            .whitespace(" "),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .whitespace(" "),
+            .token("else", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testSwitchStatement() {
         let components = highlighter.highlight("""
         switch variable {
@@ -414,6 +434,7 @@ extension StatementTests {
             ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
             ("testChainedIfElseStatements", testChainedIfElseStatements),
             ("testIfLetStatementWithKeywordSymbolName", testIfLetStatementWithKeywordSymbolName),
+            ("testGuardStatementUnwrappingWeakSelf", testGuardStatementUnwrappingWeakSelf),
             ("testSwitchStatement", testSwitchStatement),
             ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
             ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),

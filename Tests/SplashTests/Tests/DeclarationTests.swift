@@ -691,6 +691,27 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyDeclarationAfterCommentEndingWithVarKeyword() {
+        let components = highlighter.highlight("""
+        // var
+        var number = 7
+        """)
+
+        XCTAssertEqual(components, [
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("var", .comment),
+            .whitespace("\n"),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("number"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("7", .number)
+        ])
+    }
+
     func testSubscriptDeclaration() {
         let components = highlighter.highlight("""
         extension Collection {
@@ -1102,6 +1123,7 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
+            ("testPropertyDeclarationAfterCommentEndingWithVarKeyword", testPropertyDeclarationAfterCommentEndingWithVarKeyword),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
