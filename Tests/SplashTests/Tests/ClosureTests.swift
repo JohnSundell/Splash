@@ -201,6 +201,46 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClosureWithWeakSelfCaptureList() {
+        let components = highlighter.highlight("closure { [weak self] in }")
+
+        XCTAssertEqual(components, [
+            .token("closure", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("weak", .keyword),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .plainText("]"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
+    func testClosureWithUnownedSelfCaptureList() {
+        let components = highlighter.highlight("closure { [unowned self] in }")
+
+        XCTAssertEqual(components, [
+            .token("closure", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("unowned", .keyword),
+            .whitespace(" "),
+            .token("self", .keyword),
+            .plainText("]"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -218,7 +258,9 @@ extension ClosureTests {
             ("testClosureWithInoutArgument", testClosureWithInoutArgument),
             ("testPassingClosureAsArgument", testPassingClosureAsArgument),
             ("testNestedEscapingClosure", testNestedEscapingClosure),
-            ("testClosureArgumentShorthands", testClosureArgumentShorthands)
+            ("testClosureArgumentShorthands", testClosureArgumentShorthands),
+            ("testClosureWithWeakSelfCaptureList", testClosureWithWeakSelfCaptureList),
+            ("testClosureWithUnownedSelfCaptureList", testClosureWithUnownedSelfCaptureList)
         ]
     }
 }
