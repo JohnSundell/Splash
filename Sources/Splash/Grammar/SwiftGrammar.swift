@@ -506,9 +506,11 @@ private extension Segment {
         var previousToken: String?
 
         for token in tokens.onSameLine {
-            guard previousToken != "\\" else {
-                previousToken = token
-                continue
+            if token.hasPrefix("(") || token.hasPrefix("#(") || token.hasPrefix("\"") {
+                guard previousToken != "\\" else {
+                    previousToken = token
+                    continue
+                }
             }
 
             if token == start {
