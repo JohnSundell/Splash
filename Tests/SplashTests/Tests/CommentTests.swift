@@ -138,7 +138,12 @@ final class CommentTests: SyntaxHighlighterTestCase {
         
     func testCommentWithNumber() {
         let components = highlighter.highlight("// 1")
-        XCTAssertEqual(components, [.token("// 1", .comment)])
+
+        XCTAssertEqual(components, [
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("1", .comment)
+        ])
     }
 
     func testAllTestsRunOnLinux() {
