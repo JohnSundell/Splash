@@ -70,14 +70,11 @@ internal extension Font {
     }
 
     private func load(fromPath path: String) -> Loaded? {
-        let url = CFURLCreateWithFileSystemPath(
-            kCFAllocatorDefault,
-            path as CFString,
-            .cfurlposixPathStyle,
-            false
-        )
-
-        guard let font = url.flatMap(CGDataProvider.init).flatMap(CGFont.init) else {
+        guard
+            let url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, path as CFString, .cfurlposixPathStyle, false),
+            let provider = CGDataProvider(url: url),
+            let font = CGFont(provider)
+        else {
             return nil
         }
 
