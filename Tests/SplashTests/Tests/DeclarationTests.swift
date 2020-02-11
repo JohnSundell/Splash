@@ -1023,6 +1023,26 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testEnumDeclarationWithSomeCase() {
+        let components = highlighter.highlight("""
+        enum MyEnum { case some }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("enum", .keyword),
+            .whitespace(" "),
+            .plainText("MyEnum"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("case", .keyword),
+            .whitespace(" "),
+            .plainText("some"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testIndirectEnumDeclaration() {
         let components = highlighter.highlight("""
         indirect enum Content {
@@ -1135,6 +1155,7 @@ extension DeclarationTests {
             ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
             ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
             ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
+            ("testEnumDeclarationWithSomeCase", testEnumDeclarationWithSomeCase),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
             ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations)
         ]

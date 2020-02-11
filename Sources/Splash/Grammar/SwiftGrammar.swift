@@ -307,6 +307,12 @@ private extension SwiftGrammar {
                 return true
             }
 
+            if segment.tokens.current == "some" {
+                guard segment.tokens.previous != "case" else {
+                    return false
+                }
+            }
+
             if segment.tokens.next == ":" {
                 // Nil pattern matching inside of a switch statement case
                 if segment.tokens.current == "nil" {
