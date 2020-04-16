@@ -223,7 +223,7 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .call }
         private let keywordsToAvoid: Set<String>
         private let callLikeKeywords: Set<String>
-        private let controlFlowTokens = ["if", "&&", "||", "for"]
+        private let controlFlowTokens = ["if", "&&", "||", "for", "switch"]
 
         init() {
             var keywordsToAvoid = keywords
