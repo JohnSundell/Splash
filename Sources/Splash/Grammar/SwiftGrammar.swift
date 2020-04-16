@@ -231,6 +231,7 @@ private extension SwiftGrammar {
             keywordsToAvoid.remove("try")
             keywordsToAvoid.remove("throw")
             keywordsToAvoid.remove("if")
+            keywordsToAvoid.remove("in")
             self.keywordsToAvoid = keywordsToAvoid
 
             var callLikeKeywords = accessControlKeywords

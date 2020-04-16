@@ -241,6 +241,25 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testClosureWithSingleFunctionCall() {
+        let components = highlighter.highlight("closure { a in call(a) }")
+
+        XCTAssertEqual(components, [
+            .token("closure", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("a"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("(a)"),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -260,7 +279,8 @@ extension ClosureTests {
             ("testNestedEscapingClosure", testNestedEscapingClosure),
             ("testClosureArgumentShorthands", testClosureArgumentShorthands),
             ("testClosureWithWeakSelfCaptureList", testClosureWithWeakSelfCaptureList),
-            ("testClosureWithUnownedSelfCaptureList", testClosureWithUnownedSelfCaptureList)
+            ("testClosureWithUnownedSelfCaptureList", testClosureWithUnownedSelfCaptureList),
+            ("testClosureWithSingleFunctionCall", testClosureWithSingleFunctionCall)
         ]
     }
 }
