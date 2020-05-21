@@ -170,6 +170,19 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testUsingTryKeywordWithinFunctionCall() {
+        let components = highlighter.highlight("XCTAssertThrowsError(try function())")
+
+        XCTAssertEqual(components, [
+            .token("XCTAssertThrowsError", .call),
+            .plainText("("),
+            .token("try", .keyword),
+            .whitespace(" "),
+            .token("function", .call),
+            .plainText("())")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -189,7 +202,8 @@ extension FunctionCallTests {
             ("testPassingTypeToFunction", testPassingTypeToFunction),
             ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
             ("testIndentedFunctionCalls", testIndentedFunctionCalls),
-            ("testXCTAssertCalls", testXCTAssertCalls)
+            ("testXCTAssertCalls", testXCTAssertCalls),
+            ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall)
         ]
     }
 }
