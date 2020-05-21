@@ -55,6 +55,8 @@ public struct SwiftGrammar: Grammar {
             return false
         case (".", "/"):
             return false
+        case ("{", "/"), ("}", "/"):
+            return false
         default:
             return true
         }

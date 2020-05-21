@@ -173,6 +173,23 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentsNextToCurlyBrackets() {
+        let components = highlighter.highlight("""
+        call {//commentA
+        }//commentB
+        """)
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .token("//commentA", .comment),
+            .whitespace("\n"),
+            .plainText("}"),
+            .token("//commentB", .comment)
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -188,7 +205,8 @@ extension CommentTests {
             ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
             ("testCommentEndingWithComma", testCommentEndingWithComma),
             ("testCommentWithNumber", testCommentWithNumber),
-            ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation)
+            ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation),
+            ("testCommentsNextToCurlyBrackets", testCommentsNextToCurlyBrackets)
         ]
     }
 }
