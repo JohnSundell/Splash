@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Swift-5.0-orange.svg" />
+    <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" />
     <a href="https://swift.org/package-manager">
         <img src="https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat" alt="Swift Package Manager" />
     </a>
@@ -26,6 +26,10 @@ Splash can be used either as a library in your own Swift Package Manager-powered
 Thanks to my good friend [Gui Rambo](https://twitter.com/_inside), you can [try out Splash directly in your browser](https://splash.rambo.codes)! His web tool lets you use Splash to generate either HTML or an image, by simply pasting Swift code into a text box.
 
 👉 [splash.rambo.codes](https://splash.rambo.codes)
+
+If you're using [Publish](https://github.com/JohnSundell/Publish), then there's an official plugin that makes it easy to integrate Splash into your website:
+
+👉 [SplashPublishPlugin](https://github.com/JohnSundell/SplashPublishPlugin)
 
 If you're using Jekyll, there's also a custom ```{% splash %}``` tag available for the Liquid templating language.
 
@@ -143,7 +147,7 @@ Splash is distributed as a Swift package, making it easy to install for use in s
 
 Splash supports both macOS and Linux.
 
-*Before you begin, make sure that you have a Swift 4.2-compatible toolchain installed (for example Xcode 10 if you're on a Mac).*
+*Before you begin, make sure that you have a Swift 5.2-compatible toolchain installed (for example Xcode 11.5 or later if you're on a Mac).*
 
 ### 📦 As a package
 
