@@ -87,7 +87,7 @@ private extension SwiftGrammar {
     static let declarationKeywords: Set<String> = [
         "class", "struct", "enum", "func",
         "protocol", "typealias", "import",
-        "associatedtype", "subscript"
+        "associatedtype", "subscript", "init"
     ]
 
     struct PreprocessingRule: SyntaxRule {

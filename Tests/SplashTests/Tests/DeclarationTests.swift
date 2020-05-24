@@ -1106,6 +1106,35 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGenericInitializerDeclaration() {
+        let components = highlighter.highlight("""
+        struct Box {
+            init<T: Model>(model: T) {}
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Box"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("init", .keyword),
+            .plainText("<T:"),
+            .whitespace(" "),
+            .token("Model", .type),
+            .plainText(">(model:"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -1157,7 +1186,8 @@ extension DeclarationTests {
             ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
             ("testEnumDeclarationWithSomeCase", testEnumDeclarationWithSomeCase),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
-            ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations)
+            ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations),
+            ("testGenericInitializerDeclaration", testGenericInitializerDeclaration)
         ]
     }
 }
