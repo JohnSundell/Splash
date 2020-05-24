@@ -368,6 +368,23 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testGenericSubclassDeclaration() {
+        let components = highlighter.highlight("class Promise<Value>: Future<Value> {}")
+
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("Promise<Value>:"),
+            .whitespace(" "),
+            .token("Future", .type),
+            .plainText("<"),
+            .token("Value", .type),
+            .plainText(">"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testProtocolDeclaration() {
         let components = highlighter.highlight("""
         protocol Hello {
@@ -1161,6 +1178,7 @@ extension DeclarationTests {
             ("testClassDeclarationWithDeinit", testClassDeclarationWithDeinit),
             ("testClassDeclarationWithMultipleProtocolConformances", testClassDeclarationWithMultipleProtocolConformances),
             ("testSubclassDeclaration", testSubclassDeclaration),
+            ("testGenericSubclassDeclaration", testGenericSubclassDeclaration),
             ("testProtocolDeclaration", testProtocolDeclaration),
             ("testProtocolDeclarationWithAssociatedTypes", testProtocolDeclarationWithAssociatedTypes),
             ("testExtensionDeclaration", testExtensionDeclaration),

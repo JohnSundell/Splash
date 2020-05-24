@@ -419,7 +419,7 @@ private extension SwiftGrammar {
                     }
 
                     // Handling generic lists for parameters, rather than declarations
-                    if foundOpeningBracket && token == ":" {
+                    if foundOpeningBracket && token.isAny(of: ":", ">:") {
                         return true
                     }
 
