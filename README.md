@@ -198,7 +198,7 @@ $ install .build/Release/SplashHTMLGen /usr/local/bin/SplashHTMLGen
 
 Splash is developed completely in the open, and your contributions are more than welcome. It's still a very new project, so I'm sure there are bugs to be found and improvements to be made - and hopefully we can work on those together as a community.
 
-You might notice that this project does not have GitHub issues enabled. That's because with Splash, I'm trying out a new 100% PR-based open source workflow. This is a bit of an experiment, so let's see how it works out.
+This project does not come with GitHub Issues-based support, and users are instead encouraged to become active participants in its continued development — by fixing any bugs that they encounter, or by improving the documentation wherever it's found to be lacking.
 
 To read more about suggested workflows when contributing to Splash, how to report bugs and feature requests, as well as technical details and an architectural overview - check out the [Contributing Guide](https://github.com/JohnSundell/Splash/blob/master/CONTRIBUTING.md).
 
