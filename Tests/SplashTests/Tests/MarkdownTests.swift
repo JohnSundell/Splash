@@ -6,6 +6,8 @@
 
 import XCTest
 import Splash
+import SplashTestKit
+
 
 final class MarkdownTests: SplashTestCase {
     private var decorator: MarkdownDecorator!

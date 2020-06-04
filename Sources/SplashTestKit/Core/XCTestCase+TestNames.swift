@@ -9,8 +9,8 @@ import XCTest
 
 #if os(macOS)
 
-extension XCTestCase {
-    static var testNames: [String] {
+public extension XCTestCase {
+    public static var testNames: [String] {
         return defaultTestSuite.tests.map { test in
             let components = test.name.components(separatedBy: .whitespaces)
             return components[1].replacingOccurrences(of: "]", with: "")

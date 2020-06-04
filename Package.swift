@@ -11,7 +11,8 @@ import PackageDescription
 let package = Package(
     name: "Splash",
     products: [
-        .library(name: "Splash", targets: ["Splash"])
+        .library(name: "Splash", targets: ["Splash"]),
+        .library(name: "SplashTestKit", targets: ["SplashTestKit"])
     ],
     targets: [
         .target(name: "Splash"),
@@ -31,9 +32,13 @@ let package = Package(
             name: "SplashTokenizer",
             dependencies: ["Splash"]
         ),
+        .target(
+            name: "SplashTestKit",
+            dependencies: ["Splash"]
+        ),
         .testTarget(
             name: "SplashTests",
-            dependencies: ["Splash"]
+            dependencies: ["Splash", "SplashTestKit"]
         )
     ]
 )

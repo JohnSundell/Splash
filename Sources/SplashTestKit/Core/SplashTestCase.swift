@@ -8,9 +8,9 @@ import Foundation
 import XCTest
 
 /// Abstract base class for all Splash tests
-class SplashTestCase: XCTestCase {
+open class SplashTestCase: XCTestCase {
     #if os(macOS)
-    func testHasLinuxVerificationTest() {
+    public func testHasLinuxVerificationTest() {
         let concreteType = type(of: self)
 
         guard concreteType != SyntaxHighlighterTestCase.self else {

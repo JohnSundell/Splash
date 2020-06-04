@@ -7,4 +7,4 @@
 import Foundation
 import XCTest
 
-typealias TestClosure<T: XCTestCase> = (T) -> () throws -> Void
+public typealias TestClosure<T: XCTestCase> = (T) -> () throws -> Void

@@ -7,10 +7,10 @@
 import Foundation
 import Splash
 
-struct OutputFormatMock: OutputFormat {
-    let builder: OutputBuilderMock
+public struct OutputFormatMock: OutputFormat {
+    public let builder: OutputBuilderMock
 
-    func makeBuilder() -> OutputBuilderMock {
+    public func makeBuilder() -> OutputBuilderMock {
         return builder
     }
 }

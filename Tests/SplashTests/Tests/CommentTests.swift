@@ -7,6 +7,8 @@
 import Foundation
 import XCTest
 import Splash
+import SplashTestKit
+
 
 final class CommentTests: SyntaxHighlighterTestCase {
     func testSingleLineComment() {

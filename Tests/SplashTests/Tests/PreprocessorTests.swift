@@ -7,6 +7,7 @@
 import Foundation
 import XCTest
 import Splash
+import SplashTestKit
 
 final class PreprocessorTests: SyntaxHighlighterTestCase {
     func testPreprocessing() {

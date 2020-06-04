@@ -7,8 +7,8 @@
 import Foundation
 import XCTest
 
-struct TestCaseVerifier<Case: XCTestCase> {
-    static func verifyLinuxTests(_ tests: [(String, TestClosure<Case>)]) -> Bool {
+public struct TestCaseVerifier<Case: XCTestCase> {
+    public static func verifyLinuxTests(_ tests: [(String, TestClosure<Case>)]) -> Bool {
         #if os(macOS)
         let testNames = Set(tests.map { $0.0 })
 

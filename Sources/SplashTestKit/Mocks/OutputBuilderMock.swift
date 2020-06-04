@@ -7,27 +7,27 @@
 import Foundation
 import Splash
 
-struct OutputBuilderMock: OutputBuilder {
+public struct OutputBuilderMock: OutputBuilder {
     private var components = [Component]()
 
-    mutating func addToken(_ token: String, ofType type: TokenType) {
+    public mutating func addToken(_ token: String, ofType type: TokenType) {
         components.append(.token(token, type))
     }
 
-    mutating func addPlainText(_ text: String) {
+    public mutating func addPlainText(_ text: String) {
         components.append(.plainText(text))
     }
 
-    mutating func addWhitespace(_ whitespace: String) {
+    public mutating func addWhitespace(_ whitespace: String) {
         components.append(.whitespace(whitespace))
     }
 
-    func build() -> [Component] {
+    public func build() -> [Component] {
         return components
     }
 }
 
-extension OutputBuilderMock {
+public extension OutputBuilderMock {
     enum Component: Equatable {
         case token(String, TokenType)
         case plainText(String)

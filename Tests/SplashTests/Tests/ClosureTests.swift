@@ -7,6 +7,8 @@
 import Foundation
 import XCTest
 import Splash
+import SplashTestKit
+
 
 final class ClosureTests: SyntaxHighlighterTestCase {
     func testTrailingClosureWithArguments() {
