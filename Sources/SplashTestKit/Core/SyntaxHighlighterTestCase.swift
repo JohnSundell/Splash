@@ -21,6 +21,6 @@ open class SyntaxHighlighterTestCase: SplashTestCase {
     open override func setUp() {
         super.setUp()
         builder = OutputBuilderMock()
-        highlighter = SyntaxHighlighter(format: OutputFormatMock(builder: builder), grammar: Self.grammer)
+        highlighter = SyntaxHighlighter(format: OutputFormatMock(builder: builder), grammar: self.grammer)
     }
 }
