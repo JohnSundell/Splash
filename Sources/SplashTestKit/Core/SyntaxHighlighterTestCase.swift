@@ -11,7 +11,7 @@ import Splash
 /// Test case used as an abstract base class for all tests relating to
 /// syntax highlighting. For all such tests, the Swift grammar is used.
 open class SyntaxHighlighterTestCase: SplashTestCase {
-    public static var grammer: Grammar {
+    open var grammer: Grammar {
         SwiftGrammar()
     }
     
