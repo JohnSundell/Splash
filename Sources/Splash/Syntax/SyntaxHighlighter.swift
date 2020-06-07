@@ -35,8 +35,9 @@ public struct SyntaxHighlighter<Format: OutputFormat> {
                 state = (token, type)
                 return
             }
-
-            builder.addToken(token, ofType: type)
+            if token != whitespace {
+                builder.addToken(token, ofType: type)
+            }
             builder.addWhitespace(whitespace)
             state = nil
         }
