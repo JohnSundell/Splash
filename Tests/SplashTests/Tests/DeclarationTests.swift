@@ -1123,6 +1123,34 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testWrappedPropertyDeclarationUsingNestedType() {
+        let components = highlighter.highlight("""
+        struct User {
+            @Persisted.InMemory var name: String
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("User"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@Persisted", .keyword),
+            .plainText("."),
+            .token("InMemory", .keyword),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("name:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testGenericInitializerDeclaration() {
         let components = highlighter.highlight("""
         struct Box {
@@ -1205,6 +1233,7 @@ extension DeclarationTests {
             ("testEnumDeclarationWithSomeCase", testEnumDeclarationWithSomeCase),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
             ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations),
+            ("testWrappedPropertyDeclarationUsingNestedType", testWrappedPropertyDeclarationUsingNestedType),
             ("testGenericInitializerDeclaration", testGenericInitializerDeclaration)
         ]
     }
