@@ -139,7 +139,21 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
-            return segment.tokens.current.hasPrefix("@")
+            if segment.tokens.current.hasPrefix("@") {
+                return true
+            }
+
+            if segment.tokens.previous == "." {
+                let suffix = segment.tokens.onSameLine.suffix(2)
+
+                guard suffix.count == 2 else {
+                    return false
+                }
+
+                return suffix.first?.hasPrefix("@") ?? false
+            }
+
+            return false
         }
     }
 
