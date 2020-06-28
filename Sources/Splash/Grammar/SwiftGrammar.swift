@@ -53,7 +53,7 @@ public struct SwiftGrammar: Grammar {
             return false
         case ("(", _) where delimiterB != ".":
             return false
-        case (".", "/"):
+        case (".", "/"), (",", "/"):
             return false
         case ("{", "/"), ("}", "/"):
             return false

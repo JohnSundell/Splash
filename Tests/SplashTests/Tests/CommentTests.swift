@@ -135,6 +135,35 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("{}")
         ])
     }
+
+    func testCommentPrecededByComma() {
+        let components = highlighter.highlight("""
+        func find(
+            string: String,//TODO: Remove
+            options: Options
+        )
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("find("),
+            .whitespace("\n    "),
+            .plainText("string:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .plainText(","),
+            .token("//TODO:", .comment),
+            .whitespace(" "),
+            .token("Remove", .comment),
+            .whitespace("\n    "),
+            .plainText("options:"),
+            .whitespace(" "),
+            .token("Options", .type),
+            .whitespace("\n"),
+            .plainText(")")
+        ])
+    }
         
     func testCommentWithNumber() {
         let components = highlighter.highlight("// 1")
@@ -204,6 +233,7 @@ extension CommentTests {
             ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
             ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
             ("testCommentEndingWithComma", testCommentEndingWithComma),
+            ("testCommentPrecededByComma", testCommentPrecededByComma),
             ("testCommentWithNumber", testCommentWithNumber),
             ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation),
             ("testCommentsNextToCurlyBrackets", testCommentsNextToCurlyBrackets)
