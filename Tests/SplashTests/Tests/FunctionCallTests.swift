@@ -183,6 +183,19 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCallingFunctionWithProjectedPropertyWrapperValue() {
+        let components = highlighter.highlight("call(self.$value)")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("("),
+            .token("self", .keyword),
+            .plainText("."),
+            .token("$value", .property),
+            .plainText(")")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -203,7 +216,8 @@ extension FunctionCallTests {
             ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
             ("testIndentedFunctionCalls", testIndentedFunctionCalls),
             ("testXCTAssertCalls", testXCTAssertCalls),
-            ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall)
+            ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall),
+            ("testCallingFunctionWithProjectedPropertyWrapperValue", testCallingFunctionWithProjectedPropertyWrapperValue)
         ]
     }
 }

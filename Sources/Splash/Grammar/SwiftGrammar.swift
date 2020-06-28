@@ -625,6 +625,6 @@ private extension Segment {
             return false
         }
 
-        return firstCharacter == "_" || firstCharacter.isLetter
+        return firstCharacter == "_" || firstCharacter == "$" || firstCharacter.isLetter
     }
 }
