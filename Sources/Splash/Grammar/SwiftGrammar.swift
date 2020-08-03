@@ -433,8 +433,10 @@ private extension SwiftGrammar {
                     }
 
                     // Handling generic lists for parameters, rather than declarations
-                    if foundOpeningBracket && token.isAny(of: ":", ">:") {
-                        return true
+                    if foundOpeningBracket {
+                        if token.isAny(of: ":", ">:") || token.first == "@" {
+                            return true
+                        }
                     }
 
                     guard !declarationKeywords.contains(token) else {
