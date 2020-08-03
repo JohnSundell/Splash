@@ -1093,6 +1093,33 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyWrapperDeclaration() {
+        let components = highlighter.highlight("""
+        @propertyWrapper
+        struct Wrapped<Value> {
+            var wrappedValue: Value
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("@propertyWrapper", .keyword),
+            .whitespace("\n"),
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Wrapped<Value>"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("wrappedValue:"),
+            .whitespace(" "),
+            .token("Value", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testWrappedPropertyDeclarations() {
         let components = highlighter.highlight("""
         struct User {
@@ -1146,6 +1173,37 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("name:"),
             .whitespace(" "),
             .token("String", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testWrappedPropertyDeclarationUsingExplicitType() {
+        let components = highlighter.highlight("""
+        struct Model {
+            @Wrapper<Bool>(key: "setting")
+            var setting
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Model"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@Wrapper", .keyword),
+            .plainText("<"),
+            .token("Bool", .type),
+            .plainText(">(key:"),
+            .whitespace(" "),
+            .token(#""setting""#, .string),
+            .plainText(")"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("setting"),
             .whitespace("\n"),
             .plainText("}")
         ])
@@ -1232,8 +1290,10 @@ extension DeclarationTests {
             ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
             ("testEnumDeclarationWithSomeCase", testEnumDeclarationWithSomeCase),
             ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
+            ("testPropertyWrapperDeclaration", testPropertyWrapperDeclaration),
             ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations),
             ("testWrappedPropertyDeclarationUsingNestedType", testWrappedPropertyDeclarationUsingNestedType),
+            ("testWrappedPropertyDeclarationUsingExplicitType", testWrappedPropertyDeclarationUsingExplicitType),
             ("testGenericInitializerDeclaration", testGenericInitializerDeclaration)
         ]
     }
