@@ -163,7 +163,7 @@ If you want to use Splash through one of its built-in command line tools, start 
 
 ```
 $ git clone https://github.com/johnsundell/splash.git
-$ cd Splash
+$ cd splash
 ```
 
 To run a tool without installing it, you can use the Swift Package Manager's `run` command, like this:
@@ -191,7 +191,7 @@ If you only wish to install one of these, compile it and then move it to `/usr/l
 
 ```
 $ swift build -c release -Xswiftc -static-stdlib
-$ install .build/Release/SplashHTMLGen /usr/local/bin/SplashHTMLGen
+$ install .build/release/SplashHTMLGen /usr/local/bin/SplashHTMLGen
 ```
 
 ## Contributions and support
