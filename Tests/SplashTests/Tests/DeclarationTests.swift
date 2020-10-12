@@ -682,6 +682,47 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyWithCommentedDidSet() {
+        let components = highlighter.highlight("""
+        struct Hello {
+            var property: Int {
+                // Comment.
+                didSet { }
+            }
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Hello"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("property:"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n        "),
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("Comment.", .comment),
+            .whitespace("\n        "),
+            .token("didSet", .keyword),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace("\n    "),
+            .plainText("}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testPropertyWithSetterAccessLevel() {
         let components = highlighter.highlight("""
         struct Hello {
@@ -1305,6 +1346,7 @@ extension DeclarationTests {
             ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
             ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
+            ("testPropertyWithCommentedDidSet", testPropertyWithCommentedDidSet),
             ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
             ("testPropertyDeclarationAfterCommentEndingWithVarKeyword", testPropertyDeclarationAfterCommentEndingWithVarKeyword),
             ("testPropertyDeclarationWithStaticPropertyDefaultValue", testPropertyDeclarationWithStaticPropertyDefaultValue),
