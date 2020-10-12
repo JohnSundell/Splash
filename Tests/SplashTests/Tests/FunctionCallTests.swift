@@ -66,6 +66,24 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testExplicitInitializerCallUsingTrailingClosureSyntax() {
+        let components = highlighter.highlight("let task = Task.init {}")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("task"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("Task", .type),
+            .plainText("."),
+            .token("init", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testDotSyntaxInitializerCall() {
         let components = highlighter.highlight("let string: String = .init()")
 
@@ -225,6 +243,7 @@ extension FunctionCallTests {
             ("testFunctionCallWithNil", testFunctionCallWithNil),
             ("testImplicitInitializerCall", testImplicitInitializerCall),
             ("testExplicitInitializerCall", testExplicitInitializerCall),
+            ("testExplicitInitializerCallUsingTrailingClosureSyntax", testExplicitInitializerCallUsingTrailingClosureSyntax),
             ("testDotSyntaxInitializerCall", testDotSyntaxInitializerCall),
             ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
             ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),

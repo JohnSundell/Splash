@@ -265,6 +265,11 @@ private extension SwiftGrammar {
                 return false
             }
 
+            // Never highlight initializers as regular function calls
+            if token == "init" {
+                return false
+            }
+
             // There's a few keywords that might look like function calls
             if callLikeKeywords.contains(segment.tokens.current) {
                 if let nextToken = segment.tokens.next {
@@ -305,7 +310,7 @@ private extension SwiftGrammar {
                     return false
                 }
 
-                if segment.tokens.previous != "." {
+                if segment.tokens.previous != "." || segment.tokens.onSameLine.isEmpty {
                     guard !keywords.contains(segment.tokens.current) else {
                         return false
                     }
@@ -509,7 +514,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard segment.tokens.current != "self" else {
+            guard !segment.tokens.current.isAny(of: "self", "init") else {
                 return false
             }
 
