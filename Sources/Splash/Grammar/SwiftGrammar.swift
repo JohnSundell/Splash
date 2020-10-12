@@ -305,8 +305,10 @@ private extension SwiftGrammar {
                     return false
                 }
 
-                guard !keywords.contains(segment.tokens.current) else {
-                    return false
+                if segment.tokens.previous != "." {
+                    guard !keywords.contains(segment.tokens.current) else {
+                        return false
+                    }
                 }
 
                 return !segment.tokens.onSameLine.contains(anyOf: controlFlowTokens)

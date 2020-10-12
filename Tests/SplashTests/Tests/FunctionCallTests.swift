@@ -196,6 +196,23 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax() {
+        let components = highlighter.highlight("publisher.catch { error in }")
+
+        XCTAssertEqual(components, [
+            .plainText("publisher."),
+            .token("catch", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("error"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -217,7 +234,8 @@ extension FunctionCallTests {
             ("testIndentedFunctionCalls", testIndentedFunctionCalls),
             ("testXCTAssertCalls", testXCTAssertCalls),
             ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall),
-            ("testCallingFunctionWithProjectedPropertyWrapperValue", testCallingFunctionWithProjectedPropertyWrapperValue)
+            ("testCallingFunctionWithProjectedPropertyWrapperValue", testCallingFunctionWithProjectedPropertyWrapperValue),
+            ("testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax", testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax)
         ]
     }
 }
