@@ -503,7 +503,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard segment.tokens.previous.isAny(of: ".", "?.", "().", ").") else {
+            guard segment.tokens.previous.isAny(of: ".", "?.", "().", ").", ">.") else {
                 return false
             }
 

@@ -729,6 +729,36 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyDeclarationWithStaticPropertyDefaultValue() {
+        let components = highlighter.highlight("""
+        class ViewModel {
+            var state = LoadingState<Output>.idle
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("ViewModel"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("state"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("LoadingState", .type),
+            .plainText("<"),
+            .token("Output", .type),
+            .plainText(">."),
+            .token("idle", .property),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testSubscriptDeclaration() {
         let components = highlighter.highlight("""
         extension Collection {
@@ -1277,6 +1307,7 @@ extension DeclarationTests {
             ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
             ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
             ("testPropertyDeclarationAfterCommentEndingWithVarKeyword", testPropertyDeclarationAfterCommentEndingWithVarKeyword),
+            ("testPropertyDeclarationWithStaticPropertyDefaultValue", testPropertyDeclarationWithStaticPropertyDefaultValue),
             ("testSubscriptDeclaration", testSubscriptDeclaration),
             ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
