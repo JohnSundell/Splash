@@ -443,7 +443,7 @@ private extension SwiftGrammar {
 
                     // Handling generic lists for parameters, rather than declarations
                     if foundOpeningBracket {
-                        if token.isAny(of: ":") || token.first == "@" {
+                        if token == ":" || token.first == "@" {
                             return true
                         }
                     }
