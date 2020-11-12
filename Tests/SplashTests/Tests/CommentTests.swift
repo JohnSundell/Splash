@@ -219,6 +219,109 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentWithinGenericTypeList() {
+        let components = highlighter.highlight("""
+        struct Box<One, /*Comment*/Two: Equatable, Three> {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Box<One,"),
+            .whitespace(" "),
+            .token("/*Comment*/", .comment),
+            .plainText("Two:"),
+            .whitespace(" "),
+            .token("Equatable", .type),
+            .plainText(","),
+            .whitespace(" "),
+            .plainText("Three>"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testCommentsNextToGenericTypeList() {
+        let components = highlighter.highlight("""
+        struct Box/*Start*/<Content>/*End*/ {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Box"),
+            .token("/*Start*/", .comment),
+            .plainText("<Content>"),
+            .token("/*End*/", .comment),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testCommentsNextToInitialization() {
+        let components = highlighter.highlight("/*Start*/Object()/*End*/")
+
+        XCTAssertEqual(components, [
+            .token("/*Start*/", .comment),
+            .token("Object", .type),
+            .plainText("()"),
+            .token("/*End*/", .comment)
+        ])
+    }
+
+    func testCommentsNextToProtocolName() {
+        let components = highlighter.highlight("""
+        struct Model<Value>: /*Start*/Equatable/*End*/ {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Model<Value>:"),
+            .whitespace(" "),
+            .token("/*Start*/", .comment),
+            .token("Equatable", .type),
+            .token("/*End*/", .comment),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testCommentsAfterOptionalTypes() {
+        let components = highlighter.highlight("""
+        struct Model {
+            var one: String?//One
+            var two: String?/*Two*/
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Model"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("one:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .plainText("?"),
+            .token("//One", .comment),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("two:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .plainText("?"),
+            .token("/*Two*/", .comment),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -236,7 +339,12 @@ extension CommentTests {
             ("testCommentPrecededByComma", testCommentPrecededByComma),
             ("testCommentWithNumber", testCommentWithNumber),
             ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation),
-            ("testCommentsNextToCurlyBrackets", testCommentsNextToCurlyBrackets)
+            ("testCommentsNextToCurlyBrackets", testCommentsNextToCurlyBrackets),
+            ("testCommentWithinGenericTypeList", testCommentWithinGenericTypeList),
+            ("testCommentsNextToGenericTypeList", testCommentsNextToGenericTypeList),
+            ("testCommentsNextToInitialization", testCommentsNextToInitialization),
+            ("testCommentsNextToProtocolName", testCommentsNextToProtocolName),
+            ("testCommentsAfterOptionalTypes", testCommentsAfterOptionalTypes)
         ]
     }
 }
