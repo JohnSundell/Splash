@@ -57,6 +57,8 @@ public struct SwiftGrammar: Grammar {
             return false
         case ("{", "/"), ("}", "/"):
             return false
+        case (">", "/"), ("?", "/"):
+            return false
         default:
             return true
         }
@@ -424,14 +426,14 @@ private extension SwiftGrammar {
             }
 
             // In a generic declaration, only highlight constraints
-            if segment.tokens.previous.isAny(of: "<", ",") {
+            if segment.tokens.previous.isAny(of: "<", ",", "*/") {
                 var foundOpeningBracket = false
 
                 // Since the declaration might be on another line, we have to walk
                 // backwards through all tokens until we've found enough information.
                 for token in segment.tokens.all.reversed() {
                     // Highlight return type generics as normal
-                    if token == "->" {
+                    if token.isAny(of: "->", ">", ">:") {
                         return true
                     }
 
@@ -441,7 +443,7 @@ private extension SwiftGrammar {
 
                     // Handling generic lists for parameters, rather than declarations
                     if foundOpeningBracket {
-                        if token.isAny(of: ":", ">:") || token.first == "@" {
+                        if token == ":" || token.first == "@" {
                             return true
                         }
                     }
@@ -456,7 +458,7 @@ private extension SwiftGrammar {
                         return true
                     }
 
-                    if token.isAny(of: ">", "=", "==", "(") {
+                    if token.isAny(of: "=", "==", "(") {
                         return true
                     }
                 }
