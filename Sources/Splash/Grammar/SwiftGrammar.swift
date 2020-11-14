@@ -501,6 +501,18 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .property }
 
         func matches(_ segment: Segment) -> Bool {
+            let currentToken = segment.tokens.current
+
+            if currentToken.first == "$" {
+                let secondIndex = currentToken.index(after: currentToken.startIndex)
+
+                guard secondIndex != currentToken.endIndex else {
+                    return false
+                }
+
+                return currentToken[secondIndex].isLetter
+            }
+
             guard !segment.tokens.onSameLine.isEmpty else {
                 return false
             }
@@ -513,7 +525,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard !segment.tokens.current.isAny(of: "self", "init") else {
+            guard !currentToken.isAny(of: "self", "init") else {
                 return false
             }
 
