@@ -322,6 +322,43 @@ final class CommentTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testCommentsAfterArrayTypes() {
+        let components = highlighter.highlight("""
+        struct Model {
+            var one: [String]//One
+            var two: [String]/*Two*/
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Model"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("one:"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("String", .type),
+            .plainText("]"),
+            .token("//One", .comment),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("two:"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("String", .type),
+            .plainText("]"),
+            .token("/*Two*/", .comment),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -344,7 +381,8 @@ extension CommentTests {
             ("testCommentsNextToGenericTypeList", testCommentsNextToGenericTypeList),
             ("testCommentsNextToInitialization", testCommentsNextToInitialization),
             ("testCommentsNextToProtocolName", testCommentsNextToProtocolName),
-            ("testCommentsAfterOptionalTypes", testCommentsAfterOptionalTypes)
+            ("testCommentsAfterOptionalTypes", testCommentsAfterOptionalTypes),
+            ("testCommentsAfterArrayTypes", testCommentsAfterArrayTypes)
         ]
     }
 }
