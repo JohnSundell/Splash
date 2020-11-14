@@ -331,6 +331,10 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current == "_" {
+                return true
+            }
+
             if segment.tokens.current == "prefix" && segment.tokens.next == "func" {
                 return true
             }
@@ -372,7 +376,7 @@ private extension SwiftGrammar {
                     }
 
                     // Don't highlight most keywords when used as a parameter label
-                    if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil", "try") {
+                    if !segment.tokens.current.isAny(of: "self", "let", "var", "true", "false", "inout", "nil", "try") {
                         guard !previousToken.isAny(of: "(", ",", ">(") else {
                             return false
                         }

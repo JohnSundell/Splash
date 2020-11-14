@@ -920,6 +920,24 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithIgnoredParameter() {
+        let components = highlighter.highlight("func perform(with _: Void) {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("perform(with"),
+            .whitespace(" "),
+            .token("_", .keyword),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("Void", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testFunctionDeclarationWithNonEscapedKeywordAsName() {
         let components = highlighter.highlight("func get() -> Int { return 7 }")
 
@@ -1354,6 +1372,7 @@ extension DeclarationTests {
             ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
             ("testDeferDeclaration", testDeferDeclaration),
             ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
+            ("testFunctionDeclarationWithIgnoredParameter", testFunctionDeclarationWithIgnoredParameter),
             ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
             ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
             ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
