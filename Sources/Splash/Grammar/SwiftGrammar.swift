@@ -57,6 +57,8 @@ public struct SwiftGrammar: Grammar {
             return false
         case ("{", "/"), ("}", "/"):
             return false
+        case ("[", "/"), ("]", "/"):
+            return false
         case (">", "/"), ("?", "/"):
             return false
         default:
@@ -329,6 +331,10 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .keyword }
 
         func matches(_ segment: Segment) -> Bool {
+            if segment.tokens.current == "_" {
+                return true
+            }
+
             if segment.tokens.current == "prefix" && segment.tokens.next == "func" {
                 return true
             }
@@ -339,16 +345,7 @@ private extension SwiftGrammar {
                 }
             }
 
-            if segment.tokens.next == ":" {
-                // Nil pattern matching inside of a switch statement case
-                if segment.tokens.current == "nil" {
-                    guard let previousToken = segment.tokens.previous else {
-                        return false
-                    }
-
-                    return previousToken.isAny(of: "case", ",")
-                }
-
+            if segment.tokens.next == ":", segment.tokens.current != "nil" {
                 guard segment.tokens.current == "default" else {
                     return false
                 }
@@ -379,7 +376,7 @@ private extension SwiftGrammar {
                     }
 
                     // Don't highlight most keywords when used as a parameter label
-                    if !segment.tokens.current.isAny(of: "_", "self", "let", "var", "true", "false", "inout", "nil", "try") {
+                    if !segment.tokens.current.isAny(of: "self", "let", "var", "true", "false", "inout", "nil", "try") {
                         guard !previousToken.isAny(of: "(", ",", ">(") else {
                             return false
                         }
@@ -504,6 +501,18 @@ private extension SwiftGrammar {
         var tokenType: TokenType { return .property }
 
         func matches(_ segment: Segment) -> Bool {
+            let currentToken = segment.tokens.current
+
+            if currentToken.first == "$" {
+                let secondIndex = currentToken.index(after: currentToken.startIndex)
+
+                guard secondIndex != currentToken.endIndex else {
+                    return false
+                }
+
+                return currentToken[secondIndex].isLetter
+            }
+
             guard !segment.tokens.onSameLine.isEmpty else {
                 return false
             }
@@ -516,7 +525,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            guard !segment.tokens.current.isAny(of: "self", "init") else {
+            guard !currentToken.isAny(of: "self", "init") else {
                 return false
             }
 

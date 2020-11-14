@@ -201,14 +201,33 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testCallingFunctionWithProjectedPropertyWrapperValue() {
-        let components = highlighter.highlight("call(self.$value)")
+    func testCallingFunctionsWithProjectedPropertyWrapperValues() {
+        let components = highlighter.highlight("""
+        call($value)
+        call(self.$value)
+        """)
 
         XCTAssertEqual(components, [
             .token("call", .call),
             .plainText("("),
+            .token("$value", .property),
+            .plainText(")"),
+            .whitespace("\n"),
+            .token("call", .call),
+            .plainText("("),
             .token("self", .keyword),
             .plainText("."),
+            .token("$value", .property),
+            .plainText(")")
+        ])
+    }
+
+    func testCallingFunctionWithInoutProjectedPropertyWrapperValue() {
+        let components = highlighter.highlight("call(&$value)")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("(&"),
             .token("$value", .property),
             .plainText(")")
         ])
@@ -253,7 +272,8 @@ extension FunctionCallTests {
             ("testIndentedFunctionCalls", testIndentedFunctionCalls),
             ("testXCTAssertCalls", testXCTAssertCalls),
             ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall),
-            ("testCallingFunctionWithProjectedPropertyWrapperValue", testCallingFunctionWithProjectedPropertyWrapperValue),
+            ("testCallingFunctionsWithProjectedPropertyWrapperValues", testCallingFunctionsWithProjectedPropertyWrapperValues),
+            ("testCallingFunctionWithInoutProjectedPropertyWrapperValue", testCallingFunctionWithInoutProjectedPropertyWrapperValue),
             ("testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax", testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax)
         ]
     }
