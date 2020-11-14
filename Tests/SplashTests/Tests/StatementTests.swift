@@ -444,6 +444,30 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testTernaryOperationContainingNil() {
+        let components = highlighter.highlight("""
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        """)
+
+        XCTAssertEqual(components, [
+            .plainText("components."),
+            .token("queryItems", .property),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("queryItems."),
+            .token("isEmpty", .property),
+            .whitespace(" "),
+            .plainText("?"),
+            .whitespace(" "),
+            .token("nil", .keyword),
+            .whitespace(" "),
+            .plainText(":"),
+            .whitespace(" "),
+            .plainText("queryItems")
+        ])
+    }
+
     func testAllTestsRunOnLinux() {
         XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
     }
@@ -468,7 +492,8 @@ extension StatementTests {
             ("testForStatementWithContinue", testForStatementWithContinue),
             ("testRepeatWhileStatement", testRepeatWhileStatement),
             ("testInitializingTypeWithLeadingUnderscore", testInitializingTypeWithLeadingUnderscore),
-            ("testCallingFunctionWithLeadingUnderscore", testCallingFunctionWithLeadingUnderscore)
+            ("testCallingFunctionWithLeadingUnderscore", testCallingFunctionWithLeadingUnderscore),
+            ("testTernaryOperationContainingNil", testTernaryOperationContainingNil)
         ]
     }
 }
