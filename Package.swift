@@ -11,7 +11,11 @@ import PackageDescription
 let package = Package(
     name: "Splash",
     products: [
-        .library(name: "Splash", targets: ["Splash"])
+        .library(name: "Splash", targets: ["Splash"]),
+        .executable(name: "SplashMarkdown", targets: ["SplashMarkdown"]),
+        .executable(name: "SplashHTMLGen", targets: ["SplashHTMLGen"]),
+        .executable(name: "SplashImageGen", targets: ["SplashImageGen"]),
+        .executable(name: "SplashTokenizer", targets: ["SplashTokenizer"]),
     ],
     targets: [
         .target(name: "Splash"),
