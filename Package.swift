@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.4
 
 /**
  *  Splash
@@ -19,19 +19,19 @@ let package = Package(
     ],
     targets: [
         .target(name: "Splash"),
-        .target(
+        .executableTarget(
             name: "SplashMarkdown",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashHTMLGen",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashImageGen",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashTokenizer",
             dependencies: ["Splash"]
         ),

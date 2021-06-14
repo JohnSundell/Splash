@@ -259,28 +259,4 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension ClosureTests {
-    static var allTests: [(String, TestClosure<ClosureTests>)] {
-        return [
-            ("testTrailingClosureWithArguments", testTrailingClosureWithArguments),
-            ("testTrailingClosureWithoutParanthesis", testTrailingClosureWithoutParanthesis),
-            ("testEmptyTrailingClosure", testEmptyTrailingClosure),
-            ("testClosureArgumentWithSingleArgument", testClosureArgumentWithSingleArgument),
-            ("testClosureArgumentWithMultipleArguments", testClosureArgumentWithMultipleArguments),
-            ("testEscapingClosureArgument", testEscapingClosureArgument),
-            ("testClosureWithInoutArgument", testClosureWithInoutArgument),
-            ("testPassingClosureAsArgument", testPassingClosureAsArgument),
-            ("testNestedEscapingClosure", testNestedEscapingClosure),
-            ("testClosureArgumentShorthands", testClosureArgumentShorthands),
-            ("testClosureWithWeakSelfCaptureList", testClosureWithWeakSelfCaptureList),
-            ("testClosureWithUnownedSelfCaptureList", testClosureWithUnownedSelfCaptureList),
-            ("testClosureWithSingleFunctionCall", testClosureWithSingleFunctionCall)
-        ]
-    }
 }

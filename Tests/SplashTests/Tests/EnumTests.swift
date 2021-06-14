@@ -57,19 +57,4 @@ final class EnumTests: SyntaxHighlighterTestCase {
             .plainText("]")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension EnumTests {
-    static var allTests: [(String, TestClosure<EnumTests>)] {
-        return [
-            ("testEnumDotSyntaxInAssignment", testEnumDotSyntaxInAssignment),
-            ("testEnumDotSyntaxAsArgument", testEnumDotSyntaxAsArgument),
-            ("testEnumDotSyntaxWithAssociatedValueTreatedAsCall", testEnumDotSyntaxWithAssociatedValueTreatedAsCall),
-            ("testUsingEnumInSubscript", testUsingEnumInSubscript)
-        ]
-    }
 }

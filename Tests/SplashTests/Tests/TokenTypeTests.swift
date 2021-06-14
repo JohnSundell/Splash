@@ -8,24 +8,12 @@ import Foundation
 import XCTest
 import Splash
 
-final class TokenTypeTests: SplashTestCase {
+final class TokenTypeTests: XCTestCase {
     func testConvertingToString() {
         let standardType = TokenType.comment
         XCTAssertEqual(standardType.string, "comment")
 
         let customType = TokenType.custom("MyCustomType")
         XCTAssertEqual(customType.string, "MyCustomType")
-    }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension TokenTypeTests {
-    static var allTests: [(String, TestClosure<TokenTypeTests>)] {
-        return [
-            ("testConvertingToString", testConvertingToString)
-        ]
     }
 }

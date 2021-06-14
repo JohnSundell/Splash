@@ -101,21 +101,4 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .plainText(")")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension PreprocessorTests {
-    static var allTests: [(String, TestClosure<PreprocessorTests>)] {
-        return [
-            ("testPreprocessing", testPreprocessing),
-            ("testSelector", testSelector),
-            ("testFunctionAttribute", testFunctionAttribute),
-            ("testAvailabilityCheck", testAvailabilityCheck),
-            ("testWarningDirective", testWarningDirective),
-            ("testErrorDirective", testErrorDirective)
-        ]
-    }
 }
