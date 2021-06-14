@@ -1326,4 +1326,183 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
+
+    func testNonThrowingAsyncFunctionDeclaration() {
+        let components = highlighter.highlight("func test() async {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testNonThrowingAsyncFunctionDeclarationWithReturnValue() {
+        let components = highlighter.highlight("func test() async -> Int { 0 }")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
+    func testThrowingAsyncFunctionDeclaration() {
+        let components = highlighter.highlight("func test() async throws {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .token("throws", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testDeclaringGenericFunctionNamedAwait() {
+        let components = highlighter.highlight("""
+        func await<T>(_ function: () -> T) {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("await<T>("),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("function:"),
+            .whitespace(" "),
+            .plainText("()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testActorDeclaration() {
+        let components = highlighter.highlight("""
+        actor MyActor {
+            var value = 0
+            func action() {}
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("actor", .keyword),
+            .whitespace(" "),
+            .plainText("MyActor"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace("\n    "),
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("action()"),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testPublicActorDeclaration() {
+        let components = highlighter.highlight("public actor MyActor {}")
+
+        XCTAssertEqual(components, [
+            .token("public", .keyword),
+            .whitespace(" "),
+            .token("actor", .keyword),
+            .whitespace(" "),
+            .plainText("MyActor"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testDeclaringAndMutatingLocalVariableNamedActor() {
+        let components = highlighter.highlight("""
+        let actor = Actor()
+        actor.position = scene.center
+        """)
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("actor"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("Actor", .type),
+            .plainText("()"),
+            .whitespace("\n"),
+            .plainText("actor."),
+            .token("position", .property),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("scene."),
+            .token("center", .property)
+        ])
+    }
+
+    func testPassingAndReferencingLocalVariableNamedActor() {
+        let components = highlighter.highlight("""
+        prepare(actor: actor)
+        scene.add(actor)
+        latestActor = actor
+        return actor
+        """)
+
+        XCTAssertEqual(components, [
+            .token("prepare", .call),
+            .plainText("(actor:"),
+            .whitespace(" "),
+            .plainText("actor)"),
+            .whitespace("\n"),
+            .plainText("scene."),
+            .token("add", .call),
+            .plainText("(actor)"),
+            .whitespace("\n"),
+            .plainText("latestActor"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("actor"),
+            .whitespace("\n"),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .plainText("actor")
+        ])
+    }
 }
