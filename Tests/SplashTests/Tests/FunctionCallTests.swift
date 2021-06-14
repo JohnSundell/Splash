@@ -249,32 +249,4 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension FunctionCallTests {
-    static var allTests: [(String, TestClosure<FunctionCallTests>)] {
-        return [
-            ("testFunctionCallWithIntegers", testFunctionCallWithIntegers),
-            ("testFunctionCallWithNil", testFunctionCallWithNil),
-            ("testImplicitInitializerCall", testImplicitInitializerCall),
-            ("testExplicitInitializerCall", testExplicitInitializerCall),
-            ("testExplicitInitializerCallUsingTrailingClosureSyntax", testExplicitInitializerCallUsingTrailingClosureSyntax),
-            ("testDotSyntaxInitializerCall", testDotSyntaxInitializerCall),
-            ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
-            ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
-            ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
-            ("testPassingTypeToFunction", testPassingTypeToFunction),
-            ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
-            ("testIndentedFunctionCalls", testIndentedFunctionCalls),
-            ("testXCTAssertCalls", testXCTAssertCalls),
-            ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall),
-            ("testCallingFunctionsWithProjectedPropertyWrapperValues", testCallingFunctionsWithProjectedPropertyWrapperValues),
-            ("testCallingFunctionWithInoutProjectedPropertyWrapperValue", testCallingFunctionWithInoutProjectedPropertyWrapperValue),
-            ("testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax", testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax)
-        ]
-    }
 }

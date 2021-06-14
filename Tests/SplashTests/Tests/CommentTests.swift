@@ -358,31 +358,4 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("}")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension CommentTests {
-    static var allTests: [(String, TestClosure<CommentTests>)] {
-        return [
-            ("testSingleLineComment", testSingleLineComment),
-            ("testMultiLineComment", testMultiLineComment),
-            ("testMultiLineCommentWithDoubleAsterisks", testMultiLineCommentWithDoubleAsterisks),
-            ("testMutliLineDocumentationComment", testMutliLineDocumentationComment),
-            ("testCommentStartingWithPunctuation", testCommentStartingWithPunctuation),
-            ("testCommentEndingWithComma", testCommentEndingWithComma),
-            ("testCommentPrecededByComma", testCommentPrecededByComma),
-            ("testCommentWithNumber", testCommentWithNumber),
-            ("testCommentWithNoWhiteSpaceToPunctuation", testCommentWithNoWhiteSpaceToPunctuation),
-            ("testCommentsNextToCurlyBrackets", testCommentsNextToCurlyBrackets),
-            ("testCommentWithinGenericTypeList", testCommentWithinGenericTypeList),
-            ("testCommentsNextToGenericTypeList", testCommentsNextToGenericTypeList),
-            ("testCommentsNextToInitialization", testCommentsNextToInitialization),
-            ("testCommentsNextToProtocolName", testCommentsNextToProtocolName),
-            ("testCommentsAfterOptionalTypes", testCommentsAfterOptionalTypes),
-            ("testCommentsAfterArrayTypes", testCommentsAfterArrayTypes)
-        ]
-    }
 }

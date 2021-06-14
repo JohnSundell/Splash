@@ -467,33 +467,4 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("queryItems")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension StatementTests {
-    static var allTests: [(String, TestClosure<StatementTests>)] {
-        return [
-            ("testImportStatement", testImportStatement),
-            ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
-            ("testChainedIfElseStatements", testChainedIfElseStatements),
-            ("testIfLetStatementWithKeywordSymbolName", testIfLetStatementWithKeywordSymbolName),
-            ("testGuardStatementUnwrappingWeakSelf", testGuardStatementUnwrappingWeakSelf),
-            ("testSwitchStatement", testSwitchStatement),
-            ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
-            ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),
-            ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
-            ("testSwitchStatementWithTypePatternMatching", testSwitchStatementWithTypePatternMatching),
-            ("testSwitchStatementWithOptional", testSwitchStatementWithOptional),
-            ("testSwitchStatementWithProperty", testSwitchStatementWithProperty),
-            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
-            ("testForStatementWithContinue", testForStatementWithContinue),
-            ("testRepeatWhileStatement", testRepeatWhileStatement),
-            ("testInitializingTypeWithLeadingUnderscore", testInitializingTypeWithLeadingUnderscore),
-            ("testCallingFunctionWithLeadingUnderscore", testCallingFunctionWithLeadingUnderscore),
-            ("testTernaryOperationContainingNil", testTernaryOperationContainingNil)
-        ]
-    }
 }
