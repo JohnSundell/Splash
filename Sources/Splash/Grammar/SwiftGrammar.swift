@@ -81,7 +81,8 @@ private extension SwiftGrammar {
         "lazy", "subscript", "defer", "inout", "while",
         "continue", "fallthrough", "repeat", "indirect",
         "deinit", "is", "#file", "#line", "#function",
-        "dynamic", "some", "#available", "convenience", "unowned"
+        "dynamic", "some", "#available", "convenience", "unowned",
+        "async", "await", "actor"
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [
@@ -91,7 +92,8 @@ private extension SwiftGrammar {
     static let declarationKeywords: Set<String> = [
         "class", "struct", "enum", "func",
         "protocol", "typealias", "import",
-        "associatedtype", "subscript", "init"
+        "associatedtype", "subscript", "init",
+        "actor"
     ]
 
     struct PreprocessingRule: SyntaxRule {
@@ -252,6 +254,7 @@ private extension SwiftGrammar {
             keywordsToAvoid.remove("throw")
             keywordsToAvoid.remove("if")
             keywordsToAvoid.remove("in")
+            keywordsToAvoid.remove("await")
             self.keywordsToAvoid = keywordsToAvoid
 
             var callLikeKeywords = accessControlKeywords
@@ -351,12 +354,30 @@ private extension SwiftGrammar {
                 }
             }
 
-            if let previousToken = segment.tokens.previous {
-                // Don't highlight variables with the same name as a keyword
-                // when used in optional binding, such as if let, guard let:
-                if !segment.tokens.onSameLine.isEmpty, segment.tokens.current != "self" {
-                    guard !previousToken.isAny(of: "let", "var") else {
+            if segment.trailingWhitespace == nil {
+                if !segment.tokens.current.isAny(of: "self", "super") {
+                    guard segment.tokens.next != "." else {
                         return false
+                    }
+                }
+            }
+
+            if let previousToken = segment.tokens.previous {
+                if !segment.tokens.onSameLine.isEmpty {
+                    // Don't highlight variables with the same name as a keyword
+                    // when used in optional binding, such as if let, guard let:
+                    if segment.tokens.current != "self" {
+                        guard !previousToken.isAny(of: "let", "var") else {
+                            return false
+                        }
+
+                        if segment.tokens.current == "actor" {
+                            if accessControlKeywords.contains(previousToken) {
+                                return true
+                            }
+                            
+                            return previousToken.first == "@"
+                        }
                     }
                 }
 
@@ -376,7 +397,7 @@ private extension SwiftGrammar {
                     }
 
                     // Don't highlight most keywords when used as a parameter label
-                    if !segment.tokens.current.isAny(of: "self", "let", "var", "true", "false", "inout", "nil", "try") {
+                    if !segment.tokens.current.isAny(of: "self", "let", "var", "true", "false", "inout", "nil", "try", "actor") {
                         guard !previousToken.isAny(of: "(", ",", ">(") else {
                             return false
                         }
@@ -451,11 +472,7 @@ private extension SwiftGrammar {
                         return !foundOpeningBracket
                     }
 
-                    guard !keywords.contains(token) else {
-                        return true
-                    }
-
-                    if token.isAny(of: "=", "==", "(") {
+                    if token.isAny(of: "=", "==", "(", "_", "@escaping") {
                         return true
                     }
                 }
