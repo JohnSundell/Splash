@@ -1,4 +1,4 @@
-// swift-tools-version:5.4
+// swift-tools-version:5.6
 
 /**
  *  Splash
@@ -10,6 +10,7 @@ import PackageDescription
 
 let package = Package(
     name: "Splash",
+    platforms: [.macOS(.v12)],
     products: [
         .library(name: "Splash", targets: ["Splash"]),
         .executable(name: "SplashMarkdown", targets: ["SplashMarkdown"]),
