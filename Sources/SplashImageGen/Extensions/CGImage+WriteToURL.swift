@@ -7,6 +7,7 @@
 #if os(macOS)
 
 import Foundation
+import ImageIO
 
 extension CGImage {
     func write(to url: URL) {
