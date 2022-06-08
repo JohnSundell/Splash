@@ -1119,6 +1119,44 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithGenericAnyParameter() {
+        let components = highlighter.highlight("func process(collection: any Collection<any Value>)")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(collection:"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Collection", .type),
+            .plainText("<"),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText(">)")
+        ])
+    }
+
+    func testFunctionDeclarationWithAnyDictionary() {
+        let components = highlighter.highlight("func process(dictionary: [String: any Value])")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(dictionary:"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("String", .type),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText("])")
+        ])
+    }
+
     func testPrefixFunctionDeclaration() {
         let components = highlighter.highlight("prefix func !(rhs: Bool) -> Bool { !rhs }")
 
