@@ -82,7 +82,7 @@ private extension SwiftGrammar {
         "continue", "fallthrough", "repeat", "indirect",
         "deinit", "is", "#file", "#line", "#function",
         "dynamic", "some", "#available", "convenience", "unowned",
-        "async", "await", "actor"
+        "async", "await", "actor", "any"
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [

@@ -1104,6 +1104,21 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithAnyParameter() {
+        let components = highlighter.highlight("func process(value: any Value)")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(value:"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText(")")
+        ])
+    }
+
     func testPrefixFunctionDeclaration() {
         let components = highlighter.highlight("prefix func !(rhs: Bool) -> Bool { !rhs }")
 
