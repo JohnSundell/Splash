@@ -342,7 +342,7 @@ private extension SwiftGrammar {
                 return true
             }
 
-            if segment.tokens.current == "some" {
+            if segment.tokens.current.isAny(of: "some", "any") {
                 guard segment.tokens.previous != "case" else {
                     return false
                 }
