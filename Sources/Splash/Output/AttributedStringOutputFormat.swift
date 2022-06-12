@@ -5,6 +5,7 @@
  */
 
 #if !os(Linux)
+#if canImport(SwiftUI)
 
 import Foundation
 
@@ -64,4 +65,5 @@ private extension NSMutableAttributedString {
     }
 }
 
+#endif
 #endif
