@@ -1,4 +1,4 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.4
 
 /**
  *  Splash
@@ -11,23 +11,27 @@ import PackageDescription
 let package = Package(
     name: "Splash",
     products: [
-        .library(name: "Splash", targets: ["Splash"])
+        .library(name: "Splash", targets: ["Splash"]),
+        .executable(name: "SplashMarkdown", targets: ["SplashMarkdown"]),
+        .executable(name: "SplashHTMLGen", targets: ["SplashHTMLGen"]),
+        .executable(name: "SplashImageGen", targets: ["SplashImageGen"]),
+        .executable(name: "SplashTokenizer", targets: ["SplashTokenizer"]),
     ],
     targets: [
         .target(name: "Splash"),
-        .target(
+        .executableTarget(
             name: "SplashMarkdown",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashHTMLGen",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashImageGen",
             dependencies: ["Splash"]
         ),
-        .target(
+        .executableTarget(
             name: "SplashTokenizer",
             dependencies: ["Splash"]
         ),

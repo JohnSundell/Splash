@@ -2,7 +2,7 @@ import Foundation
 import XCTest
 import Splash
 
-final class HTMLOutputFormatTests: SplashTestCase {
+final class HTMLOutputFormatTests: XCTestCase {
     private var highlighter: SyntaxHighlighter<HTMLOutputFormat>!
 
     override func setUp() {
@@ -38,19 +38,5 @@ final class HTMLOutputFormatTests: SplashTestCase {
         XCTAssertEqual(html, """
         <span class="comment">// Hey I'm a comment!</span>
         """)
-    }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension HTMLOutputFormatTests {
-    static var allTests: [(String, TestClosure<HTMLOutputFormatTests>)] {
-        return [
-            ("testBasicGeneration", testBasicGeneration),
-            ("testStrippingGreaterAndLessThanCharactersFromOutput", testStrippingGreaterAndLessThanCharactersFromOutput),
-            ("testCommentMerging", testCommentMerging)
-        ]
     }
 }

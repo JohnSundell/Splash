@@ -23,10 +23,6 @@ Splash can be used either as a library in your own Swift Package Manager-powered
 
 ### 🌍 On the web
 
-Thanks to my good friend [Gui Rambo](https://twitter.com/_inside), you can [try out Splash directly in your browser](https://splash.rambo.codes)! His web tool lets you use Splash to generate either HTML or an image, by simply pasting Swift code into a text box.
-
-👉 [splash.rambo.codes](https://splash.rambo.codes)
-
 If you're using [Publish](https://github.com/JohnSundell/Publish), then there's an official plugin that makes it easy to integrate Splash into your website:
 
 👉 [SplashPublishPlugin](https://github.com/JohnSundell/SplashPublishPlugin)
@@ -163,7 +159,7 @@ If you want to use Splash through one of its built-in command line tools, start 
 
 ```
 $ git clone https://github.com/johnsundell/splash.git
-$ cd Splash
+$ cd splash
 ```
 
 To run a tool without installing it, you can use the Swift Package Manager's `run` command, like this:
@@ -191,7 +187,7 @@ If you only wish to install one of these, compile it and then move it to `/usr/l
 
 ```
 $ swift build -c release -Xswiftc -static-stdlib
-$ install .build/Release/SplashHTMLGen /usr/local/bin/SplashHTMLGen
+$ install .build/release/SplashHTMLGen /usr/local/bin/SplashHTMLGen
 ```
 
 ## Contributions and support
@@ -204,4 +200,4 @@ To read more about suggested workflows when contributing to Splash, how to repor
 
 ## Hope you enjoy using Splash!
 
-I had a lot of fun building Splash, and I'm looking forward to continue working on it in the open together with you! I hope you'll like it and that you'll find it useful. Let me know what you think on on [Twitter](https://twitter.com/johnsundell) 😊
+I had a lot of fun building Splash, and I'm looking forward to continue working on it in the open together with you! I hope you'll like it and that you'll find it useful. Let me know what you think on [Twitter](https://twitter.com/johnsundell) 😊

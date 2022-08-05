@@ -310,34 +310,4 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .plainText(")")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension LiteralTests {
-    static var allTests: [(String, TestClosure<LiteralTests>)] {
-        return [
-            ("testStringLiteral", testStringLiteral),
-            ("testStringLiteralPassedToFunction", testStringLiteralPassedToFunction),
-            ("testStringLiteralWithEscapedQuote", testStringLiteralWithEscapedQuote),
-            ("testStringLiteralWithAttribute", testStringLiteralWithAttribute),
-            ("testStringLiteralInterpolation", testStringLiteralInterpolation),
-            ("testStringLiteralWithInterpolatedClosureArgumentShorthand", testStringLiteralWithInterpolatedClosureArgumentShorthand),
-            ("testStringLiteralWithCustomIterpolation", testStringLiteralWithCustomIterpolation),
-            ("testStringLiteralWithInterpolationSurroundedByBrackets", testStringLiteralWithInterpolationSurroundedByBrackets),
-            ("testStringLiteralWithInterpolationPrefixedByPunctuation", testStringLiteralWithInterpolationPrefixedByPunctuation),
-            ("testStringLiteralWithInterpolationContainingString", testStringLiteralWithInterpolationContainingString),
-            ("testMultiLineStringLiteral", testMultiLineStringLiteral),
-            ("testSingleLineRawStringLiteral", testSingleLineRawStringLiteral),
-            ("testMultiLineRawStringLiteral", testMultiLineRawStringLiteral),
-            ("testRawStringWithInterpolation", testRawStringWithInterpolation),
-            ("testStringLiteralContainingOnlyNewLine", testStringLiteralContainingOnlyNewLine),
-            ("testDoubleLiteral", testDoubleLiteral),
-            ("testIntegerLiteralWithSeparators", testIntegerLiteralWithSeparators),
-            ("testKeyPathLiteral", testKeyPathLiteral),
-            ("testKeyPathLiteralsAsArguments", testKeyPathLiteralsAsArguments)
-        ]
-    }
 }

@@ -42,18 +42,4 @@ final class OptionalTests: SyntaxHighlighterTestCase {
             .plainText("()")
         ])
     }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension OptionalTests {
-    static var allTests: [(String, TestClosure<OptionalTests>)] {
-        return [
-            ("testAssigningPropertyWithOptionalChaining", testAssigningPropertyWithOptionalChaining),
-            ("testReadingPropertyWithOptionalChaining", testReadingPropertyWithOptionalChaining),
-            ("testCallingMethodwithOptionalChaining", testCallingMethodwithOptionalChaining)
-        ]
-    }
 }

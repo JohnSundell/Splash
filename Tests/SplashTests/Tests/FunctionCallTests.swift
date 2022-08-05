@@ -66,6 +66,24 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testExplicitInitializerCallUsingTrailingClosureSyntax() {
+        let components = highlighter.highlight("let task = Task.init {}")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("task"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("Task", .type),
+            .plainText("."),
+            .token("init", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
     func testDotSyntaxInitializerCall() {
         let components = highlighter.highlight("let string: String = .init()")
 
@@ -183,27 +201,52 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
+    func testCallingFunctionsWithProjectedPropertyWrapperValues() {
+        let components = highlighter.highlight("""
+        call($value)
+        call(self.$value)
+        """)
 
-extension FunctionCallTests {
-    static var allTests: [(String, TestClosure<FunctionCallTests>)] {
-        return [
-            ("testFunctionCallWithIntegers", testFunctionCallWithIntegers),
-            ("testFunctionCallWithNil", testFunctionCallWithNil),
-            ("testImplicitInitializerCall", testImplicitInitializerCall),
-            ("testExplicitInitializerCall", testExplicitInitializerCall),
-            ("testDotSyntaxInitializerCall", testDotSyntaxInitializerCall),
-            ("testAccessingPropertyAfterFunctionCallWithoutArguments", testAccessingPropertyAfterFunctionCallWithoutArguments),
-            ("testAccessingPropertyAfterFunctionCallWithArguments", testAccessingPropertyAfterFunctionCallWithArguments),
-            ("testCallingStaticMethodOnGenericType", testCallingStaticMethodOnGenericType),
-            ("testPassingTypeToFunction", testPassingTypeToFunction),
-            ("testPassingBoolToUnnamedArgument", testPassingBoolToUnnamedArgument),
-            ("testIndentedFunctionCalls", testIndentedFunctionCalls),
-            ("testXCTAssertCalls", testXCTAssertCalls),
-            ("testUsingTryKeywordWithinFunctionCall", testUsingTryKeywordWithinFunctionCall)
-        ]
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("("),
+            .token("$value", .property),
+            .plainText(")"),
+            .whitespace("\n"),
+            .token("call", .call),
+            .plainText("("),
+            .token("self", .keyword),
+            .plainText("."),
+            .token("$value", .property),
+            .plainText(")")
+        ])
+    }
+
+    func testCallingFunctionWithInoutProjectedPropertyWrapperValue() {
+        let components = highlighter.highlight("call(&$value)")
+
+        XCTAssertEqual(components, [
+            .token("call", .call),
+            .plainText("(&"),
+            .token("$value", .property),
+            .plainText(")")
+        ])
+    }
+
+    func testCallingMethodWithSameNameAsKeywordWithTrailingClosureSyntax() {
+        let components = highlighter.highlight("publisher.catch { error in }")
+
+        XCTAssertEqual(components, [
+            .plainText("publisher."),
+            .token("catch", .call),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("error"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("}")
+        ])
     }
 }

@@ -7,7 +7,7 @@
 import XCTest
 import Splash
 
-final class MarkdownTests: SplashTestCase {
+final class MarkdownTests: XCTestCase {
     private var decorator: MarkdownDecorator!
 
     override func setUp() {
@@ -105,20 +105,5 @@ final class MarkdownTests: SplashTestCase {
         """
 
         XCTAssertEqual(decorator.decorate(markdown), expectedResult)
-    }
-
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
-
-extension MarkdownTests {
-    static var allTests: [(String, TestClosure<MarkdownTests>)] {
-        return [
-            ("testConvertingCodeBlock", testConvertingCodeBlock),
-            ("testSkippingHighlightingForCodeBlock", testSkippingHighlightingForCodeBlock),
-            ("testEscapingSpecialCharactersWithinHighlightedCodeBlock", testEscapingSpecialCharactersWithinHighlightedCodeBlock),
-            ("testEscapingSpecialCharactersWithinSkippedCodeBlock", testEscapingSpecialCharactersWithinSkippedCodeBlock)
-        ]
     }
 }

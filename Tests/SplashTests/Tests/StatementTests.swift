@@ -444,31 +444,115 @@ final class StatementTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
+    func testTernaryOperationContainingNil() {
+        let components = highlighter.highlight("""
+        components.queryItems = queryItems.isEmpty ? nil : queryItems
+        """)
 
-extension StatementTests {
-    static var allTests: [(String, TestClosure<StatementTests>)] {
-        return [
-            ("testImportStatement", testImportStatement),
-            ("testImportStatementWithSubmodule", testImportStatementWithSubmodule),
-            ("testChainedIfElseStatements", testChainedIfElseStatements),
-            ("testIfLetStatementWithKeywordSymbolName", testIfLetStatementWithKeywordSymbolName),
-            ("testGuardStatementUnwrappingWeakSelf", testGuardStatementUnwrappingWeakSelf),
-            ("testSwitchStatement", testSwitchStatement),
-            ("testSwitchStatementWithSingleAssociatedValue", testSwitchStatementWithSingleAssociatedValue),
-            ("testSwitchStatementWithMultipleAssociatedValues", testSwitchStatementWithMultipleAssociatedValues),
-            ("testSwitchStatementWithFallthrough", testSwitchStatementWithFallthrough),
-            ("testSwitchStatementWithTypePatternMatching", testSwitchStatementWithTypePatternMatching),
-            ("testSwitchStatementWithOptional", testSwitchStatementWithOptional),
-            ("testSwitchStatementWithProperty", testSwitchStatementWithProperty),
-            ("testForStatementWithStaticProperty", testForStatementWithStaticProperty),
-            ("testForStatementWithContinue", testForStatementWithContinue),
-            ("testRepeatWhileStatement", testRepeatWhileStatement),
-            ("testInitializingTypeWithLeadingUnderscore", testInitializingTypeWithLeadingUnderscore),
-            ("testCallingFunctionWithLeadingUnderscore", testCallingFunctionWithLeadingUnderscore)
-        ]
+        XCTAssertEqual(components, [
+            .plainText("components."),
+            .token("queryItems", .property),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("queryItems."),
+            .token("isEmpty", .property),
+            .whitespace(" "),
+            .plainText("?"),
+            .whitespace(" "),
+            .token("nil", .keyword),
+            .whitespace(" "),
+            .plainText(":"),
+            .whitespace(" "),
+            .plainText("queryItems")
+        ])
+    }
+
+    func testAwaitingFunctionCall() {
+        let components = highlighter.highlight("let result = await call()")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("result"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("await", .keyword),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("()")
+        ])
+    }
+
+    func testAwaitingVariable() {
+        let components = highlighter.highlight("let result = await value")
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("result"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("await", .keyword),
+            .whitespace(" "),
+            .plainText("value")
+        ])
+    }
+
+    func testAwaitingAsyncSequenceElement() {
+        let components = highlighter.highlight("for await value in sequence {}")
+
+        XCTAssertEqual(components, [
+            .token("for", .keyword),
+            .whitespace(" "),
+            .token("await", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("sequence"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testAwaitingThrowingAsyncSequenceElement() {
+        let components = highlighter.highlight("for try await value in sequence {}")
+
+        XCTAssertEqual(components, [
+            .token("for", .keyword),
+            .whitespace(" "),
+            .token("try", .keyword),
+            .whitespace(" "),
+            .token("await", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .token("in", .keyword),
+            .whitespace(" "),
+            .plainText("sequence"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testAsyncLetExpression() {
+        let components = highlighter.highlight("async let result = call()")
+
+        XCTAssertEqual(components, [
+            .token("async", .keyword),
+            .whitespace(" "),
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("result"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("call", .call),
+            .plainText("()")
+        ])
     }
 }

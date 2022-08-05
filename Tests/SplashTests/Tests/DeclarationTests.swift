@@ -682,6 +682,47 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyWithCommentedDidSet() {
+        let components = highlighter.highlight("""
+        struct Hello {
+            var property: Int {
+                // Comment.
+                didSet { }
+            }
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Hello"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("property:"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n        "),
+            .token("//", .comment),
+            .whitespace(" "),
+            .token("Comment.", .comment),
+            .whitespace("\n        "),
+            .token("didSet", .keyword),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .plainText("}"),
+            .whitespace("\n    "),
+            .plainText("}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testPropertyWithSetterAccessLevel() {
         let components = highlighter.highlight("""
         struct Hello {
@@ -726,6 +767,36 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("="),
             .whitespace(" "),
             .token("7", .number)
+        ])
+    }
+
+    func testPropertyDeclarationWithStaticPropertyDefaultValue() {
+        let components = highlighter.highlight("""
+        class ViewModel {
+            var state = LoadingState<Output>.idle
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("class", .keyword),
+            .whitespace(" "),
+            .plainText("ViewModel"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("state"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("LoadingState", .type),
+            .plainText("<"),
+            .token("Output", .type),
+            .plainText(">."),
+            .token("idle", .property),
+            .whitespace("\n"),
+            .plainText("}")
         ])
     }
 
@@ -846,6 +917,24 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("{"),
             .whitespace(" "),
             .plainText("}")
+        ])
+    }
+
+    func testFunctionDeclarationWithIgnoredParameter() {
+        let components = highlighter.highlight("func perform(with _: Void) {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("perform(with"),
+            .whitespace(" "),
+            .token("_", .keyword),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("Void", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
         ])
     }
 
@@ -1015,6 +1104,59 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testFunctionDeclarationWithAnyParameter() {
+        let components = highlighter.highlight("func process(value: any Value)")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(value:"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText(")")
+        ])
+    }
+
+    func testFunctionDeclarationWithGenericAnyParameter() {
+        let components = highlighter.highlight("func process(collection: any Collection<any Value>)")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(collection:"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Collection", .type),
+            .plainText("<"),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText(">)")
+        ])
+    }
+
+    func testFunctionDeclarationWithAnyDictionary() {
+        let components = highlighter.highlight("func process(dictionary: [String: any Value])")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("process(dictionary:"),
+            .whitespace(" "),
+            .plainText("["),
+            .token("String", .type),
+            .plainText(":"),
+            .whitespace(" "),
+            .token("any", .keyword),
+            .whitespace(" "),
+            .token("Value", .type),
+            .plainText("])")
+        ])
+    }
+
     func testPrefixFunctionDeclaration() {
         let components = highlighter.highlight("prefix func !(rhs: Bool) -> Bool { !rhs }")
 
@@ -1093,6 +1235,33 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
+    func testPropertyWrapperDeclaration() {
+        let components = highlighter.highlight("""
+        @propertyWrapper
+        struct Wrapped<Value> {
+            var wrappedValue: Value
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("@propertyWrapper", .keyword),
+            .whitespace("\n"),
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Wrapped<Value>"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("wrappedValue:"),
+            .whitespace(" "),
+            .token("Value", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
     func testWrappedPropertyDeclarations() {
         let components = highlighter.highlight("""
         struct User {
@@ -1118,6 +1287,65 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("name:"),
             .whitespace(" "),
             .token("String", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testWrappedPropertyDeclarationUsingNestedType() {
+        let components = highlighter.highlight("""
+        struct User {
+            @Persisted.InMemory var name: String
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("User"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@Persisted", .keyword),
+            .plainText("."),
+            .token("InMemory", .keyword),
+            .whitespace(" "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("name:"),
+            .whitespace(" "),
+            .token("String", .type),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testWrappedPropertyDeclarationUsingExplicitType() {
+        let components = highlighter.highlight("""
+        struct Model {
+            @Wrapper<Bool>(key: "setting")
+            var setting
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("struct", .keyword),
+            .whitespace(" "),
+            .plainText("Model"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("@Wrapper", .keyword),
+            .plainText("<"),
+            .token("Bool", .type),
+            .plainText(">(key:"),
+            .whitespace(" "),
+            .token(#""setting""#, .string),
+            .plainText(")"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("setting"),
             .whitespace("\n"),
             .plainText("}")
         ])
@@ -1152,60 +1380,182 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
         ])
     }
 
-    func testAllTestsRunOnLinux() {
-        XCTAssertTrue(TestCaseVerifier.verifyLinuxTests((type(of: self)).allTests))
-    }
-}
+    func testNonThrowingAsyncFunctionDeclaration() {
+        let components = highlighter.highlight("func test() async {}")
 
-extension DeclarationTests {
-    static var allTests: [(String, TestClosure<DeclarationTests>)] {
-        return [
-            ("testFunctionDeclaration", testFunctionDeclaration),
-            ("testRequiredFunctionDeclaration", testRequiredFunctionDeclaration),
-            ("testPublicFunctionDeclarationWithDocumentationEndingWithDot", testPublicFunctionDeclarationWithDocumentationEndingWithDot),
-            ("testFunctionDeclarationWithEmptyExternalLabel", testFunctionDeclarationWithEmptyExternalLabel),
-            ("testFunctionDeclarationWithKeywordArgumentLabel", testFunctionDeclarationWithKeywordArgumentLabel),
-            ("testFunctionDeclarationWithKeywordArgumentLabelOnNewLine", testFunctionDeclarationWithKeywordArgumentLabelOnNewLine),
-            ("testGenericFunctionDeclarationWithKeywordArgumentLabel", testGenericFunctionDeclarationWithKeywordArgumentLabel),
-            ("testGenericFunctionDeclarationWithoutConstraints", testGenericFunctionDeclarationWithoutConstraints),
-            ("testGenericFunctionDeclarationWithSingleConstraint", testGenericFunctionDeclarationWithSingleConstraint),
-            ("testGenericFunctionDeclarationWithMultipleConstraints", testGenericFunctionDeclarationWithMultipleConstraints),
-            ("testGenericFunctionDeclarationWithGenericParameter", testGenericFunctionDeclarationWithGenericParameter),
-            ("testFunctionDeclarationWithGenericReturnType", testFunctionDeclarationWithGenericReturnType),
-            ("testGenericStructDeclaration", testGenericStructDeclaration),
-            ("testClassDeclaration", testClassDeclaration),
-            ("testCompactClassDeclarationWithInitializer", testCompactClassDeclarationWithInitializer),
-            ("testClassDeclarationWithDeinit", testClassDeclarationWithDeinit),
-            ("testClassDeclarationWithMultipleProtocolConformances", testClassDeclarationWithMultipleProtocolConformances),
-            ("testSubclassDeclaration", testSubclassDeclaration),
-            ("testGenericSubclassDeclaration", testGenericSubclassDeclaration),
-            ("testProtocolDeclaration", testProtocolDeclaration),
-            ("testProtocolDeclarationWithAssociatedTypes", testProtocolDeclarationWithAssociatedTypes),
-            ("testExtensionDeclaration", testExtensionDeclaration),
-            ("testExtensionDeclarationWithConvenienceInitializer", testExtensionDeclarationWithConvenienceInitializer),
-            ("testExtensionDeclarationWithConstraint", testExtensionDeclarationWithConstraint),
-            ("testLazyPropertyDeclaration", testLazyPropertyDeclaration),
-            ("testDynamicPropertyDeclaration", testDynamicPropertyDeclaration),
-            ("testGenericPropertyDeclaration", testGenericPropertyDeclaration),
-            ("testPropertyDeclarationWithWillSet", testPropertyDeclarationWithWillSet),
-            ("testPropertyDeclarationWithDidSet", testPropertyDeclarationWithDidSet),
-            ("testPropertyWithSetterAccessLevel", testPropertyWithSetterAccessLevel),
-            ("testPropertyDeclarationAfterCommentEndingWithVarKeyword", testPropertyDeclarationAfterCommentEndingWithVarKeyword),
-            ("testSubscriptDeclaration", testSubscriptDeclaration),
-            ("testGenericSubscriptDeclaration", testGenericSubscriptDeclaration),
-            ("testDeferDeclaration", testDeferDeclaration),
-            ("testFunctionDeclarationWithInOutParameter", testFunctionDeclarationWithInOutParameter),
-            ("testFunctionDeclarationWithNonEscapedKeywordAsName", testFunctionDeclarationWithNonEscapedKeywordAsName),
-            ("testFunctionDeclarationWithEscapedKeywordAsName", testFunctionDeclarationWithEscapedKeywordAsName),
-            ("testFunctionDeclarationWithPreProcessors", testFunctionDeclarationWithPreProcessors),
-            ("testNonMutatingFunction", testNonMutatingFunction),
-            ("testRethrowingFunctionDeclaration", testRethrowingFunctionDeclaration),
-            ("testFunctionDeclarationWithOpaqueReturnType", testFunctionDeclarationWithOpaqueReturnType),
-            ("testPrefixFunctionDeclaration", testPrefixFunctionDeclaration),
-            ("testEnumDeclarationWithSomeCase", testEnumDeclarationWithSomeCase),
-            ("testIndirectEnumDeclaration", testIndirectEnumDeclaration),
-            ("testWrappedPropertyDeclarations", testWrappedPropertyDeclarations),
-            ("testGenericInitializerDeclaration", testGenericInitializerDeclaration)
-        ]
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testNonThrowingAsyncFunctionDeclarationWithReturnValue() {
+        let components = highlighter.highlight("func test() async -> Int { 0 }")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("Int", .type),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace(" "),
+            .plainText("}")
+        ])
+    }
+
+    func testThrowingAsyncFunctionDeclaration() {
+        let components = highlighter.highlight("func test() async throws {}")
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("test()"),
+            .whitespace(" "),
+            .token("async", .keyword),
+            .whitespace(" "),
+            .token("throws", .keyword),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testDeclaringGenericFunctionNamedAwait() {
+        let components = highlighter.highlight("""
+        func await<T>(_ function: () -> T) {}
+        """)
+
+        XCTAssertEqual(components, [
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("await<T>("),
+            .token("_", .keyword),
+            .whitespace(" "),
+            .plainText("function:"),
+            .whitespace(" "),
+            .plainText("()"),
+            .whitespace(" "),
+            .plainText("->"),
+            .whitespace(" "),
+            .token("T", .type),
+            .plainText(")"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testActorDeclaration() {
+        let components = highlighter.highlight("""
+        actor MyActor {
+            var value = 0
+            func action() {}
+        }
+        """)
+
+        XCTAssertEqual(components, [
+            .token("actor", .keyword),
+            .whitespace(" "),
+            .plainText("MyActor"),
+            .whitespace(" "),
+            .plainText("{"),
+            .whitespace("\n    "),
+            .token("var", .keyword),
+            .whitespace(" "),
+            .plainText("value"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("0", .number),
+            .whitespace("\n    "),
+            .token("func", .keyword),
+            .whitespace(" "),
+            .plainText("action()"),
+            .whitespace(" "),
+            .plainText("{}"),
+            .whitespace("\n"),
+            .plainText("}")
+        ])
+    }
+
+    func testPublicActorDeclaration() {
+        let components = highlighter.highlight("public actor MyActor {}")
+
+        XCTAssertEqual(components, [
+            .token("public", .keyword),
+            .whitespace(" "),
+            .token("actor", .keyword),
+            .whitespace(" "),
+            .plainText("MyActor"),
+            .whitespace(" "),
+            .plainText("{}")
+        ])
+    }
+
+    func testDeclaringAndMutatingLocalVariableNamedActor() {
+        let components = highlighter.highlight("""
+        let actor = Actor()
+        actor.position = scene.center
+        """)
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("actor"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("Actor", .type),
+            .plainText("()"),
+            .whitespace("\n"),
+            .plainText("actor."),
+            .token("position", .property),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("scene."),
+            .token("center", .property)
+        ])
+    }
+
+    func testPassingAndReferencingLocalVariableNamedActor() {
+        let components = highlighter.highlight("""
+        prepare(actor: actor)
+        scene.add(actor)
+        latestActor = actor
+        return actor
+        """)
+
+        XCTAssertEqual(components, [
+            .token("prepare", .call),
+            .plainText("(actor:"),
+            .whitespace(" "),
+            .plainText("actor)"),
+            .whitespace("\n"),
+            .plainText("scene."),
+            .token("add", .call),
+            .plainText("(actor)"),
+            .whitespace("\n"),
+            .plainText("latestActor"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .plainText("actor"),
+            .whitespace("\n"),
+            .token("return", .keyword),
+            .whitespace(" "),
+            .plainText("actor")
+        ])
     }
 }
