@@ -189,7 +189,7 @@ private extension SwiftGrammar {
                 return false
             }
 
-            return !segment.isWithinStringInterpolation
+            return !segment.isWithinMultiLineStringInterpolation
         }
     }
 
@@ -604,6 +604,95 @@ private extension Segment {
         }
 
         return markerCounts.start != markerCounts.end
+    }
+    
+    var isWithinMultiLineStringInterpolation: Bool {
+        let delimiter = "\\("
+
+        if tokens.current == delimiter || tokens.previous == delimiter {
+            return true
+        }
+
+        
+        /*
+         Loop back through tokens (not just same line)
+         counting closing ) and opening ( and to see if a \\(
+         can be found before the start of the string.
+         
+         if the number of closed braces is < the number of opening braces + 1
+         then we are inside a multi line string interpolation.
+         */
+                       
+        var unbalancedClosedParenthesis = 0
+        
+        /* Note the order of `(` and `)` matters.
+         
+         for example \(
+            this is an interpolation
+         )(but non of this is)
+         */
+        
+        for token in tokens.all.lazy.reversed() {
+            var previousChar: Character? = nil
+            // only need to search to the start of this multi line string.
+            // multi line string must have new line after """ so will always be a suffix of a token.
+            if token.hasSuffix("\"\"\"") {
+                // We are before the first interpolation.
+                return false
+            }
+            
+            // The order of ( and ) is important>
+            // () does note close the interpolation
+            // )( does close the interpolation
+            for char in token.lazy.reversed() {
+                // we consume unbalancedClosedParenthesis
+                // only once we are sure we are not dealing with the start of
+                // an interpolation
+                if previousChar == "(" {
+                    if char != "\\" {
+                        if unbalancedClosedParenthesis > 0 {
+                            unbalancedClosedParenthesis -= 1
+                        }
+                        // we do not want to put unbalancedClosedParenthesis
+                        // into negative as the order of ( and ) is very important.
+                    } else {
+                        // keeping ( in the previousChar
+                        // so that if the token is \\( it still ends up consuming the open brane.
+                        continue
+                    }
+                }
+                
+                previousChar = char
+
+                switch char {
+                case ")":
+                    unbalancedClosedParenthesis += 1
+                default:
+                    previousChar = char
+                }
+            }
+            
+            
+            
+            if token.hasPrefix(delimiter) {
+                // there is a closing parenthesis that closes the scope
+                if unbalancedClosedParenthesis > 0 {
+                    return false
+                }
+                // all the closing parenthesis have matching opening parenthesis.
+                return true
+            }
+            
+            // If the last char in the token was (
+            if previousChar == "(" {
+                if unbalancedClosedParenthesis > 0 {
+                    unbalancedClosedParenthesis -= 1
+                }
+            }
+        }
+        
+        // not inside a multi line string
+        return false
     }
 
     var isWithinStringInterpolation: Bool {
