@@ -168,6 +168,78 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .token("\"\"\"", .string)
         ])
     }
+    
+    func testMultiLineStringLiteralWithMultiLineInterpolated() {
+        let components = highlighter.highlight("""
+        let string = \"\"\"
+        Hello\\(
+            variable,
+            format: .value
+        )(not-interpolated)
+        \"\"\"
+        """)
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("string"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("\"\"\"", .string),
+            .whitespace("\n"),
+            .token("Hello", .string),
+            .plainText("\\("),
+            .whitespace("\n    "),
+            .plainText("variable,"),
+            .whitespace("\n    "),
+            .plainText("format:"),
+            .whitespace(" "),
+            .plainText("."),
+            .token("value", Splash.TokenType.dotAccess),
+            .whitespace("\n"),
+            .plainText(")"),
+            .token("(not-interpolated)", .string),
+            .whitespace("\n"),
+            .token("\"\"\"", .string)
+        ])
+    }
+    
+    func testMultiLineStringLiteralWithInterpolatedString() {
+        let components = highlighter.highlight("""
+        let string = \"\"\"
+        Hello \\(
+            value ? "Bob"
+        ) Welcome.
+        \"\"\"
+        """)
+
+        XCTAssertEqual(components, [
+            .token("let", .keyword),
+            .whitespace(" "),
+            .plainText("string"),
+            .whitespace(" "),
+            .plainText("="),
+            .whitespace(" "),
+            .token("\"\"\"", .string),
+            .whitespace("\n"),
+            .token("Hello", .string),
+            .whitespace(" "),
+            .plainText("\\("),
+            .whitespace("\n    "),
+            .plainText("value"),
+            .whitespace(" "),
+            .plainText("?"),
+            .whitespace(" "),
+            .token("\"Bob\"", .string),
+            .whitespace("\n"),
+            .plainText(")"),
+            .whitespace(" "),
+            .token("Welcome.", .string),
+            .whitespace("\n"),
+            .token("\"\"\"", .string)
+        ])
+    }
 
     func testSingleLineRawStringLiteral() {
         let components = highlighter.highlight("""
