@@ -7,7 +7,7 @@
 import Foundation
 
 internal extension String {
-    func removing(_ substring: String) -> String {
-        replacingOccurrences(of: substring, with: "")
-    }
+  func removing(_ substring: String) -> String {
+    replacingOccurrences(of: substring, with: "")
+  }
 }

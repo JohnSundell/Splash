@@ -7,7 +7,7 @@
 import Foundation
 
 extension String {
-    var isNumber: Bool {
-        Int(self) != nil
-    }
+  var isNumber: Bool {
+    Int(self) != nil
+  }
 }

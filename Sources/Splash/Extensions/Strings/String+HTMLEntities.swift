@@ -7,18 +7,18 @@
 import Foundation
 
 internal extension StringProtocol {
-    func escapingHTMLEntities() -> String {
-        String(flatMap { character -> String in
-            switch character {
-            case "&":
-                return "&amp;"
-            case "<":
-                return "&lt;"
-            case ">":
-                return "&gt;"
-            default:
-                return String(character)
-            }
-        })
-    }
+  func escapingHTMLEntities() -> String {
+    String(flatMap { character -> String in
+      switch character {
+      case "&":
+        return "&amp;"
+      case "<":
+        return "&lt;"
+      case ">":
+        return "&gt;"
+      default:
+        return String(character)
+      }
+    })
+  }
 }

@@ -7,11 +7,11 @@
 import Foundation
 
 internal extension CharacterSet {
-    func contains(_ character: Character) -> Bool {
-        guard let scalar = character.unicodeScalars.first else {
-            return false
-        }
-
-        return contains(scalar)
+  func contains(_ character: Character) -> Bool {
+    guard let scalar = character.unicodeScalars.first else {
+      return false
     }
+
+    return contains(scalar)
+  }
 }

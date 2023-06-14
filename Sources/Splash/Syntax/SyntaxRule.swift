@@ -12,11 +12,11 @@ import Foundation
 /// of code. If the rule matches then the rule's token type will be
 /// associated with the given segment's current token.
 public protocol SyntaxRule {
-    /// The token type that this syntax rule represents
-    var tokenType: TokenType { get }
+  /// The token type that this syntax rule represents
+  var tokenType: TokenType { get }
 
-    /// Determine if the syntax rule matches a given segment. If it's
-    /// a match, then the rule's `tokenType` will be associated with
-    /// the segment's current token.
-    func matches(_ segment: Segment) -> Bool
+  /// Determine if the syntax rule matches a given segment. If it's
+  /// a match, then the rule's `tokenType` will be associated with
+  /// the segment's current token.
+  func matches(_ segment: Segment) -> Bool
 }

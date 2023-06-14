@@ -7,19 +7,19 @@
 import Foundation
 
 internal extension String {
-    var isCapitalized: Bool {
-        guard let firstCharacter = first.map(String.init) else {
-            return false
-        }
-
-        return firstCharacter != firstCharacter.lowercased()
+  var isCapitalized: Bool {
+    guard let firstCharacter = first.map(String.init) else {
+      return false
     }
 
-    var startsWithLetter: Bool {
-        guard let firstCharacter = first else {
-            return false
-        }
+    return firstCharacter != firstCharacter.lowercased()
+  }
 
-        return CharacterSet.letters.contains(firstCharacter)
+  var startsWithLetter: Bool {
+    guard let firstCharacter = first else {
+      return false
     }
+
+    return CharacterSet.letters.contains(firstCharacter)
+  }
 }

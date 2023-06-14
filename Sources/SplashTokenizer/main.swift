@@ -8,8 +8,8 @@ import Foundation
 import Splash
 
 guard CommandLine.arguments.count > 1 else {
-    print("⚠️  Please supply the code to tokenize as a string argument")
-    exit(1)
+  print("⚠️  Please supply the code to tokenize as a string argument")
+  exit(1)
 }
 
 let code = CommandLine.arguments[1]

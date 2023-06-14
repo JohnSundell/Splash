@@ -7,9 +7,9 @@
 import Foundation
 
 internal extension Sequence where Element: Equatable {
-    func numberOfOccurrences(of target: Element) -> Int {
-        reduce(0) { count, element in
-            element == target ? count + 1 : count
-        }
+  func numberOfOccurrences(of target: Element) -> Int {
+    reduce(0) { count, element in
+      element == target ? count + 1 : count
     }
+  }
 }

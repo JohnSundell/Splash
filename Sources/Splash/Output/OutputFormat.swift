@@ -12,12 +12,12 @@ import Foundation
 /// conforming to this protocol and passing the implementation to a
 /// syntax highlighter when it's created.
 public protocol OutputFormat {
-    /// The type of builder that this output format uses. The builder's
-    /// `Output` type determines the output type of the format.
-    associatedtype Builder: OutputBuilder
+  /// The type of builder that this output format uses. The builder's
+  /// `Output` type determines the output type of the format.
+  associatedtype Builder: OutputBuilder
 
-    /// Make a new instance of the output format's builder. This will be
-    /// called once per syntax highlighting session. The builder is expected
-    /// to be a newly created, blank instance.
-    func makeBuilder() -> Builder
+  /// Make a new instance of the output format's builder. This will be
+  /// called once per syntax highlighting session. The builder is expected
+  /// to be a newly created, blank instance.
+  func makeBuilder() -> Builder
 }

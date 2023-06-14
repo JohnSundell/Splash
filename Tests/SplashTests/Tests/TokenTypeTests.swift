@@ -9,11 +9,11 @@ import Splash
 import XCTest
 
 final class TokenTypeTests: XCTestCase {
-    func testConvertingToString() {
-        let standardType = TokenType.comment
-        XCTAssertEqual(standardType.string, "comment")
+  func testConvertingToString() {
+    let standardType = TokenType.comment
+    XCTAssertEqual(standardType.string, "comment")
 
-        let customType = TokenType.custom("MyCustomType")
-        XCTAssertEqual(customType.string, "MyCustomType")
-    }
+    let customType = TokenType.custom("MyCustomType")
+    XCTAssertEqual(customType.string, "MyCustomType")
+  }
 }

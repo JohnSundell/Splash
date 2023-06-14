@@ -6,13 +6,13 @@
 
 #if os(macOS)
 
-    import Cocoa
+  import Cocoa
 
-    extension NSGraphicsContext {
-        func fill(with color: NSColor, in rect: CGRect) {
-            cgContext.setFillColor(color.cgColor)
-            cgContext.fill(rect)
-        }
+  extension NSGraphicsContext {
+    func fill(with color: NSColor, in rect: CGRect) {
+      cgContext.setFillColor(color.cgColor)
+      cgContext.fill(rect)
     }
+  }
 
 #endif
