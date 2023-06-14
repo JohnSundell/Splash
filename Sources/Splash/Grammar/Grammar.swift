@@ -32,8 +32,9 @@ public protocol Grammar {
 }
 
 public extension Grammar {
-    func isDelimiter(_ delimiterA: Character,
-                     mergableWith delimiterB: Character) -> Bool {
-        return true
+    func isDelimiter(_: Character,
+                     mergableWith _: Character) -> Bool
+    {
+        true
     }
 }

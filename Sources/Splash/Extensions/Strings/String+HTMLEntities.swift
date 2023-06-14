@@ -1,14 +1,14 @@
 /**
-*  Splash
-*  Copyright (c) John Sundell 2019
-*  MIT license - see LICENSE.md
-*/
+ *  Splash
+ *  Copyright (c) John Sundell 2019
+ *  MIT license - see LICENSE.md
+ */
 
 import Foundation
 
 internal extension StringProtocol {
     func escapingHTMLEntities() -> String {
-        return String(flatMap { character -> String in
+        String(flatMap { character -> String in
             switch character {
             case "&":
                 return "&amp;"

@@ -82,7 +82,7 @@ public struct SyntaxHighlighter<Format: OutputFormat> {
 
 private extension OutputBuilder {
     mutating func addToken(_ token: String, ofType type: TokenType?) {
-        if let type = type {
+        if let type {
             addToken(token, ofType: type)
         } else {
             addPlainText(token)

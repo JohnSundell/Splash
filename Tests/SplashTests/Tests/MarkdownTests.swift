@@ -4,8 +4,8 @@
  *  MIT license - see LICENSE.md
  */
 
-import XCTest
 import Splash
+import XCTest
 
 final class MarkdownTests: XCTestCase {
     private var decorator: MarkdownDecorator!
@@ -52,13 +52,13 @@ final class MarkdownTests: XCTestCase {
         Text.
         """
 
-            let expectedResult = """
-            Text text.
+        let expectedResult = """
+        Text text.
 
-            <pre class="splash"><code>struct Hello: Protocol {}</code></pre>
+        <pre class="splash"><code>struct Hello: Protocol {}</code></pre>
 
-            Text.
-            """
+        Text.
+        """
 
         XCTAssertEqual(decorator.decorate(markdown), expectedResult)
     }

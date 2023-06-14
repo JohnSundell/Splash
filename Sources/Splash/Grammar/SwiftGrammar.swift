@@ -34,12 +34,13 @@ public struct SwiftGrammar: Grammar {
             KeyPathRule(),
             PropertyRule(),
             DotAccessRule(),
-            KeywordRule()
+            KeywordRule(),
         ]
     }
 
     public func isDelimiter(_ delimiterA: Character,
-                            mergableWith delimiterB: Character) -> Bool {
+                            mergableWith delimiterB: Character) -> Bool
+    {
         switch (delimiterA, delimiterB) {
         case ("\\", "("):
             return true
@@ -82,22 +83,22 @@ private extension SwiftGrammar {
         "continue", "fallthrough", "repeat", "indirect",
         "deinit", "is", "#file", "#line", "#function",
         "dynamic", "some", "#available", "convenience", "unowned",
-        "async", "await", "actor", "any"
+        "async", "await", "actor", "any",
     ] as Set<String>).union(accessControlKeywords)
 
     static let accessControlKeywords: Set<String> = [
-        "public", "internal", "fileprivate", "private"
+        "public", "internal", "fileprivate", "private",
     ]
 
     static let declarationKeywords: Set<String> = [
         "class", "struct", "enum", "func",
         "protocol", "typealias", "import",
         "associatedtype", "subscript", "init",
-        "actor"
+        "actor",
     ]
 
     struct PreprocessingRule: SyntaxRule {
-        var tokenType: TokenType { return .preprocessing }
+        var tokenType: TokenType { .preprocessing }
         private let controlFlowTokens: Set<String> = ["#if", "#endif", "#elseif", "#else"]
         private let directiveTokens: Set<String> = ["#warning", "#error"]
 
@@ -115,7 +116,7 @@ private extension SwiftGrammar {
     }
 
     struct CommentRule: SyntaxRule {
-        var tokenType: TokenType { return .comment }
+        var tokenType: TokenType { .comment }
 
         func matches(_ segment: Segment) -> Bool {
             if segment.tokens.current.hasPrefix("/*") {
@@ -123,7 +124,7 @@ private extension SwiftGrammar {
                     return true
                 }
             }
-            
+
             if segment.tokens.current.hasPrefix("//") {
                 return true
             }
@@ -142,7 +143,7 @@ private extension SwiftGrammar {
     }
 
     struct AttributeRule: SyntaxRule {
-        var tokenType: TokenType { return .keyword }
+        var tokenType: TokenType { .keyword }
 
         func matches(_ segment: Segment) -> Bool {
             if segment.tokens.current.hasPrefix("@") {
@@ -164,7 +165,7 @@ private extension SwiftGrammar {
     }
 
     struct RawStringRule: SyntaxRule {
-        var tokenType: TokenType { return .string }
+        var tokenType: TokenType { .string }
 
         func matches(_ segment: Segment) -> Bool {
             guard !segment.isWithinRawStringInterpolation else {
@@ -182,7 +183,7 @@ private extension SwiftGrammar {
     }
 
     struct MultiLineStringRule: SyntaxRule {
-        var tokenType: TokenType { return .string }
+        var tokenType: TokenType { .string }
 
         func matches(_ segment: Segment) -> Bool {
             guard !segment.tokens.count(of: "\"\"\"").isEven else {
@@ -194,11 +195,12 @@ private extension SwiftGrammar {
     }
 
     struct SingleLineStringRule: SyntaxRule {
-        var tokenType: TokenType { return .string }
+        var tokenType: TokenType { .string }
 
         func matches(_ segment: Segment) -> Bool {
-            if segment.tokens.current.hasPrefix("\"") &&
-               segment.tokens.current.hasSuffix("\"") {
+            if segment.tokens.current.hasPrefix("\""),
+               segment.tokens.current.hasSuffix("\"")
+            {
                 return true
             }
 
@@ -207,12 +209,12 @@ private extension SwiftGrammar {
             }
 
             return !segment.isWithinStringInterpolation &&
-                   !segment.isWithinRawStringInterpolation
+                !segment.isWithinRawStringInterpolation
         }
     }
 
     struct NumberRule: SyntaxRule {
-        var tokenType: TokenType { return .number }
+        var tokenType: TokenType { .number }
 
         func matches(_ segment: Segment) -> Bool {
             // Don't match against index-based closure arguments
@@ -233,8 +235,9 @@ private extension SwiftGrammar {
             }
 
             guard let previous = segment.tokens.previous,
-                  let next = segment.tokens.next else {
-                    return false
+                  let next = segment.tokens.next
+            else {
+                return false
             }
 
             return previous.isNumber && next.isNumber
@@ -242,7 +245,7 @@ private extension SwiftGrammar {
     }
 
     struct CallRule: SyntaxRule {
-        var tokenType: TokenType { return .call }
+        var tokenType: TokenType { .call }
         private let keywordsToAvoid: Set<String>
         private let callLikeKeywords: Set<String>
         private let controlFlowTokens = ["if", "&&", "||", "for", "switch"]
@@ -331,14 +334,14 @@ private extension SwiftGrammar {
     }
 
     struct KeywordRule: SyntaxRule {
-        var tokenType: TokenType { return .keyword }
+        var tokenType: TokenType { .keyword }
 
         func matches(_ segment: Segment) -> Bool {
             if segment.tokens.current == "_" {
                 return true
             }
 
-            if segment.tokens.current == "prefix" && segment.tokens.next == "func" {
+            if segment.tokens.current == "prefix", segment.tokens.next == "func" {
                 return true
             }
 
@@ -375,7 +378,7 @@ private extension SwiftGrammar {
                             if accessControlKeywords.contains(previousToken) {
                                 return true
                             }
-                            
+
                             return previousToken.first == "@"
                         }
                     }
@@ -414,7 +417,7 @@ private extension SwiftGrammar {
     }
 
     struct TypeRule: SyntaxRule {
-        var tokenType: TokenType { return .type }
+        var tokenType: TokenType { .type }
 
         func matches(_ segment: Segment) -> Bool {
             // Types should not be highlighted when declared
@@ -455,7 +458,7 @@ private extension SwiftGrammar {
                         return true
                     }
 
-                    if !foundOpeningBracket && token == "<" {
+                    if !foundOpeningBracket, token == "<" {
                         foundOpeningBracket = true
                     }
 
@@ -483,7 +486,7 @@ private extension SwiftGrammar {
     }
 
     struct DotAccessRule: SyntaxRule {
-        var tokenType: TokenType { return .dotAccess }
+        var tokenType: TokenType { .dotAccess }
 
         func matches(_ segment: Segment) -> Bool {
             guard !segment.tokens.onSameLine.isEmpty else {
@@ -507,15 +510,15 @@ private extension SwiftGrammar {
     }
 
     struct KeyPathRule: SyntaxRule {
-        var tokenType: TokenType { return .property }
+        var tokenType: TokenType { .property }
 
         func matches(_ segment: Segment) -> Bool {
-            return segment.tokens.previous.isAny(of: #"\."#, #"(\."#)
+            segment.tokens.previous.isAny(of: #"\."#, #"(\."#)
         }
     }
 
     struct PropertyRule: SyntaxRule {
-        var tokenType: TokenType { return .property }
+        var tokenType: TokenType { .property }
 
         func matches(_ segment: Segment) -> Bool {
             let currentToken = segment.tokens.current
@@ -588,7 +591,7 @@ private extension Segment {
                 } else {
                     markerCounts.end += 1
                 }
-            } else if token == end && start != end {
+            } else if token == end, start != end {
                 markerCounts.end += 1
             } else {
                 if token.hasPrefix(start) {
@@ -654,7 +657,7 @@ private extension Segment {
     }
 
     var prefixedByDotAccess: Bool {
-        return tokens.previous == "(." || prefix.hasSuffix(" .")
+        tokens.previous == "(." || prefix.hasSuffix(" .")
     }
 
     var isValidSymbol: Bool {

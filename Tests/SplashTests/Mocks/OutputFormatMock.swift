@@ -11,6 +11,6 @@ struct OutputFormatMock: OutputFormat {
     let builder: OutputBuilderMock
 
     func makeBuilder() -> OutputBuilderMock {
-        return builder
+        builder
     }
 }

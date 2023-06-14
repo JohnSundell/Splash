@@ -23,7 +23,7 @@ struct OutputBuilderMock: OutputBuilder {
     }
 
     func build() -> [Component] {
-        return components
+        components
     }
 }
 

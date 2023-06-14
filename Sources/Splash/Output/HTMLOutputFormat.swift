@@ -19,7 +19,7 @@ public struct HTMLOutputFormat: OutputFormat {
     }
 
     public func makeBuilder() -> Builder {
-        return Builder(classPrefix: classPrefix)
+        Builder(classPrefix: classPrefix)
     }
 }
 

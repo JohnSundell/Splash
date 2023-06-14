@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class FunctionCallTests: SyntaxHighlighterTestCase {
     func testFunctionCallWithIntegers() {
@@ -19,7 +19,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .plainText(","),
             .whitespace(" "),
             .token("2", .number),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -30,7 +30,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("handler", .call),
             .plainText("("),
             .token("nil", .keyword),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -45,7 +45,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .plainText("="),
             .whitespace(" "),
             .token("String", .type),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -62,7 +62,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("String", .type),
             .plainText("."),
             .token("init", .keyword),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -80,7 +80,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .plainText("."),
             .token("init", .keyword),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -98,7 +98,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("."),
             .token("init", .keyword),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -108,7 +108,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("call", .call),
             .plainText("()."),
-            .token("property", .property)
+            .token("property", .property),
         ])
     }
 
@@ -118,7 +118,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("call", .call),
             .plainText("(argument)."),
-            .token("property", .property)
+            .token("property", .property),
         ])
     }
 
@@ -131,7 +131,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("String", .type),
             .plainText(">."),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -144,7 +144,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("String", .type),
             .plainText("."),
             .token("self", .keyword),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -155,7 +155,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("setCachingEnabled", .call),
             .plainText("("),
             .token("true", .keyword),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -175,7 +175,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .whitespace("\n    "),
             .plainText("."),
             .token("callTwo", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -184,7 +184,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
 
         XCTAssertEqual(components, [
             .token("XCTAssertTrue", .call),
-            .plainText("(variable)")
+            .plainText("(variable)"),
         ])
     }
 
@@ -197,7 +197,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("try", .keyword),
             .whitespace(" "),
             .token("function", .call),
-            .plainText("())")
+            .plainText("())"),
         ])
     }
 
@@ -218,7 +218,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("self", .keyword),
             .plainText("."),
             .token("$value", .property),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -229,7 +229,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("(&"),
             .token("$value", .property),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -246,7 +246,7 @@ final class FunctionCallTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("in", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 }

@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class EnumTests: SyntaxHighlighterTestCase {
     func testEnumDotSyntaxInAssignment() {
@@ -22,7 +22,7 @@ final class EnumTests: SyntaxHighlighterTestCase {
             .plainText("="),
             .whitespace(" "),
             .plainText("."),
-            .token("aCase", .dotAccess)
+            .token("aCase", .dotAccess),
         ])
     }
 
@@ -33,7 +33,7 @@ final class EnumTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("(."),
             .token("aCase", .dotAccess),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -44,7 +44,7 @@ final class EnumTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("(."),
             .token("error", .call),
-            .plainText("(error))")
+            .plainText("(error))"),
         ])
     }
 
@@ -54,7 +54,7 @@ final class EnumTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .plainText("dictionary[."),
             .token("key", .dotAccess),
-            .plainText("]")
+            .plainText("]"),
         ])
     }
 }

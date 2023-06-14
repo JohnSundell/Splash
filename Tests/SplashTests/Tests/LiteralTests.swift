@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class LiteralTests: SyntaxHighlighterTestCase {
     func testStringLiteral() {
@@ -21,7 +21,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("\"Hello,", .string),
             .whitespace(" "),
-            .token("world!\"", .string)
+            .token("world!\"", .string),
         ])
     }
 
@@ -34,7 +34,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .token("\"Hello,", .string),
             .whitespace(" "),
             .token("world!\"", .string),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -50,7 +50,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .plainText(";"),
             .whitespace(" "),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -72,7 +72,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .plainText("\\("),
             .token("call", .call),
             .plainText("())"),
-            .token("\"", .string)
+            .token("\"", .string),
         ])
     }
 
@@ -82,7 +82,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("\"", .string),
             .plainText(#"\($0)"#),
-            .token("\"", .string)
+            .token("\"", .string),
         ])
     }
 
@@ -106,7 +106,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("call", .call),
             .plainText("())"),
-            .token("\"", .string)
+            .token("\"", .string),
         ])
     }
 
@@ -116,7 +116,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token(#""["#, .string),
             .plainText(#"\(text)"#),
-            .token(#"]""#, .string)
+            .token(#"]""#, .string),
         ])
     }
 
@@ -126,7 +126,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("\".", .string),
             .plainText(#"\(text)"#),
-            .token("\"", .string)
+            .token("\"", .string),
         ])
     }
 
@@ -141,7 +141,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("\"name\"", .string),
             .plainText(")"),
-            .token("\"", .string)
+            .token("\"", .string),
         ])
     }
 
@@ -165,7 +165,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("\\(variable)"),
             .whitespace("\n"),
-            .token("\"\"\"", .string)
+            .token("\"\"\"", .string),
         ])
     }
 
@@ -183,7 +183,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("\\(withoutInterpolation)", .string),
             .whitespace(" "),
-            .token("yes\"#", .string)
+            .token("yes\"#", .string),
         ])
     }
 
@@ -218,7 +218,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("\"#", .string),
             .whitespace("\n"),
-            .token("\"\"\"#", .string)
+            .token("\"\"\"#", .string),
         ])
     }
 
@@ -230,7 +230,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("\\#(variable)"),
             .whitespace(" "),
-            .token("world\"#", .string)
+            .token("world\"#", .string),
         ])
     }
 
@@ -243,7 +243,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .plainText("(separator:"),
             .whitespace(" "),
             .token(#""\n""#, .string),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -257,7 +257,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("="),
             .whitespace(" "),
-            .token("1.13", .number)
+            .token("1.13", .number),
         ])
     }
 
@@ -271,7 +271,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("="),
             .whitespace(" "),
-            .token("1_000_000", .number)
+            .token("1_000_000", .number),
         ])
     }
 
@@ -289,7 +289,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("\\."),
             .token("property", .property),
-            .plainText("]")
+            .plainText("]"),
         ])
     }
 
@@ -307,7 +307,7 @@ final class LiteralTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText(#"\."#),
             .token("text", .property),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 }

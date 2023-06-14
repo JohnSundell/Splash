@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 /// Test case used as an abstract base class for all tests relating to
 /// syntax highlighting. For all such tests, the Swift grammar is used.

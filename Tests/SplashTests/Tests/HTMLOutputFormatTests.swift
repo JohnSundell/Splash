@@ -1,6 +1,6 @@
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class HTMLOutputFormatTests: XCTestCase {
     private var highlighter: SyntaxHighlighter<HTMLOutputFormat>!

@@ -8,8 +8,9 @@ import Foundation
 
 internal struct Tokenizer {
     func segmentsByTokenizing(_ code: String,
-                              using grammar: Grammar) -> AnySequence<Segment> {
-        return AnySequence<Segment> {
+                              using grammar: Grammar) -> AnySequence<Segment>
+    {
+        AnySequence<Segment> {
             Buffer(iterator: Iterator(code: code, grammar: grammar))
         }
     }
@@ -79,7 +80,8 @@ private extension Tokenizer {
                 }
 
                 guard segment.trailingWhitespace == nil,
-                      component.isDelimiter == segment.currentTokenIsDelimiter else {
+                      component.isDelimiter == segment.currentTokenIsDelimiter
+                else {
                     return finish(segment, with: component, at: nextIndex)
                 }
 
@@ -122,7 +124,7 @@ private extension Tokenizer {
         }
 
         private func makeNextIndex() -> String.Index {
-            guard let index = index else {
+            guard let index else {
                 return code.startIndex
             }
 
@@ -175,7 +177,8 @@ private extension Tokenizer {
 
         private mutating func finish(_ segment: Segment,
                                      with component: Component,
-                                     at index: String.Index) -> Segment {
+                                     at index: String.Index) -> Segment
+        {
             var count = tokenCounts[segment.tokens.current] ?? 0
             count += 1
             tokenCounts[segment.tokens.current] = count
@@ -198,7 +201,7 @@ private extension Tokenizer {
 
 extension Tokenizer.Iterator.Component {
     var token: String {
-        return String(character)
+        String(character)
     }
 
     var isDelimiter: Bool {
@@ -222,10 +225,10 @@ extension Tokenizer.Iterator.Component {
 
 private extension Character {
     var isWhitespace: Bool {
-        return CharacterSet.whitespaces.contains(self)
+        CharacterSet.whitespaces.contains(self)
     }
 
     var isNewline: Bool {
-        return CharacterSet.newlines.contains(self)
+        CharacterSet.newlines.contains(self)
     }
 }

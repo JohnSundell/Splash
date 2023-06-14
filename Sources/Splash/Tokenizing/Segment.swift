@@ -43,6 +43,6 @@ public extension Segment.Tokens {
     /// Return the number of times a given token has been found up until this point.
     /// This is a convenience API over the `counts` dictionary.
     func count(of token: String) -> Int {
-        return counts[token] ?? 0
+        counts[token] ?? 0
     }
 }

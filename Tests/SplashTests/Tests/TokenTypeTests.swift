@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class TokenTypeTests: XCTestCase {
     func testConvertingToString() {

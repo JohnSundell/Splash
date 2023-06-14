@@ -33,7 +33,7 @@ public enum TokenType: Hashable {
 public extension TokenType {
     /// Return a string value representing the token type
     var string: String {
-        if case .custom(let type) = self {
+        if case let .custom(type) = self {
             return type
         }
 

@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class OptionalTests: SyntaxHighlighterTestCase {
     func testAssigningPropertyWithOptionalChaining() {
@@ -18,7 +18,7 @@ final class OptionalTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("="),
             .whitespace(" "),
-            .token("true", .keyword)
+            .token("true", .keyword),
         ])
     }
 
@@ -29,7 +29,7 @@ final class OptionalTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("(object?."),
             .token("property", .property),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -39,7 +39,7 @@ final class OptionalTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .plainText("object?."),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 }

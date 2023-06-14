@@ -8,6 +8,6 @@ import Foundation
 
 extension String {
     var isNumber: Bool {
-        return Int(self) != nil
+        Int(self) != nil
     }
 }

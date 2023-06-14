@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class StatementTests: SyntaxHighlighterTestCase {
     func testImportStatement() {
@@ -15,7 +15,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("import", .keyword),
             .whitespace(" "),
-            .plainText("UIKit")
+            .plainText("UIKit"),
         ])
     }
 
@@ -25,7 +25,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("import", .keyword),
             .whitespace(" "),
-            .plainText("os.log")
+            .plainText("os.log"),
         ])
     }
 
@@ -58,7 +58,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("\"string\"", .string),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -76,7 +76,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("optional"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -96,7 +96,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("else", .keyword),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -140,7 +140,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("callB", .call),
             .plainText("()"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -169,7 +169,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -205,7 +205,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -239,7 +239,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("callB", .call),
             .plainText("()"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -272,7 +272,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -311,7 +311,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -333,7 +333,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("break", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -353,7 +353,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -375,7 +375,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("continue", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -422,7 +422,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText(">"),
             .whitespace(" "),
-            .token("1", .number)
+            .token("1", .number),
         ])
     }
 
@@ -431,7 +431,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
 
         XCTAssertEqual(components, [
             .token("_MyType", .type),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -440,7 +440,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
 
         XCTAssertEqual(components, [
             .token("_myFunction", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -464,7 +464,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText(":"),
             .whitespace(" "),
-            .plainText("queryItems")
+            .plainText("queryItems"),
         ])
     }
 
@@ -481,7 +481,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .token("await", .keyword),
             .whitespace(" "),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -497,7 +497,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("await", .keyword),
             .whitespace(" "),
-            .plainText("value")
+            .plainText("value"),
         ])
     }
 
@@ -515,7 +515,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("sequence"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -535,7 +535,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("sequence"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -552,7 +552,7 @@ final class StatementTests: SyntaxHighlighterTestCase {
             .plainText("="),
             .whitespace(" "),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 }

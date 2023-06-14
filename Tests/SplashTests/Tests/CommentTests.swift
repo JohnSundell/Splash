@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class CommentTests: SyntaxHighlighterTestCase {
     func testSingleLineComment() {
@@ -27,7 +27,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("\"string\"", .comment),
             .whitespace("\n"),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -55,7 +55,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("*/", .comment),
             .whitespace(" "),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -83,7 +83,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("*/", .comment),
             .whitespace(" "),
             .token("call", .call),
-            .plainText("()")
+            .plainText("()"),
         ])
     }
 
@@ -108,7 +108,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("MyClass"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -132,7 +132,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("World"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -161,17 +161,17 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("Options", .type),
             .whitespace("\n"),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
-        
+
     func testCommentWithNumber() {
         let components = highlighter.highlight("// 1")
 
         XCTAssertEqual(components, [
             .token("//", .comment),
             .whitespace(" "),
-            .token("1", .comment)
+            .token("1", .comment),
         ])
     }
 
@@ -182,7 +182,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
         (/**/)
         """)
 
-         XCTAssertEqual(components, [
+        XCTAssertEqual(components, [
             .plainText("("),
             .token("/*", .comment),
             .whitespace(" "),
@@ -215,7 +215,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("//commentA", .comment),
             .whitespace("\n"),
             .plainText("}"),
-            .token("//commentB", .comment)
+            .token("//commentB", .comment),
         ])
     }
 
@@ -237,7 +237,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("Three>"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -254,7 +254,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("<Content>"),
             .token("/*End*/", .comment),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -265,7 +265,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("/*Start*/", .comment),
             .token("Object", .type),
             .plainText("()"),
-            .token("/*End*/", .comment)
+            .token("/*End*/", .comment),
         ])
     }
 
@@ -283,7 +283,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .token("Equatable", .type),
             .token("/*End*/", .comment),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -318,7 +318,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("?"),
             .token("/*Two*/", .comment),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -355,7 +355,7 @@ final class CommentTests: SyntaxHighlighterTestCase {
             .plainText("]"),
             .token("/*Two*/", .comment),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 }

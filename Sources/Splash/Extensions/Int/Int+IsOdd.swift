@@ -8,6 +8,6 @@ import Foundation
 
 internal extension Int {
     var isEven: Bool {
-        return self % 2 == 0
+        self % 2 == 0
     }
 }

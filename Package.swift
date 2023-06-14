@@ -38,6 +38,6 @@ let package = Package(
         .testTarget(
             name: "SplashTests",
             dependencies: ["Splash"]
-        )
+        ),
     ]
 )

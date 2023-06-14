@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class ClosureTests: SyntaxHighlighterTestCase {
     func testTrailingClosureWithArguments() {
@@ -22,7 +22,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("in", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -36,7 +36,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("$0"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -46,7 +46,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
         XCTAssertEqual(components, [
             .token("call", .call),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -65,7 +65,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("->"),
             .whitespace(" "),
             .token("Void", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -87,7 +87,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("->"),
             .whitespace(" "),
             .token("Void", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -106,7 +106,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("->"),
             .whitespace(" "),
             .token("Void", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -127,7 +127,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("->"),
             .whitespace(" "),
             .token("Void", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -141,7 +141,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("$0"),
             .whitespace(" "),
-            .plainText("})")
+            .plainText("})"),
         ])
     }
 
@@ -168,7 +168,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .plainText("->"),
             .whitespace(" "),
             .token("Void", .type),
-            .plainText("]()")
+            .plainText("]()"),
         ])
     }
 
@@ -197,7 +197,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace("\n    "),
             .plainText("$2()"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -217,7 +217,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("in", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -237,7 +237,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("in", .keyword),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -256,7 +256,7 @@ final class ClosureTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("(a)"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 }

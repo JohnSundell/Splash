@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class DeclarationTests: SyntaxHighlighterTestCase {
     func testFunctionDeclaration() {
@@ -22,7 +22,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("->"),
             .whitespace(" "),
-            .token("Int", .type)
+            .token("Int", .type),
         ])
     }
 
@@ -34,7 +34,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("func", .keyword),
             .whitespace(" "),
-            .plainText("hello()")
+            .plainText("hello()"),
         ])
     }
 
@@ -53,7 +53,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("func", .keyword),
             .whitespace(" "),
-            .plainText("hello()")
+            .plainText("hello()"),
         ])
     }
 
@@ -69,7 +69,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("b:"),
             .whitespace(" "),
             .token("B", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -84,7 +84,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("b:"),
             .whitespace(" "),
             .token("B", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -106,7 +106,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("B", .type),
             .whitespace("\n"),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -126,7 +126,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("O", .type),
             .plainText(")"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -146,7 +146,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("b:"),
             .whitespace(" "),
             .token("B", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -162,7 +162,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText(">(t:"),
             .whitespace(" "),
             .token("T", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -188,7 +188,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("b:"),
             .whitespace(" "),
             .token("B", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -215,7 +215,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("T", .type),
             .plainText("?"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -242,7 +242,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("[]"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -259,7 +259,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("B>"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -291,7 +291,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("Int", .type),
             .plainText("?"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -313,7 +313,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{}"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -331,7 +331,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{}"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -348,7 +348,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("ProtocolB", .type),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -364,7 +364,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -381,7 +381,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("Value", .type),
             .plainText(">"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -418,7 +418,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("method()"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -449,7 +449,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("."),
             .token("Error", .type),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -463,7 +463,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -496,7 +496,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -524,7 +524,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -552,17 +552,17 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("0", .number),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
-    
+
     func testDynamicPropertyDeclaration() {
         let components = highlighter.highlight("""
         class Hello {
             @objc dynamic var property = 0
         }
         """)
-        
+
         XCTAssertEqual(components, [
             .token("class", .keyword),
             .whitespace(" "),
@@ -582,10 +582,9 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("0", .number),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
-
 
     func testGenericPropertyDeclaration() {
         let components = highlighter.highlight("class Hello { var array: Array<String> = [] }")
@@ -610,7 +609,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("[]"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -644,7 +643,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -678,7 +677,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -719,7 +718,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace("\n    "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -745,7 +744,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("Int", .type),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -766,7 +765,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("="),
             .whitespace(" "),
-            .token("7", .number)
+            .token("7", .number),
         ])
     }
 
@@ -796,7 +795,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText(">."),
             .token("idle", .property),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -833,7 +832,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -872,7 +871,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -890,7 +889,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{}"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -916,7 +915,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -934,7 +933,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("Void", .type),
             .plainText(")"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -956,7 +955,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("7", .number),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -978,7 +977,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("7", .number),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1013,7 +1012,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("#function", .keyword),
             .plainText(")"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -1041,7 +1040,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1075,7 +1074,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("["),
             .token("T", .type),
-            .plainText("]")
+            .plainText("]"),
         ])
     }
 
@@ -1100,7 +1099,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token(#""!""#, .string),
             .plainText(")"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1115,7 +1114,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("any", .keyword),
             .whitespace(" "),
             .token("Value", .type),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -1134,7 +1133,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("any", .keyword),
             .whitespace(" "),
             .token("Value", .type),
-            .plainText(">)")
+            .plainText(">)"),
         ])
     }
 
@@ -1153,7 +1152,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("any", .keyword),
             .whitespace(" "),
             .token("Value", .type),
-            .plainText("])")
+            .plainText("])"),
         ])
     }
 
@@ -1178,7 +1177,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("!rhs"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1198,7 +1197,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("some"),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1231,7 +1230,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("Content", .type),
             .plainText("])"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1258,7 +1257,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("Value", .type),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1288,7 +1287,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("String", .type),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1316,7 +1315,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("String", .type),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1347,7 +1346,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("setting"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1376,7 +1375,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1390,7 +1389,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("async", .keyword),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -1412,7 +1411,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("0", .number),
             .whitespace(" "),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1428,7 +1427,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .token("throws", .keyword),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -1452,7 +1451,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .token("T", .type),
             .plainText(")"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -1485,7 +1484,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("{}"),
             .whitespace("\n"),
-            .plainText("}")
+            .plainText("}"),
         ])
     }
 
@@ -1499,7 +1498,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("MyActor"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -1525,7 +1524,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .plainText("="),
             .whitespace(" "),
             .plainText("scene."),
-            .token("center", .property)
+            .token("center", .property),
         ])
     }
 
@@ -1555,7 +1554,7 @@ final class DeclarationTests: SyntaxHighlighterTestCase {
             .whitespace("\n"),
             .token("return", .keyword),
             .whitespace(" "),
-            .plainText("actor")
+            .plainText("actor"),
         ])
     }
 }

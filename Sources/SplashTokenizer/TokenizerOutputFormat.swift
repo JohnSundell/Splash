@@ -9,7 +9,7 @@ import Splash
 
 struct TokenizerOutputFormat: OutputFormat {
     func makeBuilder() -> Builder {
-        return Builder()
+        Builder()
     }
 }
 
@@ -25,12 +25,12 @@ extension TokenizerOutputFormat {
             components.append("Plain text: \(text)")
         }
 
-        mutating func addWhitespace(_ whitespace: String) {
+        mutating func addWhitespace(_: String) {
             // Ignore whitespace
         }
 
         func build() -> String {
-            return components.joined(separator: "\n")
+            components.joined(separator: "\n")
         }
     }
 }

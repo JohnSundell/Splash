@@ -5,8 +5,8 @@
  */
 
 import Foundation
-import XCTest
 import Splash
+import XCTest
 
 final class PreprocessorTests: SyntaxHighlighterTestCase {
     func testPreprocessing() {
@@ -24,7 +24,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .token("call", .call),
             .plainText("()"),
             .whitespace("\n"),
-            .token("#endif", .preprocessing)
+            .token("#endif", .preprocessing),
         ])
     }
 
@@ -44,7 +44,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .token("function", .call),
             .plainText("("),
             .token("_", .keyword),
-            .plainText(":)))")
+            .plainText(":)))"),
         ])
     }
 
@@ -58,7 +58,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("AppDelegate"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -76,7 +76,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .whitespace(" "),
             .plainText("*)"),
             .whitespace(" "),
-            .plainText("{}")
+            .plainText("{}"),
         ])
     }
 
@@ -87,7 +87,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .token("#warning", .preprocessing),
             .plainText("("),
             .token(#""Hey!""#, .string),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 
@@ -98,7 +98,7 @@ final class PreprocessorTests: SyntaxHighlighterTestCase {
             .token("#error", .preprocessing),
             .plainText("("),
             .token(#""No!""#, .string),
-            .plainText(")")
+            .plainText(")"),
         ])
     }
 }
