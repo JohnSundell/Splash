@@ -6,8 +6,6 @@
 
 import Foundation
 
-#if !os(Linux)
-
     public extension Theme {
         /// Create a theme matching the "Sundell's Colors" Xcode theme
         static func sundellsColors(withFont font: Font) -> Theme {
@@ -177,5 +175,3 @@ import Foundation
             )
         }
     }
-
-#endif
