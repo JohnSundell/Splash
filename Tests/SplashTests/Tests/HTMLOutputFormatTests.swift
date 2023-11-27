@@ -39,4 +39,16 @@ final class HTMLOutputFormatTests: XCTestCase {
         <span class="comment">// Hey I'm a comment!</span>
         """)
     }
+
+    func testEncodingNewlinesWithBreakTag() {
+        let html = highlighter.highlight("""
+        // comment line 1
+        // comment line 2
+        func expressTheCommentAbove()
+        """)
+
+        XCTAssertEqual(html, """
+        <span class=\"comment\">// comment line 1<br>// comment line 2</span>\n<span class=\"keyword\">func</span> expressTheCommentAbove()
+        """)
+    }
 }
